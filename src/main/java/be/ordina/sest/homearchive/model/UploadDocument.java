@@ -2,7 +2,7 @@ package be.ordina.sest.homearchive.model;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class DbDocument {
+public class UploadDocument {
 
 	private MultipartFile file;
 

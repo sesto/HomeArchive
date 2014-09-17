@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import be.ordina.sest.homearchive.model.DbDocument;
+import be.ordina.sest.homearchive.model.UploadDocument;
 import be.ordina.sest.homearchive.service.UploadService;
 
 @Controller
@@ -20,14 +20,14 @@ public class UploadController {
 
 	@RequestMapping("/uploadForm")
 	public ModelAndView getUploadForm(
-			@ModelAttribute("dbDocument") DbDocument uploadedFile,
+			@ModelAttribute("dbDocument") UploadDocument uploadedFile,
 			BindingResult result) {
 		return new ModelAndView("uploadForm");
 	}
 
 	@RequestMapping("/fileUpload")
 	public ModelAndView fileUploaded(
-			@ModelAttribute("uploadedFile") DbDocument uploadedFile,
+			@ModelAttribute("uploadedFile") UploadDocument uploadedFile,
 			BindingResult result) throws IOException {
 		uploadService.uploadFile(uploadedFile);
 		return new ModelAndView("showFile", "message", uploadedFile.getFile().getOriginalFilename());

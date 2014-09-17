@@ -11,8 +11,11 @@
 		<title>Welcome</title>
 	</head> 
 	<body>
-		<c:url value="/uploadForm" var="messageUrl" />
-		<a href="${messageUrl}">Click to enter</a>
+		<p><c:url value="/uploadForm" var="uploadUrl" />
+		<a href="${uploadUrl}">Upload File</a></p>
+		<p><c:url value="/downloadForm" var="downloadUrl" />
+		<a href="${downloadUrl}">Download File</a></p>
+		
 	</body>
 
 </html>

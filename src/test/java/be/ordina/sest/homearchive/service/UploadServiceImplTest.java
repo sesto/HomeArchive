@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mongodb.DBObject;
 
 import be.ordina.sest.homearchive.dao.MongoDao;
-import be.ordina.sest.homearchive.model.DbDocument;
+import be.ordina.sest.homearchive.model.UploadDocument;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UploadServiceImplTest {
@@ -33,14 +33,14 @@ public class UploadServiceImplTest {
     @Mock
     private InputStream is;
 
-    private DbDocument document;
+    private UploadDocument document;
 
     @Before
     public void init() throws IOException {
         when(file.getOriginalFilename()).thenReturn("fileName");
         when(file.getContentType()).thenReturn("contentType");
         when(file.getInputStream()).thenReturn(is);
-        document = new DbDocument();
+        document = new UploadDocument();
         document.setFile(file);
 
     }
