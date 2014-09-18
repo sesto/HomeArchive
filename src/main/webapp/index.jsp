@@ -11,9 +11,9 @@
 		<title>Welcome</title>
 	</head> 
 	<body>
-		<p><c:url value="/uploadForm" var="uploadUrl" />
+		<p><c:url value="/ui/uploadForm" var="uploadUrl" />
 		<a href="${uploadUrl}">Upload File</a></p>
-		<p><c:url value="/downloadForm" var="downloadUrl" />
+		<p><c:url value="/ui/downloadForm" var="downloadUrl" />
 		<a href="${downloadUrl}">Download File</a></p>
 		
 	</body>

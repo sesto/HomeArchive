@@ -15,21 +15,21 @@ import be.ordina.sest.homearchive.service.UploadService;
 @Controller
 public class UploadController {
 
-	@Autowired
-	private UploadService uploadService;
+    @Autowired
+    private UploadService uploadService;
 
-	@RequestMapping("/uploadForm")
-	public ModelAndView getUploadForm(
-			@ModelAttribute("dbDocument") UploadDocument uploadedFile,
-			BindingResult result) {
-		return new ModelAndView("uploadForm");
-	}
+    @RequestMapping("uploadForm")
+    public ModelAndView getUploadForm(
+        @ModelAttribute("dbDocument") final UploadDocument uploadedFile,
+        final BindingResult result) {
+        return new ModelAndView("uploadForm");
+    }
 
-	@RequestMapping("/fileUpload")
-	public ModelAndView fileUploaded(
-			@ModelAttribute("uploadedFile") UploadDocument uploadedFile,
-			BindingResult result) throws IOException {
-		uploadService.uploadFile(uploadedFile);
-		return new ModelAndView("showFile", "message", uploadedFile.getFile().getOriginalFilename());
-	}
+    @RequestMapping("fileUpload")
+    public ModelAndView fileUploaded(
+        @ModelAttribute("uploadedFile") final UploadDocument uploadedFile,
+        final BindingResult result) throws IOException {
+        uploadService.uploadFile(uploadedFile);
+        return new ModelAndView("showFile", "message", uploadedFile.getFile().getOriginalFilename());
+    }
 }

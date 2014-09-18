@@ -15,18 +15,17 @@ import com.mongodb.DBObject;
 
 @Service
 public class UploadServiceImpl implements UploadService {
-	
-	@Autowired
-	private MongoDao dao;
 
-	@Override
-	public void uploadFile(UploadDocument document) throws IOException {
-		MultipartFile file = document.getFile();
-		String fileName = file.getOriginalFilename();
-		String contentType = file.getContentType();
-		InputStream content = file.getInputStream();
-		DBObject metaData = new BasicDBObject();
-		dao.saveDocument(content, fileName, contentType, metaData);
-	}
+    @Autowired
+    private MongoDao dao;
 
+    @Override
+    public void uploadFile(final UploadDocument document) throws IOException {
+        MultipartFile file = document.getFile();
+        String fileName = file.getOriginalFilename();
+        String contentType = file.getContentType();
+        InputStream content = file.getInputStream();
+        DBObject metaData = new BasicDBObject("tags", document.getTags());
+        dao.saveDocument(content, fileName, contentType, metaData);
+    }
 }

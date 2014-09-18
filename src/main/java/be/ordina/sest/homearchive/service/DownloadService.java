@@ -1,11 +1,18 @@
 package be.ordina.sest.homearchive.service;
 
 import java.io.IOException;
+import java.util.List;
 
-import be.ordina.sest.homearchive.model.DownloadDocument;
+import org.springframework.data.mongodb.core.query.Query;
+
+import be.ordina.sest.homearchive.model.RequestDocument;
+
+import com.mongodb.gridfs.GridFSDBFile;
 
 public interface DownloadService {
 
-    void downloadFileByName(final DownloadDocument downloadDocument) throws IOException;
+    GridFSDBFile downloadFileByName(final RequestDocument downloadDocument) throws IOException;
+
+    List<GridFSDBFile> findDocuments(final RequestDocument document);
 
 }

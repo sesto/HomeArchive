@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.gridfs.GridFsCriteria;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Component;
 
+import be.ordina.sest.homearchive.helper.GridFsQueryBuilder;
+
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 
@@ -33,8 +35,15 @@ public class MongoDaoImpl implements MongoDao {
 
     @Override
     public GridFSDBFile findDocumentByFileName(final String fileName) {
-        Query query = new Query(GridFsCriteria.whereFilename().is(fileName));
+        Query query = new GridFsQueryBuilder().addFileName(fileName).getQuery();
         return template.findOne(query);
     }
+
+    @Override
+    public List<GridFSDBFile> findDocuments(final Query query) {
+        return template.find(query);
+    }
+
+
 
 }
