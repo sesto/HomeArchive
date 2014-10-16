@@ -1,18 +1,25 @@
-var homearchiveApp = angular.module('homearchiveApp', [ 'fileServices', 'flow', 'angularFileUpload' ]);
+var homearchiveControllers = angular.module('homearchiveControllers', [ 'fileServices', 'angularFileUpload' ]);
 
-homearchiveApp.controller('FileListCtrl',[ '$scope', '$upload', 'File', function($scope, $upload, File) {
+homearchiveControllers.controller('FileListCtrl',[ '$scope',  'FileService', function($scope, FileService) {
 
-	File.query(function(data) {
+	FileService.query(function(data) {
 		$scope.files = data;
 		console.log(JSON.stringify($scope.files));
 	});
-	
+	  
+}]);
 
-	File.get({
+homearchiveControllers.controller('DownloadCtrl',[ '$scope',  'File', function($scope,  File) {
+	FileService.get({
 		id : "543e75803004bdb5fdd82895"
 	}, function(result){
 	//	$scope.document = result;
 	});
+	  
+}]);
+
+homearchiveControllers.controller('UploadCtrl',[ '$scope', '$upload', 'File', function($scope, $upload, File) {
+
 	 $scope.onFileSelect = function($files) {
 		    //$files: an array of files selected, each file has name, size, and type.
 		    for (var i = 0; i < $files.length; i++) {
@@ -48,8 +55,6 @@ homearchiveApp.controller('FileListCtrl',[ '$scope', '$upload', 'File', function
 	  
 	  
 }]);
-
-
 
 
 
