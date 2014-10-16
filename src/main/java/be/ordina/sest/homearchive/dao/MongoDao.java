@@ -30,7 +30,7 @@ public interface MongoDao {
      * @return document
      */
 
-    GridFSDBFile findDocumentByFileName(final String fileName);
+    GridFSDBFile findDocumentById(final String fileName);
 
     /**
      *

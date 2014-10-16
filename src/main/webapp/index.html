@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app="homearchiveApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home documents archive</title>
+<!-- Bootstrap -->
+<link href="bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet" media="screen">
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+<!-- Angularjs -->
+<script src="bower_components/angular-file-upload-master/dist/angular-file-upload-shim.min.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="js/controllers.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="js/services.js"></script>
+<!-- FileSaver -->
+<script src="bower_components/flow.js/dist/flow.min.js"></script>
+<script src="bower_components/ng-flow/dist/ng-flow.min.js"></script>
+
+<script src="bower_components/angular-file-upload-master/dist/angular-file-upload.min.js"></script>
+
+
+
+
+</head>
+<body>
+
+<div ng-controller="FileListCtrl">
+  <input type="text" ng-model="tags.tag1">
+  <input type="text" ng-model="tags.tag2">
+  <input type="text" ng-model="tags.tag3">
+  <input type="file" ng-file-select="onFileSelect($files)">
+  <input type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*">
+  <div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>
+  <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class-name-or-function"
+        ng-show="dropSupported">drop files here</div>
+  <div ng-file-drop-available="dropSupported=true" 
+        ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+  <button ng-click="upload.abort()">Cancel Upload</button>
+</div>
+
+	<div ng-controller="FileListCtrl">
+      <h1>My files</h1>
+      <div flow-init flow-name="uploader.flow">
+        
+        <button flow-btn>Add files</button>
+        <button ng-click="upload()">Upload</button>
+        <div ng-repeat="file in uploader.flow.files" >
+          {{file.name}} <a ng-click="file.cancel()">X</a>
+        </div>
+        Total files #{{uploader.flow.files.length}}
+      </div>
+	
+	
+	
+	<div ng-controller="FileListCtrl">
+	Found file:  {{document.fileName}}
+	<ul>
+		
+		<li ng-repeat="file in files">
+		{{file.fileName}}
+			<p>{{file.date}}</p>
+			<p>{{file.tags}}</p>
+		</li>
+	</ul>
+</div>
+
+</div>
+
+
+
+
+</body>
+</html>

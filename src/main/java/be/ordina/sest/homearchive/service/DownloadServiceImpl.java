@@ -25,15 +25,9 @@ public class DownloadServiceImpl implements DownloadService {
     private MongoDao mongoDao;
 
     @Override
-    public GridFSDBFile downloadFileByName(final RequestDocument document) throws IOException {
-        String fileName = document.getFileName();
-        GridFSDBFile dbFile = mongoDao.findDocumentByFileName(fileName);
-        System.out.println("found file :" + dbFile.getFilename());
-        File dir = new File("TestDirectory");
-        boolean created = dir.mkdirs();
-
-        System.out.println(created);
-        dbFile.writeTo("TestDirectory/" + dbFile.getFilename());
+    public GridFSDBFile downloadFileById(final RequestDocument document) throws IOException {
+        String id = document.getId();
+        GridFSDBFile dbFile = mongoDao.findDocumentById(id);
         return dbFile;
     }
 
@@ -48,8 +42,16 @@ public class DownloadServiceImpl implements DownloadService {
             new GridFsQueryBuilder().addFileName(fileName).addContentType(documentType).addTags(tags)
             .addDateRange(startDate, endDate).getQuery();
         log.info("Starting seacrh with query: " + query);
-        mongoDao.findDocuments(query);
+        log.info("Found documents: " + mongoDao.findDocuments(query));
         return mongoDao.findDocuments(query);
+    }
+
+    @Override
+    public GridFSDBFile findDocumentById(final RequestDocument document) {
+        String id = document.getId();
+        GridFSDBFile dbFile = mongoDao.findDocumentById(id);
+        log.info("Found file: " + dbFile);
+        return dbFile;
     }
 
 }

@@ -11,8 +11,10 @@ import com.mongodb.gridfs.GridFSDBFile;
 
 public interface DownloadService {
 
-    GridFSDBFile downloadFileByName(final RequestDocument downloadDocument) throws IOException;
+    GridFSDBFile downloadFileById(final RequestDocument downloadDocument) throws IOException;
 
     List<GridFSDBFile> findDocuments(final RequestDocument document);
+
+    GridFSDBFile findDocumentById(final RequestDocument documents);
 
 }

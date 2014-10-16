@@ -2,6 +2,12 @@ package be.ordina.sest.homearchive.rs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -16,7 +22,7 @@ import be.ordina.sest.homearchive.model.RequestDocument;
 import be.ordina.sest.homearchive.service.DownloadService;
 
 import com.mongodb.gridfs.GridFSDBFile;
-
+@Log4j
 @RestController
 public class DownloadRsController {
 
@@ -24,18 +30,54 @@ public class DownloadRsController {
     private DownloadService service;
 
     @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value = "/download/{filename}", produces = {
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/xml", "image/jpeg",
-    "application/pdf"})
-    public FileSystemResource getDocument(@PathVariable("filename") final String fileName) throws IOException {
+    @RequestMapping(method = RequestMethod.GET, value = "/findFiles/{id}")
+    public /*FileSystemResource*/ void getDocument(@PathVariable("id") final String id,  final HttpServletResponse response) throws IOException {
         RequestDocument doc = new RequestDocument();
-        String correctName = fileName.replace('_', '.');
-        System.out.println("Requested file name is :  " + correctName);
-        doc.setFileName(correctName);
-        GridFSDBFile dbFile = service.downloadFileByName(doc);
-        File outputFile = new File("outputFile");
-        dbFile.writeTo(outputFile);
-        return new FileSystemResource(outputFile);
+        doc.setId(id);
+        GridFSDBFile dbFile = service.downloadFileById(doc);
+        String contentType = dbFile.getContentType();
+        String fileName = dbFile.getFilename();
+        response.setContentType(contentType);
+        response.setHeader( "Content-Disposition", "attachment;filename="
+            + fileName );
+        dbFile.writeTo(response.getOutputStream());
+        //       return new FileSystemResource(outputFile);
     }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value = "/findFiles")
+    public List<RequestDocument> findFiles(final String fileName) {
+        RequestDocument document = new RequestDocument();
+        document.setFileName(fileName);
+        List<RequestDocument> documents = new ArrayList<RequestDocument>();
+        List<GridFSDBFile> files = service.findDocuments(document);
+        for (GridFSDBFile gridFSDBFile : files) {
+            RequestDocument document1 = new RequestDocument();
+            document1.setFileName(gridFSDBFile.getFilename());
+            document1.setId((gridFSDBFile.getId().toString()));
+            document1.setDocumentType(gridFSDBFile.getContentType());
+            Object tags = gridFSDBFile.getMetaData().get("tags");
+            @SuppressWarnings("unchecked")
+            List<String> tagList = (List<String>)tags;
+            document1.setTags(tagList);
+            document1.setDocDate((gridFSDBFile.getUploadDate()));
+            documents.add(document1);
+
+        }
+        return documents;
+    }
+
+    //    @ResponseStatus(value = HttpStatus.OK)
+    //    @RequestMapping(method = RequestMethod.GET, value = "/findFiles/{id}")
+    //    public RequestDocument findFile(@PathVariable("id") final String id) throws IOException {
+    //        RequestDocument document = new RequestDocument();
+    //        document.setId(id);
+    //        RequestDocument result = new RequestDocument();
+    //        GridFSDBFile file = service.findDocumentById(document);
+    //        result.setFileName(file.getFilename());
+    //        return result;
+    //    }
+
+
+
 }

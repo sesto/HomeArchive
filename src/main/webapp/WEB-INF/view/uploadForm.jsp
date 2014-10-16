@@ -11,7 +11,7 @@
 </head>
 <body>
 	<form:form method="post" enctype="multipart/form-data"
-		modelAttribute="DbDocument" action="fileUpload">
+		modelAttribute="DbDocument" action="${pageContext.request.contextPath}/rs/findFiles">
 		<table>
 			<tr>
 				<td>Upload File:</td>

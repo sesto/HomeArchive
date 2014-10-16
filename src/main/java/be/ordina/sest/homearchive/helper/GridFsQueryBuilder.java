@@ -28,7 +28,22 @@ public class GridFsQueryBuilder {
      */
     public GridFsQueryBuilder addFileName(final String fileName) {
         if (fileName != null) {
-            Criteria criteria = GridFsCriteria.whereFilename().is(fileName);
+            Criteria criteria = GridFsCriteria.whereFilename().regex(fileName + "*");
+            createOrGetQuery(criteria);
+        }
+        return this;
+    }
+
+    /**
+     *
+     * adds _id to search
+     *
+     * @param id
+     * @return QueryBuilder
+     */
+    public GridFsQueryBuilder addId(final String id) {
+        if (id != null) {
+            Criteria criteria = GridFsCriteria.where("_id").is(id);
             createOrGetQuery(criteria);
         }
         return this;

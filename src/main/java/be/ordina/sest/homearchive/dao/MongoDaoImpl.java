@@ -34,8 +34,8 @@ public class MongoDaoImpl implements MongoDao {
     }
 
     @Override
-    public GridFSDBFile findDocumentByFileName(final String fileName) {
-        Query query = new GridFsQueryBuilder().addFileName(fileName).getQuery();
+    public GridFSDBFile findDocumentById(final String id) {
+        Query query = new GridFsQueryBuilder().addId(id).getQuery();
         return template.findOne(query);
     }
 
