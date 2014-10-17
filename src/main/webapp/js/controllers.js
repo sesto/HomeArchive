@@ -9,7 +9,7 @@ homearchiveControllers.controller('FileListCtrl',[ '$scope',  'FileService', fun
 	  
 }]);
 
-homearchiveControllers.controller('DownloadCtrl',[ '$scope',  'File', function($scope,  File) {
+homearchiveControllers.controller('DownloadCtrl',[ '$scope',  'FileService', function($scope,  FileService) {
 	FileService.get({
 		id : "543e75803004bdb5fdd82895"
 	}, function(result){
@@ -18,7 +18,7 @@ homearchiveControllers.controller('DownloadCtrl',[ '$scope',  'File', function($
 	  
 }]);
 
-homearchiveControllers.controller('UploadCtrl',[ '$scope', '$upload', 'File', function($scope, $upload, File) {
+homearchiveControllers.controller('UploadCtrl',[ '$scope', '$upload',  function($scope, $upload) {
 
 	 $scope.onFileSelect = function($files) {
 		    //$files: an array of files selected, each file has name, size, and type.
