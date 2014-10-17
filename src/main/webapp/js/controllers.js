@@ -10,6 +10,9 @@ homearchiveControllers.controller('FileListCtrl', [
 			FileService.query(function(data) {
 				$scope.files = data;
 				console.log(JSON.stringify($scope.files));
+				 $scope.getTag = function (file){
+				        return angular.isArray(file.tags) ? file.tags : [file.tags];
+				 }
 				$scope.tableParams = new ngTableParams({
 					page : 1, // show first page
 					count : 10

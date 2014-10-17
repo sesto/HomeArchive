@@ -3,10 +3,13 @@
         <p><strong>Count per page:</strong> {{tableParams.count()}}</p>
         
         <table ng-table="tableParams" class="table">
-        <tr ng-repeat="file in $data">
+        <tr ng-repeat="file in $data" ng-init='tags = getTag(file)'>
             <td data-title="'File Name'">{{file.fileName}}</td>
-            <td data-title="'Date'">{{file.docDate}}</td>
-             <td data-title="'Tags'">{{file.tags}}</td>
+            <td data-title="'Date'">{{file.docDate | date:'dd-MM-yyyy'}}</td>
+             <td data-title="'Tags'" ng-repeat ="tag in tags">
+             {{tag}}
+             
+             </td> 
         </tr>
         </table>
 	

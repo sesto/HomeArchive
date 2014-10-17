@@ -1,8 +1,8 @@
 package be.ordina.sest.homearchive.rs;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +21,7 @@ import be.ordina.sest.homearchive.model.RequestDocument;
 import be.ordina.sest.homearchive.service.DownloadService;
 
 import com.mongodb.gridfs.GridFSDBFile;
+
 @Log4j
 @RestController
 public class DownloadRsController {
@@ -31,17 +31,17 @@ public class DownloadRsController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles/{id}")
-    public /*FileSystemResource*/ void getDocument(@PathVariable("id") final String id,  final HttpServletResponse response) throws IOException {
+    public/* FileSystemResource */void getDocument(@PathVariable("id") final String id,
+        final HttpServletResponse response) throws IOException {
         RequestDocument doc = new RequestDocument();
         doc.setId(id);
         GridFSDBFile dbFile = service.downloadFileById(doc);
         String contentType = dbFile.getContentType();
         String fileName = dbFile.getFilename();
         response.setContentType(contentType);
-        response.setHeader( "Content-Disposition", "attachment;filename="
-            + fileName );
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
         dbFile.writeTo(response.getOutputStream());
-        //       return new FileSystemResource(outputFile);
+        // return new FileSystemResource(outputFile);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
@@ -58,7 +58,7 @@ public class DownloadRsController {
             document1.setDocumentType(gridFSDBFile.getContentType());
             Object tags = gridFSDBFile.getMetaData().get("tags");
             @SuppressWarnings("unchecked")
-            List<String> tagList = (List<String>)tags;
+            List<String> tagList = (List<String>) tags;
             document1.setTags(tagList);
             document1.setDocDate((gridFSDBFile.getUploadDate()));
             documents.add(document1);
@@ -66,18 +66,4 @@ public class DownloadRsController {
         }
         return documents;
     }
-
-    //    @ResponseStatus(value = HttpStatus.OK)
-    //    @RequestMapping(method = RequestMethod.GET, value = "/findFiles/{id}")
-    //    public RequestDocument findFile(@PathVariable("id") final String id) throws IOException {
-    //        RequestDocument document = new RequestDocument();
-    //        document.setId(id);
-    //        RequestDocument result = new RequestDocument();
-    //        GridFSDBFile file = service.findDocumentById(document);
-    //        result.setFileName(file.getFilename());
-    //        return result;
-    //    }
-
-
-
 }
