@@ -6,7 +6,7 @@ homearchiveControllers.controller('FileListCtrl', [
 		'FileService',
 		'ngTableParams',
 		function($scope, FileService, ngTableParams) {
-			$scope.files=[];
+			$scope.files = [];
 			$scope.tableParams = new ngTableParams({
 				page : 1, // show first page
 				count : 10
@@ -15,12 +15,12 @@ homearchiveControllers.controller('FileListCtrl', [
 				total : $scope.files.length, // length of data
 				getData : function($defer, params) {
 					params.total($scope.files.length);
-					$defer.resolve($scope.files.slice(
-							(params.page() - 1) * params.count(),
-							params.page() * params.count()));
+					$defer.resolve($scope.files.slice((params.page() - 1)
+							* params.count(), params.page() * params.count()));
 				}
 
 			});
+
 			$scope.submit = function() {
 
 				FileService.query({
@@ -35,20 +35,25 @@ homearchiveControllers.controller('FileListCtrl', [
 						return angular.isArray(file.tags) ? file.tags
 								: [ file.tags ];
 					}
-					
-					
+
 					$scope.tableParams.reload();
 				});
 			};
-		} ]);
 
-homearchiveControllers.controller('DownloadCtrl', [ '$scope', 'FileService',
-		function($scope, FileService) {
-			FileService.get({
-				id : "543e75803004bdb5fdd82895"
-			}, function(result) {
-				// $scope.document = result;
-			});
+			$scope.remove = function(file) {
+				console.log("Removing file with id: " + file.id);
+				FileService.remove({
+					id : file.id
+				}).$promise.then(function(){
+					var idx = $scope.files.indexOf(file);
+					 $scope.files.splice(idx, 1);
+					 console.log("removed from scope, idx: " + $scope.files.indexOf(file));
+					 $scope.tableParams.reload();
+				})
+					
+				
+				
+			}
 
 		} ]);
 
@@ -111,44 +116,3 @@ homearchiveControllers.controller('UploadCtrl', [
 			};
 
 		} ]);
-// homearchiveControllers.controller('FileListCtrl', [
-// '$scope',
-// 'FileService',
-// 'ngTableParams',
-// function($scope, FileService, ngTableParams) {
-//
-// $scope.submit = function() {
-//
-// $scope.tableParams = new ngTableParams({
-// page : 1, // show first page
-// count : 10
-// // count per page
-// }, {
-// total : 0, // length of data
-// getData : function($defer, params) {
-//
-// FileService.query({
-// fileName : $scope.fileName
-// }, function(data, getResponseHeaders) {
-// $scope.files = data;
-// console.log(JSON.stringify($scope.files));
-// $scope.getTag = function(file) {
-// return angular.isArray(file.tags) ? file.tags
-// : [ file.tags ];
-// }
-// var total = $scope.files.length;
-// params.total(total);
-// console.log('Total: ' + total)
-//
-// $defer.resolve($scope.files.slice(
-// (params.page() - 1) * params.count(),
-// params.page() * params.count()));
-//
-// });
-//
-// }
-//
-// });
-//
-// };
-// } ]);

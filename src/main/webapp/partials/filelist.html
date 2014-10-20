@@ -47,6 +47,7 @@
 
 			<table ng-table="tableParams" class="table">
 				<tr ng-repeat="file in $data" ng-init='tags = getTag(file)'>
+				<td data-title="'Index'">{{$index + 1}}</td>
 					<td data-title="'File Name'">{{file.fileName}}</td>
 					<td data-title="'Date'">{{file.docDate | date:'dd-MM-yyyy'}}</td>
 					<td data-title="'Tags'" ng-repeat="tag in tags">{{tag}}</td>
@@ -56,7 +57,8 @@
 						<a href="/homearchive/rs/findFiles/{{file.id}}" 
 						class="glyphicon glyphicon-save btn btn-default btn-md"></a>
 						
-						<span class="glyphicon glyphicon-remove btn btn-default btn-md" ng-click="delete()"></span>
+						<span class="glyphicon glyphicon-remove btn btn-default btn-md" 
+						ng-click="remove(file)"></span>
 							
 							<span class="glyphicon glyphicon-pencil btn btn-default btn-md" ng-click="edit()"></span>
 						
