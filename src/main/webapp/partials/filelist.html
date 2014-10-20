@@ -3,32 +3,60 @@
 	<div class="row">
 		<div class="col-lg-2">
 			<p>
-			<form action>
+			<form>
 				<div class="form-group">
 					<label for="inputEmail">File name</label> <input type="text"
 						class="form-control" ng-model="fileName" placeholder="File name1">
 				</div>
-				<div class="form-group">
-					<label for="inputEmail">Start Date</label> <input type="text"
-						class="form-control" ng-model="search.startDate"
-						placeholder="Start Date1">
+				<div class="form-group" ng-controller="StartDateCtrl">
+					<label for="inputEmail">Start Date</label>
+					<p class="input-group">
+
+						<input type="text" class="form-control"
+							datepicker-popup="dd-MM-yyyy" ng-model="$parent.startDate"
+							is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
+							datepicker-options="dateOptions"
+							date-disabled="disabled(date, mode)" ng-required="true"
+							close-text="Close" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
 				</div>
-				<div class="form-group">
-					<label for="inputEmail">End date </label> <input type="text"
-						class="form-control" ng-model="search.endDate"
-						placeholder="End date">
+
+				<div class="form-group" ng-controller="EndDateCtrl">
+					<label for="inputEmail">End Date</label>
+					<p class="input-group">
+
+						<input type="text" class="form-control"
+							datepicker-popup="dd-MM-yyyy" ng-model="$parent.endDate" is-open="opened"
+							min-date="'2010-01-01'" max-date="maxDate"
+							datepicker-options="dateOptions"
+							date-disabled="disabled(date, mode)" ng-required="true"
+							close-text="Close" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
 				</div>
+
+
+
 				<div class="form-group">
 					<label for="inputEmail">Tag1</label> <input type="text"
-						class="form-control" ng-model="search.tag1" placeholder="Tag1">
+						class="form-control" ng-model="tag1" placeholder="Tag1">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail">Tag2</label> <input type="text"
-						class="form-control" ng-model="search.tag2" placeholder="Tag2">
+						class="form-control" ng-model="tag2" placeholder="Tag2">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail">Tag3</label> <input type="text"
-						class="form-control" ng-model="search.tag3" placeholder="Tag3">
+						class="form-control" ng-model="tag3" placeholder="Tag3">
 				</div>
 
 
@@ -47,23 +75,38 @@
 
 			<table ng-table="tableParams" class="table">
 				<tr ng-repeat="file in $data" ng-init='tags = getTag(file)'>
-				<td data-title="'Index'">{{$index + 1}}</td>
+					<td data-title="'Index'">{{$index + 1}}</td>
 					<td data-title="'File Name'">{{file.fileName}}</td>
 					<td data-title="'Date'">{{file.docDate | date:'dd-MM-yyyy'}}</td>
-					<td data-title="'Tags'" ng-repeat="tag in tags">{{tag}}</td>
-					<td>
-						
-					<!--  		<span class="glyphicon glyphicon-save"></span> -->
-						<a href="/homearchive/rs/findFiles/{{file.id}}" 
-						class="glyphicon glyphicon-save btn btn-default btn-md"></a>
-						
-						<span class="glyphicon glyphicon-remove btn btn-default btn-md" 
-						ng-click="remove(file)"></span>
-							
-							<span class="glyphicon glyphicon-pencil btn btn-default btn-md" ng-click="edit()"></span>
-						
+					<td data-title="'Tags'">
+						<table ng-repeat="tag in tags">
+							<td>{{tag}}</td>
+						</table>
 					</td>
+
+
+
+
+					<td><a href="/homearchive/rs/findFiles/{{file.id}}"
+						class="glyphicon glyphicon-save btn btn-default btn-md"></a> <span
+						class="glyphicon glyphicon-remove btn btn-default btn-md"
+						ng-click="remove(file)"></span> <span
+						class="glyphicon glyphicon-pencil btn btn-default btn-md"
+						ng-click="edit()"></span></td>
 				</tr>
 			</table>
 			</p>
 		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+</div>

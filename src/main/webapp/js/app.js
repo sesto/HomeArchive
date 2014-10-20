@@ -1,4 +1,4 @@
-var homearchiveApp = angular.module('homearchiveApp', [ 'homearchiveControllers', 'ngRoute']);
+var homearchiveApp = angular.module('homearchiveApp', [ 'homearchiveControllers', 'ngRoute', 'ui.bootstrap']);
 homearchiveApp.config(['$routeProvider',
                     function($routeProvider) {
                       $routeProvider.
