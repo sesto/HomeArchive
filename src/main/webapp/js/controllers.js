@@ -6,27 +6,40 @@ homearchiveControllers.controller('FileListCtrl', [
 		'FileService',
 		'ngTableParams',
 		function($scope, FileService, ngTableParams) {
+			$scope.files=[];
+			$scope.tableParams = new ngTableParams({
+				page : 1, // show first page
+				count : 10
+			// count per page
+			}, {
+				total : $scope.files.length, // length of data
+				getData : function($defer, params) {
+					params.total($scope.files.length);
+					$defer.resolve($scope.files.slice(
+							(params.page() - 1) * params.count(),
+							params.page() * params.count()));
+				}
 
-			FileService.query(function(data) {
-				$scope.files = data;
-				console.log(JSON.stringify($scope.files));
-				 $scope.getTag = function (file){
-				        return angular.isArray(file.tags) ? file.tags : [file.tags];
-				 }
-				$scope.tableParams = new ngTableParams({
-					page : 1, // show first page
-					count : 10
-				// count per page
-				}, {
-					total : data.length, // length of data
-					getData : function($defer, params) {
-						$defer.resolve(data.slice((params.page() - 1)
-								* params.count(), params.page()
-								* params.count()));
-					}
-				});
 			});
+			$scope.submit = function() {
 
+				FileService.query({
+
+					fileName : $scope.fileName
+				}).$promise.then(
+
+				function(data) {
+					$scope.files = data;
+					console.log(JSON.stringify($scope.files));
+					$scope.getTag = function(file) {
+						return angular.isArray(file.tags) ? file.tags
+								: [ file.tags ];
+					}
+					
+					
+					$scope.tableParams.reload();
+				});
+			};
 		} ]);
 
 homearchiveControllers.controller('DownloadCtrl', [ '$scope', 'FileService',
@@ -51,9 +64,9 @@ homearchiveControllers.controller('UploadCtrl', [
 					var file = $files[i];
 					$scope.upload = $upload.upload({
 						url : '/homearchive/rs/findFiles', // upload.php
-															// script, node.js
-															// route, or servlet
-															// url
+						// script, node.js
+						// route, or servlet
+						// url
 						method : 'POST',
 						// headers: {'header-key': 'header-value'},
 						// withCredentials: true,
@@ -61,7 +74,7 @@ homearchiveControllers.controller('UploadCtrl', [
 							tags : $scope.tags
 						},
 						file : file, // or list of files ($files) for html5
-										// only
+					// only
 					// fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to
 					// modify the name of the file(s)
 					// customize file formData name ('Content-Disposition'),
@@ -98,3 +111,44 @@ homearchiveControllers.controller('UploadCtrl', [
 			};
 
 		} ]);
+// homearchiveControllers.controller('FileListCtrl', [
+// '$scope',
+// 'FileService',
+// 'ngTableParams',
+// function($scope, FileService, ngTableParams) {
+//
+// $scope.submit = function() {
+//
+// $scope.tableParams = new ngTableParams({
+// page : 1, // show first page
+// count : 10
+// // count per page
+// }, {
+// total : 0, // length of data
+// getData : function($defer, params) {
+//
+// FileService.query({
+// fileName : $scope.fileName
+// }, function(data, getResponseHeaders) {
+// $scope.files = data;
+// console.log(JSON.stringify($scope.files));
+// $scope.getTag = function(file) {
+// return angular.isArray(file.tags) ? file.tags
+// : [ file.tags ];
+// }
+// var total = $scope.files.length;
+// params.total(total);
+// console.log('Total: ' + total)
+//
+// $defer.resolve($scope.files.slice(
+// (params.page() - 1) * params.count(),
+// params.page() * params.count()));
+//
+// });
+//
+// }
+//
+// });
+//
+// };
+// } ]);

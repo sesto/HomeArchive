@@ -38,9 +38,14 @@ public class DownloadServiceImpl implements DownloadService {
         List<String> tags = document.getTags();
         Date startDate = document.getStartDate();
         Date endDate = document.getEndDate();
+        String id = document.getId();
         Query query =
-            new GridFsQueryBuilder().addFileName(fileName).addContentType(documentType).addTags(tags)
-            .addDateRange(startDate, endDate).getQuery();
+            new GridFsQueryBuilder()
+        .addId(id)
+        .addFileName(fileName)
+        .addContentType(documentType)
+        .addTags(tags)
+        .addDateRange(startDate, endDate).getQuery();
         log.info("Starting seacrh with query: " + query);
         log.info("Found documents: " + mongoDao.findDocuments(query));
         return mongoDao.findDocuments(query);

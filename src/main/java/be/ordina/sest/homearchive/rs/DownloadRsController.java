@@ -2,7 +2,6 @@ package be.ordina.sest.homearchive.rs;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,8 +46,9 @@ public class DownloadRsController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles")
-    public List<RequestDocument> findFiles(final String fileName) {
+    public List<RequestDocument> findFiles(@RequestParam(value = "fileName", required = false) final String fileName) {
         RequestDocument document = new RequestDocument();
+
         document.setFileName(fileName);
         List<RequestDocument> documents = new ArrayList<RequestDocument>();
         List<GridFSDBFile> files = service.findDocuments(document);
@@ -66,4 +67,5 @@ public class DownloadRsController {
         }
         return documents;
     }
+
 }

@@ -44,6 +44,11 @@ public class MongoDaoImpl implements MongoDao {
         return template.find(query);
     }
 
+    @Override
+    public void deleteDocument(final String id) {
+        Query query = new GridFsQueryBuilder().addId(id).getQuery();
+        template.delete(query);
 
+    }
 
 }

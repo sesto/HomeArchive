@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -27,7 +28,7 @@ public class GridFsQueryBuilder {
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addFileName(final String fileName) {
-        if (fileName != null) {
+        if (StringUtils.isNotEmpty(fileName)) {
             Criteria criteria = GridFsCriteria.whereFilename().regex(fileName + "*");
             createOrGetQuery(criteria);
         }
@@ -42,7 +43,7 @@ public class GridFsQueryBuilder {
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addId(final String id) {
-        if (id != null) {
+        if (StringUtils.isNotEmpty(id)) {
             Criteria criteria = GridFsCriteria.where("_id").is(id);
             createOrGetQuery(criteria);
         }
@@ -57,7 +58,7 @@ public class GridFsQueryBuilder {
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addContentType(final String contentType) {
-        if (contentType != null) {
+        if (StringUtils.isNotEmpty(contentType)) {
             Criteria criteria = GridFsCriteria.whereContentType().is(contentType);
             createOrGetQuery(criteria);
         }
@@ -73,8 +74,7 @@ public class GridFsQueryBuilder {
      */
     public GridFsQueryBuilder addTags(final List<String> tags) {
         if (CollectionUtils.isNotEmpty(tags)) {
-            DBObject metaData = new BasicDBObject("tags", tags);
-            Criteria criteria = GridFsCriteria.whereMetaData().is(metaData);
+            Criteria criteria = GridFsCriteria.whereMetaData("tags").in(tags);
             createOrGetQuery(criteria);
         }
         return this;
