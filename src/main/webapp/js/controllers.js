@@ -73,6 +73,7 @@ homearchiveControllers.controller('UploadCtrl', [
 				// and type.
 				for (var i = 0; i < $files.length; i++) {
 					var file = $files[i];
+					$scope.file = file.name;
 					$scope.upload = $upload.upload({
 						url : '/homearchive/rs/findFiles', // upload.php
 						// script, node.js
@@ -100,9 +101,21 @@ homearchiveControllers.controller('UploadCtrl', [
 								console.log('percent: '
 										+ parseInt(100.0 * evt.loaded
 												/ evt.total));
+								
+								$scope.progress = function(){
+									var percent = parseInt(100.0 * evt.loaded
+											/ evt.total);
+									$scope.dynamic = percent;
+								}
+								$scope.progress();
+								
+								
 							}).success(function(data, status, headers, config) {
-						// file is uploaded successfully
-						console.log(data);
+								console.log(status);
+								var message = "File uploaded successfully!";
+								$scope.message = message;
+								
+						
 					});
 					// .error(...)
 					// .then(success, error, progress);
@@ -124,10 +137,10 @@ homearchiveControllers.controller('UploadCtrl', [
 		} ]);
 
 homearchiveControllers.controller('StartDateCtrl', function ($scope) {
-	  $scope.today = function() {
-	    $scope.$parent.startDate = new Date();
-	  };
-	  $scope.today();
+//	  $scope.today = function() {
+//	    $scope.$parent.startDate = new Date();
+//	  };
+//	  $scope.today();
 
 	  $scope.clear = function () {
 	    $scope.$parent.stratDate = null;
@@ -166,10 +179,10 @@ homearchiveControllers.controller('StartDateCtrl', function ($scope) {
 	});
 
 homearchiveControllers.controller('EndDateCtrl', function ($scope) {
-	  $scope.today = function() {
-	    $scope.$parent.endDate = new Date();
-	  };
-	  $scope.today();
+//	  $scope.today = function() {
+//	    $scope.$parent.endDate = new Date();
+//	  };
+//	  $scope.today();
 
 	  $scope.clear = function () {
 	    $scope.$parent.endDate = null;

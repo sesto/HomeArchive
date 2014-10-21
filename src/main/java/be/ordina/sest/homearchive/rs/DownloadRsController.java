@@ -1,13 +1,20 @@
 package be.ordina.sest.homearchive.rs;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import lombok.extern.log4j.Log4j;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,26 +53,56 @@ public class DownloadRsController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles")
-    public List<RequestDocument> findFiles(@RequestParam(value = "fileName", required = false) final String fileName) {
+    public List<RequestDocument> findFiles(@RequestParam final Map<String, String> param) throws ParseException {
         RequestDocument document = new RequestDocument();
-
-        document.setFileName(fileName);
+        setParams(param, document);
         List<RequestDocument> documents = new ArrayList<RequestDocument>();
         List<GridFSDBFile> files = service.findDocuments(document);
         for (GridFSDBFile gridFSDBFile : files) {
-            RequestDocument document1 = new RequestDocument();
-            document1.setFileName(gridFSDBFile.getFilename());
-            document1.setId((gridFSDBFile.getId().toString()));
-            document1.setDocumentType(gridFSDBFile.getContentType());
-            Object tags = gridFSDBFile.getMetaData().get("tags");
-            @SuppressWarnings("unchecked")
-            List<String> tagList = (List<String>) tags;
-            document1.setTags(tagList);
-            document1.setDocDate((gridFSDBFile.getUploadDate()));
-            documents.add(document1);
+            setDocumentFields(documents, gridFSDBFile);
 
         }
         return documents;
     }
 
+    private void setDocumentFields(final List<RequestDocument> documents, final GridFSDBFile gridFSDBFile) {
+        RequestDocument document1 = new RequestDocument();
+        document1.setFileName(gridFSDBFile.getFilename());
+        document1.setId((gridFSDBFile.getId().toString()));
+        document1.setDocumentType(gridFSDBFile.getContentType());
+        Object tags = gridFSDBFile.getMetaData().get("tags");
+        @SuppressWarnings("unchecked")
+        List<String> tagList = (List<String>) tags;
+        document1.setTags(tagList);
+        document1.setDocDate((gridFSDBFile.getUploadDate()));
+        documents.add(document1);
+    }
+
+    private void setParams(final Map<String, String> param, final RequestDocument document) throws ParseException {
+        document.setFileName(param.get("fileName"));
+        document.setStartDate(parseDate(param.get("startDate")));
+        document.setEndDate(parseDate(param.get("endDate")));
+        List<String> receivedTags = new ArrayList<String>();
+        if (StringUtils.isNotBlank(param.get("tag1"))) {
+            receivedTags.add(param.get("tag1"));
+        }
+        if (StringUtils.isNotBlank(param.get("tag2"))) {
+            receivedTags.add(param.get("tag2"));
+        }
+        if (StringUtils.isNotBlank(param.get("tag3"))) {
+            receivedTags.add(param.get("tag3"));
+        }
+        if (!receivedTags.isEmpty()) {
+            document.setTags(receivedTags);
+        }
+    }
+
+    private Date parseDate(final String date) throws ParseException {
+        Date parsedDate = null;
+        if (StringUtils.isNotBlank(date)) {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+            parsedDate = df.parse(date.replace('"', ' ').trim());
+        }
+        return parsedDate;
+    }
 }

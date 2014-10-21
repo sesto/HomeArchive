@@ -16,7 +16,7 @@
 							datepicker-popup="dd-MM-yyyy" ng-model="$parent.startDate"
 							is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
 							datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true"
+							date-disabled="disabled(date, mode)" ng-required="false"
 							close-text="Close" /> <span class="input-group-btn">
 							<button type="button" class="btn btn-default"
 								ng-click="open($event)">
@@ -34,7 +34,7 @@
 							datepicker-popup="dd-MM-yyyy" ng-model="$parent.endDate" is-open="opened"
 							min-date="'2010-01-01'" max-date="maxDate"
 							datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true"
+							date-disabled="disabled(date, mode)" ng-required="false"
 							close-text="Close" /> <span class="input-group-btn">
 							<button type="button" class="btn btn-default"
 								ng-click="open($event)">
