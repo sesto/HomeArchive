@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.query.Query;
@@ -101,8 +102,11 @@ public class MongoDaoImpl implements MongoDao {
     @Override
     public void updateDocument(final String id, final DBObject update) {
         DBCollection collection = getDB().getCollection("fs.files");
-        DBObject query = new BasicDBObject("_id", id);
-        collection.findAndModify(query, update);
+        log.debug("Searching " + collection.getFullName() + " for document with id: " + id);
+        DBObject query = new BasicDBObject("_id", new ObjectId(id));
+
+        DBObject dbDocument = collection.findAndModify(query, update);
+        log.debug("Found document to modify: " + dbDocument);
     }
 
 }

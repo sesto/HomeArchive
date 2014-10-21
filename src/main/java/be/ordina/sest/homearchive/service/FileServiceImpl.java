@@ -79,8 +79,9 @@ public class FileServiceImpl implements FileService {
     public void updateDocument(final String id, final RequestResponseDocument document) {
         DBObject update = new BasicDBObject();
         update.put("filename", document.getFileName());
-        update.put("tags", document.getTags());
-        mongoDao.updateDocument(id, update);
+        update.put("metadata", new BasicDBObject("tags", document.getTags()));
+        log.debug("Update db object: " + update);
+        mongoDao.updateDocument(id, new BasicDBObject("$set", update));
     }
 
 }

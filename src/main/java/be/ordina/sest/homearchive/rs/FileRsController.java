@@ -123,12 +123,28 @@ public class FileRsController {
 
     }
 
-
+    /**
+     *
+     * updates document metadata
+     *
+     * @param id
+     * @param param
+     * @throws ParseException
+     */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.PUT, value = "/findFiles/{id}")
-    public void updateDocument(@PathVariable("id") final String id) throws IOException {
-
-
+    public void updateDocument(@PathVariable("id") final String id, @RequestParam (required = false) final Map<String, String> param)
+        throws ParseException {
+        log.debug("Received parameters" + param);
+        log.debug("Updating document with _id:  " + id);
+        RequestResponseDocument document = new RequestResponseDocument();
+        setParams(param, document);
+        List<String> tagList = new ArrayList<String>();
+        tagList.add("tag1");
+        tagList.add("tag2");
+        tagList.add("tag3");
+        document.setTags(tagList);
+        service.updateDocument(id, document);
     }
 
     /**
