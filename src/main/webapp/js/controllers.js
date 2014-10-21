@@ -112,12 +112,15 @@ homearchiveControllers.controller('UploadCtrl', [
 								
 							}).success(function(data, status, headers, config) {
 								console.log(status);
-								var message = "File uploaded successfully!";
-								$scope.message = message;
+								
+								$scope.successMessage = "File uploaded successfully!";
 								
 						
-					});
-					// .error(...)
+					})
+					 .error(function(status){
+						 $scope.errorMessage  = "Problem uploading file. Error " + status + "";
+						 
+					 });
 					// .then(success, error, progress);
 					// access or attach event listeners to the underlying
 					// XMLHttpRequest.
