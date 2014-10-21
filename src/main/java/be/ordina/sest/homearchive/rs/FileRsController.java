@@ -139,11 +139,6 @@ public class FileRsController {
         log.debug("Updating document with _id:  " + id);
         RequestResponseDocument document = new RequestResponseDocument();
         setParams(param, document);
-        List<String> tagList = new ArrayList<String>();
-        tagList.add("tag1");
-        tagList.add("tag2");
-        tagList.add("tag3");
-        document.setTags(tagList);
         service.updateDocument(id, document);
     }
 
