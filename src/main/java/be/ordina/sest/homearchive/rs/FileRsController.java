@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import javax.xml.bind.DatatypeConverter;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,24 +25,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import be.ordina.sest.homearchive.model.RequestDocument;
-import be.ordina.sest.homearchive.service.DownloadService;
+import be.ordina.sest.homearchive.model.RequestResponseDocument;
+import be.ordina.sest.homearchive.model.UploadDocument;
+import be.ordina.sest.homearchive.service.FileService;
 
 import com.mongodb.gridfs.GridFSDBFile;
 
 @Log4j
 @RestController
-public class DownloadRsController {
+public class FileRsController {
 
     @Autowired
-    private DownloadService service;
+    private FileService service;
 
+    /**
+     *
+     * Downloads file
+     *
+     * @param id
+     * @param response
+     * @throws IOException
+     */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles/{id}")
-    public/* FileSystemResource */void getDocument(@PathVariable("id") final String id,
-        final HttpServletResponse response) throws IOException {
-        RequestDocument doc = new RequestDocument();
+    public void downloadFile(@PathVariable("id") final String id, final HttpServletResponse response)
+        throws IOException {
+        RequestResponseDocument doc = new RequestResponseDocument();
         doc.setId(id);
         GridFSDBFile dbFile = service.downloadFileById(doc);
         String contentType = dbFile.getContentType();
@@ -48,15 +60,24 @@ public class DownloadRsController {
         response.setContentType(contentType);
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
         dbFile.writeTo(response.getOutputStream());
-        // return new FileSystemResource(outputFile);
+
     }
 
+    /**
+     *
+     * Searches for files
+     *
+     * @param param
+     * @return
+     * @throws ParseException
+     */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles")
-    public List<RequestDocument> findFiles(@RequestParam final Map<String, String> param) throws ParseException {
-        RequestDocument document = new RequestDocument();
+    public List<RequestResponseDocument> findFiles(@RequestParam final Map<String, String> param)
+        throws ParseException {
+        RequestResponseDocument document = new RequestResponseDocument();
         setParams(param, document);
-        List<RequestDocument> documents = new ArrayList<RequestDocument>();
+        List<RequestResponseDocument> documents = new ArrayList<RequestResponseDocument>();
         List<GridFSDBFile> files = service.findDocuments(document);
         for (GridFSDBFile gridFSDBFile : files) {
             setDocumentFields(documents, gridFSDBFile);
@@ -65,8 +86,60 @@ public class DownloadRsController {
         return documents;
     }
 
-    private void setDocumentFields(final List<RequestDocument> documents, final GridFSDBFile gridFSDBFile) {
-        RequestDocument document1 = new RequestDocument();
+    /**
+     * uploads file
+     *
+     *
+     * @param file
+     * @param tags
+     * @throws IOException
+     */
+    @RequestMapping(value = "/findFiles", method = RequestMethod.POST)
+    public void uploadFile(@RequestParam("file") final MultipartFile file, @RequestParam("tags") final Object tags)
+        throws IOException {
+        UploadDocument uploadDocument = new UploadDocument();
+        uploadDocument.setFile(file);
+        @SuppressWarnings("unchecked")
+        HashMap<String, String> tagsMap = new ObjectMapper().readValue(tags.toString(), HashMap.class);
+        List<String> tagsList = new ArrayList<>();
+        for (String value : tagsMap.values()) {
+            tagsList.add(value);
+        }
+        uploadDocument.setTags(tagsList);
+        service.uploadFile(uploadDocument);
+    }
+
+    /**
+     *
+     * deletes file
+     *
+     * @param id
+     * @throws IOException
+     */
+    @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/findFiles/{id}")
+    public void deleteDocument(@PathVariable("id") final String id) throws IOException {
+        service.deleteDocument(id);
+
+    }
+
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.PUT, value = "/findFiles/{id}")
+    public void updateDocument(@PathVariable("id") final String id) throws IOException {
+
+
+    }
+
+    /**
+     * Stores file metadata in RequestRequestDocument fields
+     *
+     *
+     * @param documents
+     * @param gridFSDBFile
+     */
+    private void setDocumentFields(final List<RequestResponseDocument> documents, final GridFSDBFile gridFSDBFile) {
+        RequestResponseDocument document1 = new RequestResponseDocument();
         document1.setFileName(gridFSDBFile.getFilename());
         document1.setId((gridFSDBFile.getId().toString()));
         document1.setDocumentType(gridFSDBFile.getContentType());
@@ -78,7 +151,16 @@ public class DownloadRsController {
         documents.add(document1);
     }
 
-    private void setParams(final Map<String, String> param, final RequestDocument document) throws ParseException {
+    /**
+     *
+     * Stores request parameters in RequestRequestDocument fields
+     *
+     * @param param
+     * @param document
+     * @throws ParseException
+     */
+    private void setParams(final Map<String, String> param, final RequestResponseDocument document)
+        throws ParseException {
         document.setFileName(param.get("fileName"));
         document.setStartDate(parseDate(param.get("startDate")));
         document.setEndDate(parseDate(param.get("endDate")));
@@ -97,6 +179,13 @@ public class DownloadRsController {
         }
     }
 
+    /**
+     * Parses string representatation of the date TODO
+     *
+     * @param date
+     * @return
+     * @throws ParseException
+     */
     private Date parseDate(final String date) throws ParseException {
         Date parsedDate = null;
         if (StringUtils.isNotBlank(date)) {

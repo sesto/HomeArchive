@@ -28,6 +28,7 @@
 		<!-- Spring data mongoDB -->
 
 		<spring.data.mongodb.version>1.6.0.RELEASE</spring.data.mongodb.version>
+		<mongodb.version>2.12.1</mongodb.version>
 
 		<!-- Jackson -->
 		<jackson.databind-version>2.2.3</jackson.databind-version>
@@ -42,7 +43,7 @@
 		<apache.lang.version>2.6</apache.lang.version>
 		<apache.collections.version>3.2.1</apache.collections.version>
 		<apache.httpclient.version>4.3.5</apache.httpclient.version>
-		
+
 		<!-- joda-time -->
 		<jodatime.version>2.4</jodatime.version>
 
@@ -53,6 +54,12 @@
 	</properties>
 
 	<dependencies>
+		<!-- MongoDB driver -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongodb.version}</version>
+		</dependency>
 
 		<!-- Spring MVC -->
 		<dependency>

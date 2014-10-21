@@ -8,7 +8,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class RequestDocument implements Serializable{
+public class RequestResponseDocument implements Serializable{
 
     private static final long serialVersionUID = -5211227215172538582L;
     private String id;

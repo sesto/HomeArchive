@@ -42,5 +42,13 @@ public interface MongoDao {
 
     List<GridFSDBFile> findDocuments(final Query query);
     void deleteDocument(final String id);
+    /**
+     * updates metadata
+     *
+     *
+     * @param id
+     * @param data
+     */
+    void updateDocument(final String id, final DBObject data);
 
 }
