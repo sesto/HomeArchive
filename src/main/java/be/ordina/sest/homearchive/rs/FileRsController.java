@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 
 import lombok.extern.log4j.Log4j;
 
@@ -20,6 +19,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -133,12 +133,10 @@ public class FileRsController {
      */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.PUT, value = "/findFiles/{id}")
-    public void updateDocument(@PathVariable("id") final String id, @RequestParam (required = false) final Map<String, String> param)
+    public void updateDocument(@PathVariable("id") final String id, @RequestBody final RequestResponseDocument document)
         throws ParseException {
-        log.debug("Received parameters" + param);
+        log.debug("Received document" + document);
         log.debug("Updating document with _id:  " + id);
-        RequestResponseDocument document = new RequestResponseDocument();
-        setParams(param, document);
         service.updateDocument(id, document);
     }
 

@@ -10,11 +10,13 @@ import lombok.extern.log4j.Log4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Component;
 
 import be.ordina.sest.homearchive.helper.GridFsQueryBuilder;
+import be.ordina.sest.homearchive.model.RequestResponseDocument;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -34,6 +36,9 @@ import com.mongodb.gridfs.GridFSDBFile;
 public class MongoDaoImpl implements MongoDao {
     @Autowired
     private GridFsTemplate gridFsTemlate;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private final String dbName;
 
@@ -108,5 +113,7 @@ public class MongoDaoImpl implements MongoDao {
         DBObject dbDocument = collection.findAndModify(query, update);
         log.debug("Found document to modify: " + dbDocument);
     }
+
+
 
 }
