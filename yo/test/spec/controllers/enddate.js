@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: UploadCtrl', function () {
+describe('Controller: EnddateCtrl', function () {
 
   // load the controller's module
   beforeEach(module('homearchiveApp'));
 
-  var UploadCtrl,
+  var EnddateCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    UploadCtrl = $controller('UploadCtrl', {
+    EnddateCtrl = $controller('EnddateCtrl', {
       $scope: scope
     });
   }));

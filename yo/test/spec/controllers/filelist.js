@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: FilelistctrlCtrl', function () {
+describe('Controller: FilelistCtrl', function () {
 
   // load the controller's module
   beforeEach(module('homearchiveApp'));
 
-  var FilelistctrlCtrl,
+  var FilelistCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    FilelistctrlCtrl = $controller('FilelistctrlCtrl', {
+    FilelistCtrl = $controller('FilelistCtrl', {
       $scope: scope
     });
   }));

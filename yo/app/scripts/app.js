@@ -8,7 +8,8 @@
  * Main module of the application.
  */
 angular.module('homearchiveApp',
-		[ 'homearchiveControllers', 'ngResource', 'ngRoute', 'ui.bootstrap' ])
+		[ 'ngRoute',
+		  'fileServices', 'angularFileUpload', 'ngTable', 'ui.bootstrap' ])
 		.config(function($routeProvider) {
 			$routeProvider.when('/upload', {
 				templateUrl : 'views/upload.html',
