@@ -84,7 +84,7 @@
 					<td data-title="'File Name'">{{file.fileName}}</td>
 					<td data-title="'Date'">{{file.docDate | date:'dd-MM-yyyy'}}</td>
 					<td data-title="'Tags'">
-						<table ng-repeat="tag in tags">
+						<table ng-repeat="tag in tags track by $index"">
 							<td>{{tag}}</td>
 						</table>
 					</td>

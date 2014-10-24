@@ -22,7 +22,7 @@ import be.ordina.sest.homearchive.dao.MongoDao;
 import be.ordina.sest.homearchive.model.UploadDocument;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UploadServiceImplTest {
+public class FileServiceImplTest {
 
     @Mock
     private MongoDao mongoDao;
@@ -46,7 +46,7 @@ public class UploadServiceImplTest {
     }
 
     @InjectMocks
-    private UploadService uploadService = new UploadServiceImpl();
+    private FileService uploadService = new FileServiceImpl();
 
     @Test
     public void testUploadFile() throws Exception {

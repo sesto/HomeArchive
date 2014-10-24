@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +29,8 @@ import be.ordina.sest.homearchive.model.RequestResponseDocument;
 import be.ordina.sest.homearchive.model.UploadDocument;
 import be.ordina.sest.homearchive.service.FileService;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.gridfs.GridFSDBFile;
 
 @Log4j
@@ -95,16 +95,15 @@ public class FileRsController {
      * @throws IOException
      */
     @RequestMapping(value = "/findFiles", method = RequestMethod.POST)
-    public void uploadFile(@RequestParam("file") final MultipartFile file, @RequestParam("tags") final Object tags)
+    public void uploadFile(@RequestParam("file") final MultipartFile file, @RequestParam("tags") final String tags)
         throws IOException {
         UploadDocument uploadDocument = new UploadDocument();
         uploadDocument.setFile(file);
-        @SuppressWarnings("unchecked")
-        HashMap<String, String> tagsMap = new ObjectMapper().readValue(tags.toString(), HashMap.class);
-        List<String> tagsList = new ArrayList<>();
-        for (String value : tagsMap.values()) {
-            tagsList.add(value);
-        }
+        log.debug("Received parameters: " + tags);
+        ObjectMapper mapper = new ObjectMapper();
+        List<String> tagsList = mapper.readValue(tags, new TypeReference<ArrayList<String>>() {
+        });
+        log.debug("Parsed list: " + tagsList);
         uploadDocument.setTags(tagsList);
         service.uploadFile(uploadDocument);
     }
@@ -133,8 +132,8 @@ public class FileRsController {
      */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.PUT, value = "/findFiles/{id}")
-    public void updateDocument(@PathVariable("id") final String id, @RequestBody final RequestResponseDocument document)
-        throws ParseException {
+    public void updateDocument(@PathVariable("id") final String id,
+        @RequestBody final RequestResponseDocument document) throws ParseException {
         log.debug("Received document" + document);
         log.debug("Updating document with _id:  " + id);
         service.updateDocument(id, document);

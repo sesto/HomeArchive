@@ -1,8 +1,33 @@
 
-<form>
+
 	<div class="row">
 		<div class="col-lg-6">
-			<div class="form-group">
+ <!-- Tag input -->
+  <form role="form" ng-submit="addTag()">
+    <div class="row">
+      <div class="input-group">
+        <input type="text" ng-model="tag" placeholder="tag" class="form-control">
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Add">
+        </span>
+      </div>
+    </div>
+  </form>
+  <p></p>
+
+  <!-- Tag list -->
+  <div ng-model="tags">
+  <p class="input-group" ng-repeat="tag in tags" style="padding:5px 10px; cursor: move;">
+    <input type="text" ng-model="tag" class="form-control">
+    <span class="input-group-btn">
+      <button class="btn btn-danger" ng-click="removeTag($index)" aria-label="Remove">X</button>
+    </span>
+  </p>
+</div>		
+		
+		
+		
+<!--  			<div class="form-group">
 				<label for="inputEmail">Tag1</label> <input type="text" required
 					class="form-control" ng-model="tags.tag1" placeholder="tag1">
 			</div>
@@ -13,7 +38,8 @@
 			<div class="form-group">
 				<label for="inputEmail">Tag3</label> <input type="text"
 					class="form-control" ng-model="tags.tag3" placeholder="tag1">
-			</div>
+			</div> -->
+			<p class="input-group">
 			<input type="file" ng-file-select="onFileSelect($files)"
 				class="btn btn-primary">
 			<div ng-file-drop="onFileSelect($files)"
@@ -25,17 +51,23 @@
 				ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
 			<button ng-click="upload.abort()" class="btn btn-danger">Cancel
 				Upload</button>
-		</div>
-</form>
-<div class="col-lg-6">
-	<div ng-show="dynamic">
-		<h3>Uploading file: {{file}}</h3>
+		</div> 
+		</p>
 
+<div class="col-lg-6">
+	
+	
+	
+	
 		<div ng-show="successMessage">
 			<div class="alert alert-success ng-binding" role="alert">
 				<span ng-bind="successMessage"></span>
 			</div>
 		</div>
+	
+	<div ng-show="dynamic > 0">
+		<h3>Uploading file: {{file}}</h3>
+
 		<div ng-show="errorMessage">
 			<div class="alert alert-danger ng-binding" role="alert">
 				<span ng-bind="errorMessage"></span>
