@@ -9,28 +9,32 @@ angular
 		.module('homearchiveApp')
 		.controller(
 				'UploadCtrl',
-				['$scope',
+				[
+						'$scope',
 						'$upload',
 						function($scope, $upload) {
-					 $scope.tags = [];
-					$scope.addTag = function () {
-						
-						  $scope.tags.push($scope.tag);
-						  $scope.tag = '';
-						   $scope.removeTag = function (index) {
-						      $scope.tags.splice(index, 1);
-						    };
-						};
-				
+							$scope.tags = [];
+							$scope.addTag = function() {
+
+								$scope.tags.push($scope.tag);
+								$scope.tag = '';
+								$scope.removeTag = function(index) {
+									$scope.tags.splice(index, 1);
+								};
+							};
+
 							$scope.onFileSelect = function($files) {
 								// $files: an array of files selected, each
 								// file
 								// has name, size,
 								// and type.
-								var reset = function(){
+								var resetMessage = function() {
 									$scope.successMessage = null;
-									}
-									reset();
+									$scope.errorMessage = null;
+									$scope.file = null;
+								}
+								resetMessage();
+
 								for (var i = 0; i < $files.length; i++) {
 									var file = $files[i];
 									$scope.file = file.name;
@@ -104,15 +108,18 @@ angular
 															$scope.dynamic = percent;
 														}
 														$scope.progress();
-													
+
 													})
 											.success(
 													function(data, status,
 															headers, config) {
 														console.log(status);
-
 														$scope.successMessage = "File uploaded successfully!";
 														$scope.dynamic = 0;
+														var resetTags = function() {
+															$scope.tags = [];
+														}
+														resetTags();
 													})
 											.error(
 													function(status) {

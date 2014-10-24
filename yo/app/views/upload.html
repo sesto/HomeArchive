@@ -2,17 +2,18 @@
 
 	<div class="row">
 		<div class="col-lg-6">
+		<h4>To upload file add at least one tag</h4>
  <!-- Tag input -->
   <form role="form" ng-submit="addTag()">
     <div class="row">
       <div class="input-group">
-        <input type="text" ng-model="tag" placeholder="tag" class="form-control">
+        <input type="text" ng-model="tag" placeholder="tag" class="form-control" required="true">
         <span class="input-group-btn">
           <input type="submit" class="btn btn-primary" value="Add">
         </span>
       </div>
     </div>
-  </form>
+ </form>
   <p></p>
 
   <!-- Tag list -->
@@ -39,9 +40,9 @@
 				<label for="inputEmail">Tag3</label> <input type="text"
 					class="form-control" ng-model="tags.tag3" placeholder="tag1">
 			</div> -->
-			<p class="input-group">
-			<input type="file" ng-file-select="onFileSelect($files)"
-				class="btn btn-primary">
+			<div ng-show="tags.length != 0" class="input-group">
+			<input type="file" ng-file-select="onFileSelect($files)" onclick="this.value=null"
+			class="btn btn-primary">
 			<div ng-file-drop="onFileSelect($files)"
 				ng-file-drag-over-class="optional-css-class-name-or-function"
 				ng-show="dropSupported">
@@ -52,8 +53,8 @@
 			<button ng-click="upload.abort()" class="btn btn-danger">Cancel
 				Upload</button>
 		</div> 
-		</p>
-
+		</div>
+ 
 <div class="col-lg-6">
 	
 	
