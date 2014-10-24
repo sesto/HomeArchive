@@ -178,7 +178,7 @@ public class FileRsController {
     JsonProcessingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode params = mapper.readTree(jsonParams);
-        if (params.get("fileName") != null) {
+        if (params.get("fileName") != null&& !params.get("fileName").asText().equals("null")) {
             document.setFileName(params.get("fileName").asText());
         }
         if (params.get("startDate") != null) {

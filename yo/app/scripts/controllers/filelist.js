@@ -42,7 +42,6 @@ angular.module('homearchiveApp').controller(
 
 					$scope.submit = function() {
 						console.log($scope.tags)
-						
 						var queryParams={'params': {
 							fileName : $scope.fileName,
 							startDate : $scope.startDate,
@@ -95,9 +94,7 @@ angular.module('homearchiveApp').controller(
 					$scope.edit = function(file) {
 						$scope.editStatus = true;
 						$scope.fileName = file.fileName;
-						$scope.tag1 = file.tags[0];
-						$scope.tag2 = file.tags[1];
-						$scope.tag3 = file.tags[2];
+						$scope.tags = file.tags;
 						scopeFile = file;
 
 					};
@@ -107,9 +104,7 @@ angular.module('homearchiveApp').controller(
 							id : scopeFile.id
 						}, {
 							fileName : $scope.fileName,
-							tags : [ $scope.tag1, $scope.tag2, $scope.tag3,
-
-							]
+							tags : $scope.tags
 						}
 
 						).$promise.then(function() {
