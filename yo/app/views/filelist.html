@@ -5,14 +5,15 @@
 			<p>
 			<h3 ng-hide="editStatus">Search</h3>
 			<h3 ng-show="editStatus">Edit</h3>
-			<form>
+			
 				<div class="form-group">
 					<label for="inputEmail">File name</label> <input type="text"
 						class="form-control" ng-model="fileName" placeholder="File name1">
-					
+
 				</div>
-			
-				<div ng-hide="editStatus" class="form-group" ng-controller="StartdateCtrl">
+
+				<div ng-hide="editStatus" class="form-group"
+					ng-controller="StartdateCtrl">
 					<label for="inputEmail">Start Date</label>
 					<p class="input-group">
 
@@ -30,13 +31,14 @@
 					</p>
 				</div>
 
-				<div ng-hide="editStatus" class="form-group" ng-controller="EnddateCtrl">
+				<div ng-hide="editStatus" class="form-group"
+					ng-controller="EnddateCtrl">
 					<label for="inputEmail">End Date</label>
 					<p class="input-group">
 
 						<input type="text" class="form-control"
-							datepicker-popup="dd-MM-yyyy" ng-model="$parent.endDate" is-open="opened"
-							min-date="'2010-01-01'" max-date="maxDate"
+							datepicker-popup="dd-MM-yyyy" ng-model="$parent.endDate"
+							is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
 							datepicker-options="dateOptions"
 							date-disabled="disabled(date, mode)" ng-required="false"
 							close-text="Close" /> <span class="input-group-btn">
@@ -50,23 +52,52 @@
 
 
 
-				<div class="form-group">
-					<label for="inputEmail">Tag1</label> <input type="text"
-						class="form-control" ng-model="tag1" placeholder="Tag1">
-				</div>
-				<div class="form-group">
+
+				<!--  			<div class="form-group">
 					<label for="inputEmail">Tag2</label> <input type="text"
 						class="form-control" ng-model="tag2" placeholder="Tag2">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail">Tag3</label> <input type="text"
 						class="form-control" ng-model="tag3" placeholder="Tag3">
+				</div>  -->
+
+
+				<!-- Tag input -->
+				<form ng-submit="addTag()">
+				
+					<label for="inputEmail">Tags</label>
+						<div class="input-group">
+						
+							<input type="text" ng-model="tag" placeholder="tag"
+								class="form-control" required="true"> <span
+								class="input-group-btn"> <input type="submit"
+								class="btn btn-primary" value="Add">
+							</span>
+						</div>
+					
+				</form>
+				<p></p>
+
+				<!-- Tag list -->
+				<div ng-model="tags">
+					<p class="input-group" ng-repeat="tag in tags"
+						style="padding: 5px 10px; cursor: move;">
+						<input type="text" ng-model="tag" class="form-control"> <span
+							class="input-group-btn">
+							<button class="btn btn-danger" ng-click="removeTag($index)"
+								aria-label="Remove">X</button>
+						</span>
+					</p>
 				</div>
 
 
-				<button ng-hide="editStatus"  type="submit" class="btn btn-primary" ng-click="submit()">submit</button>
-				<button ng-show="editStatus"  type="submit" class="btn btn-primary" ng-click="update()">update</button>
-			</form>
+
+				<button ng-hide="editStatus" type="submit" class="btn btn-primary"
+					ng-click="submit()">submit</button>
+				<button ng-show="editStatus" type="submit" class="btn btn-primary"
+					ng-click="update()">update</button>
+			
 			</p>
 		</div>
 		<div class="col-lg-10">

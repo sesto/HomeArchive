@@ -13,6 +13,16 @@ angular.module('homearchiveApp').controller(
 				'ngTableParams',
 				function($scope, FileService, ngTableParams) {
 					$scope.files = [];
+					$scope.tags = [];
+
+					$scope.addTag = function() {
+						$scope.tags.push($scope.tag);
+						$scope.tag = '';
+						$scope.removeTag = function(index) {
+							$scope.tags.splice(index, 1);
+						};
+					};
+
 					var scopeFile;
 					var clear;
 					$scope.tableParams = new ngTableParams({
@@ -31,17 +41,22 @@ angular.module('homearchiveApp').controller(
 					});
 
 					$scope.submit = function() {
-
-						FileService.query({
-
+						console.log($scope.tags)
+						
+						var queryParams={'params': {
 							fileName : $scope.fileName,
 							startDate : $scope.startDate,
 							endDate : $scope.endDate,
-							tag1 : $scope.tag1,
-							tag2 : $scope.tag2,
-							tag3 : $scope.tag3
+							tags : $scope.tags
+        		}
+			};
+						
+						
+						FileService.query(
 
-						}).$promise.then(
+							queryParams
+
+						).$promise.then(
 
 						function(data) {
 							$scope.files = data;

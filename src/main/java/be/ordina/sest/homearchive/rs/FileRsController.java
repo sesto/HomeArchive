@@ -6,8 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,7 +29,9 @@ import be.ordina.sest.homearchive.model.RequestResponseDocument;
 import be.ordina.sest.homearchive.model.UploadDocument;
 import be.ordina.sest.homearchive.service.FileService;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.gridfs.GridFSDBFile;
 
@@ -70,12 +72,15 @@ public class FileRsController {
      * @param param
      * @return
      * @throws ParseException
+     * @throws IOException
+     * @throws JsonProcessingException
      */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles")
-    public List<RequestResponseDocument> findFiles(@RequestParam final Map<String, String> param)
-        throws ParseException {
+    public List<RequestResponseDocument> findFiles(@RequestParam("params") final String param) throws ParseException,
+    JsonProcessingException, IOException {
         RequestResponseDocument document = new RequestResponseDocument();
+        log.debug("Received parameters: " + param);
         setParams(param, document);
         List<RequestResponseDocument> documents = new ArrayList<RequestResponseDocument>();
         List<GridFSDBFile> files = service.findDocuments(document);
@@ -166,25 +171,36 @@ public class FileRsController {
      * @param param
      * @param document
      * @throws ParseException
+     * @throws IOException
+     * @throws JsonProcessingException
      */
-    private void setParams(final Map<String, String> param, final RequestResponseDocument document)
-        throws ParseException {
-        document.setFileName(param.get("fileName"));
-        document.setStartDate(parseDate(param.get("startDate")));
-        document.setEndDate(parseDate(param.get("endDate")));
+    private void setParams(final String jsonParams, final RequestResponseDocument document) throws ParseException,
+    JsonProcessingException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode params = mapper.readTree(jsonParams);
+        if (params.get("fileName") != null) {
+            document.setFileName(params.get("fileName").asText());
+        }
+        if (params.get("startDate") != null) {
+            String startDate = params.get("startDate").asText();
+            document.setStartDate(parseDate(startDate));
+        }
+        if (params.get("endDate") != null) {
+            String endDate = params.get("endDate").asText();
+            document.setEndDate(parseDate(endDate));
+        }
         List<String> receivedTags = new ArrayList<String>();
-        if (StringUtils.isNotBlank(param.get("tag1"))) {
-            receivedTags.add(param.get("tag1"));
+        Iterator<JsonNode> iter = params.get("tags").elements();
+        if (iter != null) {
+
+            while (iter.hasNext()) {
+                String tag = iter.next().asText();
+                if (StringUtils.isNotBlank(tag)) {
+                    receivedTags.add(tag);
+                }
+            }
         }
-        if (StringUtils.isNotBlank(param.get("tag2"))) {
-            receivedTags.add(param.get("tag2"));
-        }
-        if (StringUtils.isNotBlank(param.get("tag3"))) {
-            receivedTags.add(param.get("tag3"));
-        }
-        if (!receivedTags.isEmpty()) {
-            document.setTags(receivedTags);
-        }
+        document.setTags(receivedTags);
     }
 
     /**
@@ -196,7 +212,7 @@ public class FileRsController {
      */
     private Date parseDate(final String date) throws ParseException {
         Date parsedDate = null;
-        if (StringUtils.isNotBlank(date)) {
+        if (StringUtils.isNotBlank(date) && !date.equals("null")) {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
             parsedDate = df.parse(date.replace('"', ' ').trim());
         }
