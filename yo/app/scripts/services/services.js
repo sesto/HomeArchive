@@ -1,3 +1,5 @@
+'use strict';
+
 var fileServices = angular.module('fileServices', [ 'ngResource' ]);
 
 fileServices.factory('FileService', [ '$resource', function($resource) {

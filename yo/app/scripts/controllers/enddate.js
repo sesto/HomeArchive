@@ -34,7 +34,7 @@ angular.module('homearchiveApp')
 					};
 					$scope.toggleMax();
 
-					$scope.open = function($event, opened) {
+					$scope.open = function($event) {
 						$event.preventDefault();
 						$event.stopPropagation();
 

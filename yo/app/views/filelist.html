@@ -5,55 +5,55 @@
 			<p>
 			<h3 ng-hide="editStatus">Search</h3>
 			<h3 ng-show="editStatus">Edit</h3>
-			
-				<div class="form-group">
-					<label for="inputEmail">File name</label> <input type="text"
-						class="form-control" ng-model="fileName" placeholder="File name1">
 
-				</div>
+			<div class="form-group">
+				<label for="inputEmail">File name</label> <input type="text"
+					class="form-control" ng-model="fileName" placeholder="File name1">
 
-				<div ng-hide="editStatus" class="form-group"
-					ng-controller="StartdateCtrl">
-					<label for="inputEmail">Start Date</label>
-					<p class="input-group">
+			</div>
 
-						<input type="text" class="form-control"
-							datepicker-popup="dd-MM-yyyy" ng-model="$parent.startDate"
-							is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
-							datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="false"
-							close-text="Close" /> <span class="input-group-btn">
-							<button type="button" class="btn btn-default"
-								ng-click="open($event)">
-								<i class="glyphicon glyphicon-calendar"></i>
-							</button>
-						</span>
-					</p>
-				</div>
+			<div ng-hide="editStatus" class="form-group"
+				ng-controller="StartdateCtrl">
+				<label for="inputEmail">Start Date</label>
+				<p class="input-group">
 
-				<div ng-hide="editStatus" class="form-group"
-					ng-controller="EnddateCtrl">
-					<label for="inputEmail">End Date</label>
-					<p class="input-group">
+					<input type="text" class="form-control"
+						datepicker-popup="dd-MM-yyyy" ng-model="$parent.startDate"
+						is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
+						datepicker-options="dateOptions"
+						date-disabled="disabled(date, mode)" ng-required="false"
+						close-text="Close" /> <span class="input-group-btn">
+						<button type="button" class="btn btn-default"
+							ng-click="open($event)">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</p>
+			</div>
 
-						<input type="text" class="form-control"
-							datepicker-popup="dd-MM-yyyy" ng-model="$parent.endDate"
-							is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
-							datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="false"
-							close-text="Close" /> <span class="input-group-btn">
-							<button type="button" class="btn btn-default"
-								ng-click="open($event)">
-								<i class="glyphicon glyphicon-calendar"></i>
-							</button>
-						</span>
-					</p>
-				</div>
+			<div ng-hide="editStatus" class="form-group"
+				ng-controller="EnddateCtrl">
+				<label for="inputEmail">End Date</label>
+				<p class="input-group">
 
-
+					<input type="text" class="form-control"
+						datepicker-popup="dd-MM-yyyy" ng-model="$parent.endDate"
+						is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
+						datepicker-options="dateOptions"
+						date-disabled="disabled(date, mode)" ng-required="false"
+						close-text="Close" /> <span class="input-group-btn">
+						<button type="button" class="btn btn-default"
+							ng-click="open($event)">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</p>
+			</div>
 
 
-				<!--  			<div class="form-group">
+
+
+			<!--  			<div class="form-group">
 					<label for="inputEmail">Tag2</label> <input type="text"
 						class="form-control" ng-model="tag2" placeholder="Tag2">
 				</div>
@@ -63,41 +63,45 @@
 				</div>  -->
 
 
-				<!-- Tag input -->
-				<form ng-submit="addTag()">
-				
-					<label for="inputEmail">Tags</label>
-						<div class="input-group">
-						
-							<input type="text" ng-model="tag" placeholder="tag"
-								class="form-control" required="true"> <span
-								class="input-group-btn"> <input type="submit"
-								class="btn btn-primary" value="Add">
-							</span>
-						</div>
-					
-				</form>
-				<p></p>
+			<!-- Tag input -->
+			<form ng-submit="addTag()">
 
-				<!-- Tag list -->
-				<div ng-model="tags">
-					<p class="input-group" ng-repeat="tag in tags"
-						style="padding: 5px 10px; cursor: move;">
-						<input type="text" ng-model="tag" class="form-control"> <span
-							class="input-group-btn">
-							<button class="btn btn-danger" ng-click="removeTag($index)"
-								aria-label="Remove">X</button>
-						</span>
-					</p>
+				<label for="inputEmail">Tags</label>
+				<div class="input-group">
+
+					<input type="text" ng-model="tag" placeholder="tag"
+						class="form-control" required="true"> <span
+						class="input-group-btn"> <input type="submit"
+						class="btn btn-primary" value="Add">
+					</span>
 				</div>
 
+			</form>
+			<p></p>
+
+			<!-- Tag list -->
+			<div ng-model="tags">
+				<p class="input-group" ng-repeat="tag in tags"
+					style="padding: 5px 10px; cursor: move;">
+					<input type="text" ng-model="tag" class="form-control"> <span
+						class="input-group-btn">
+						<button class="btn btn-danger" ng-click="removeTag($index)"
+							aria-label="Remove">X</button>
+					</span>
+				</p>
+			</div>
 
 
+
+			<p>
 				<button ng-hide="editStatus" type="submit" class="btn btn-primary"
-					ng-click="submit()">submit</button>
-				<button ng-show="editStatus" type="submit" class="btn btn-primary"
-					ng-click="update()">update</button>
-			
+					role="button" ng-click="submit()">submit</button>
+				<button ng-hide="editStatus" type="submit" class="btn btn-danger"
+					role="button" ng-click="clear()">clear</button>
+			</p>
+			<button ng-show="editStatus" type="submit" class="btn btn-primary"
+				ng-click="update()">update</button>
+
 			</p>
 		</div>
 		<div class="col-lg-10">

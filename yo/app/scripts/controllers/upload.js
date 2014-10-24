@@ -24,15 +24,12 @@ angular
 							};
 
 							$scope.onFileSelect = function($files) {
-								// $files: an array of files selected, each
-								// file
-								// has name, size,
-								// and type.
+
 								var resetMessage = function() {
 									$scope.successMessage = null;
 									$scope.errorMessage = null;
 									$scope.file = null;
-								}
+								};
 								resetMessage();
 
 								for (var i = 0; i < $files.length; i++) {
@@ -40,58 +37,13 @@ angular
 									$scope.file = file.name;
 									$scope.upload = $upload
 											.upload({
-												url : 'rs/findFiles', // upload.php
-												// script, node.js
-												// route, or servlet
-												// url
+												url : 'rs/findFiles',
 												method : 'POST',
-												// headers:
-												// {'header-key':
-												// 'header-value'},
-												// withCredentials:
-												// true,
+
 												data : {
 													tags : $scope.tags
 												},
-												file : file, // or
-											// list
-											// of
-											// files
-											// ($files)
-											// for
-											// html5
-											// only
-											// fileName: 'doc.jpg'
-											// or
-											// ['1.jpg', '2.jpg',
-											// ...]
-											// // to
-											// modify the name of
-											// the
-											// file(s)
-											// customize file
-											// formData
-											// name
-											// ('Content-Disposition'),
-											// server side file
-											// variable
-											// name.
-											// fileFormDataName:
-											// myFile,
-											// //or a list of names
-											// for
-											// multiple files
-											// (html5).
-											// Default is 'file'
-											// customize how data is
-											// added to formData.
-											// See
-											// #40#issuecomment-28612000
-											// for sample code
-											// formDataAppender:
-											// function(formData,
-											// key,
-											// val){}
+												file : file,
 											})
 											.progress(
 													function(evt) {
@@ -106,7 +58,7 @@ angular
 																	* evt.loaded
 																	/ evt.total);
 															$scope.dynamic = percent;
-														}
+														};
 														$scope.progress();
 
 													})
@@ -114,7 +66,7 @@ angular
 													function(data, status,
 															headers, config) {
 														console.log(status);
-														$scope.successMessage = "File uploaded successfully!";
+														$scope.successMessage = 'File uploaded successfully!';
 														$scope.dynamic = 0;
 														var resetTags = function() {
 															$scope.tags = [];
@@ -123,27 +75,13 @@ angular
 													})
 											.error(
 													function(status) {
-														$scope.errorMessage = "Problem uploading file. Error "
-																+ status + "";
+														$scope.errorMessage = 'Problem uploading file. Error '
+																+ status + '';
 
 													});
-									// .then(success, error, progress);
-									// access or attach event listeners to
-									// the
-									// underlying
-									// XMLHttpRequest.
-									// .xhr(function(xhr){xhr.upload.addEventListener(...)})
+
 								}
-								/*
-								 * alternative way of uploading, send the file
-								 * binary with the file's content-type. Could be
-								 * used to upload files to CouchDB, imgur,
-								 * etc... html5 FileReader is needed. It could
-								 * also be used to monitor the progress of a
-								 * normal http post/put request with large data
-								 */
-								// $scope.upload = $upload.http({...}) see
-								// 88#issuecomment-31366487 for sample code.
+
 							};
 
 						} ]);
