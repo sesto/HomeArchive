@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.query.Query;
 
+import be.ordina.sest.homearchive.model.RequestResponseDocument;
+
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 
@@ -41,7 +43,9 @@ public interface MongoDao {
      */
 
     List<GridFSDBFile> findDocuments(final Query query);
+
     void deleteDocument(final String id);
+
     /**
      * updates metadata
      *

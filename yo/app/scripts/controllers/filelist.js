@@ -13,16 +13,17 @@ angular.module('homearchiveApp').controller(
 				'ngTableParams',
 				function($scope, FileService, ngTableParams) {
 					$scope.files = [];
-					$scope.tags = [];
+					$scope.file = {};
+					$scope.file.tags = [];
 
 					$scope.addTag = function() {
-						$scope.tags.push($scope.tag);
+						$scope.file.tags.push($scope.tag);
 						$scope.tag = '';
 						$scope.removeTag = function(index) {
-							$scope.tags.splice(index, 1);
-						};
-					};
+							$scope.file.tags.splice(index, 1);
 
+						}
+					};
 					var scopeFile;
 					var clean;
 					$scope.tableParams = new ngTableParams({
@@ -40,24 +41,20 @@ angular.module('homearchiveApp').controller(
 
 					});
 
+					// does search with parameters
 					$scope.submit = function() {
-						console.log($scope.tags);
-						var queryParams={'params': {
-							fileName : $scope.fileName,
-							startDate : $scope.startDate,
-							endDate : $scope.endDate,
-							tags : $scope.tags
-        		}
-			};
-						
-						
-						FileService.query(
+						console.log($scope.file.tags);
+						var queryParams = {
+							'params' : {
+								fileName : $scope.file.fileName,
+								startDate : $scope.file.startDate,
+								endDate : $scope.file.endDate,
+								tags : $scope.file.tags
+							}
+						};
 
-							queryParams
-
-						).$promise.then(
-
-						function(data) {
+						FileService.query(queryParams).$promise.then(function(
+								data) {
 							$scope.files = data;
 							console.log(JSON.stringify($scope.files));
 							$scope.getTag = function(file) {
@@ -69,16 +66,18 @@ angular.module('homearchiveApp').controller(
 						});
 					};
 
+					// clears the form
 					clean = function() {
-						$scope.fileName = null;
-						$scope.tags = [];
-						$scope.startDate = null;
-						$scope.endDate = null;
+						$scope.file.fileName = null;
+						$scope.file.tags = [];
+						$scope.file.startDate = null;
+						$scope.file.endDate = null;
 					};
-					$scope.clear = function(){
+					$scope.clear = function() {
 						clean();
 					}
 
+					// deletes file
 					$scope.remove = function(file) {
 						console.log('Removing file with id: ' + file.id);
 						FileService.remove({
@@ -92,20 +91,22 @@ angular.module('homearchiveApp').controller(
 						});
 					};
 
+					// pushes values into the model for editing
 					$scope.edit = function(file) {
 						$scope.editStatus = true;
-						$scope.fileName = file.fileName;
-						$scope.tags = file.tags;
+						$scope.file.fileName = file.fileName;
+						$scope.file.tags = file.tags;
 						scopeFile = file;
 
 					};
 
+					// submits updated values to the service
 					$scope.update = function() {
 						FileService.update({
 							id : scopeFile.id
 						}, {
-							fileName : $scope.fileName,
-							tags : $scope.tags
+							fileName : $scope.file.fileName,
+							tags : $scope.file.tags
 						}
 
 						).$promise.then(function() {

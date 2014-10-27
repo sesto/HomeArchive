@@ -178,7 +178,7 @@ public class FileRsController {
     JsonProcessingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode params = mapper.readTree(jsonParams);
-        if (params.get("fileName") != null&& !params.get("fileName").asText().equals("null")) {
+        if (params.get("fileName") != null && !params.get("fileName").asText().equals("null")) {
             document.setFileName(params.get("fileName").asText());
         }
         if (params.get("startDate") != null) {
@@ -190,17 +190,20 @@ public class FileRsController {
             document.setEndDate(parseDate(endDate));
         }
         List<String> receivedTags = new ArrayList<String>();
-        Iterator<JsonNode> iter = params.get("tags").elements();
-        if (iter != null) {
 
-            while (iter.hasNext()) {
-                String tag = iter.next().asText();
-                if (StringUtils.isNotBlank(tag)) {
-                    receivedTags.add(tag);
+        if (params.get("tags") != null) {
+            Iterator<JsonNode> iter = params.get("tags").elements();
+            if (iter != null) {
+
+                while (iter.hasNext()) {
+                    String tag = iter.next().asText();
+                    if (StringUtils.isNotBlank(tag)) {
+                        receivedTags.add(tag);
+                    }
                 }
             }
+            document.setTags(receivedTags);
         }
-        document.setTags(receivedTags);
     }
 
     /**

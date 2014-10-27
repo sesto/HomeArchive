@@ -7,8 +7,8 @@
 			<h3 ng-show="editStatus">Edit</h3>
 
 			<div class="form-group">
-				<label for="inputEmail">File name</label> <input type="text"
-					class="form-control" ng-model="fileName" placeholder="File name1">
+				<label for="inputEmail">File name</label> 
+				<input type="text" class="form-control" ng-model="file.fileName" placeholder="File name1">
 
 			</div>
 
@@ -18,7 +18,7 @@
 				<p class="input-group">
 
 					<input type="text" class="form-control"
-						datepicker-popup="dd-MM-yyyy" ng-model="$parent.startDate"
+						datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.startDate"
 						is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
 						datepicker-options="dateOptions"
 						date-disabled="disabled(date, mode)" ng-required="false"
@@ -37,7 +37,7 @@
 				<p class="input-group">
 
 					<input type="text" class="form-control"
-						datepicker-popup="dd-MM-yyyy" ng-model="$parent.endDate"
+						datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.endDate"
 						is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
 						datepicker-options="dateOptions"
 						date-disabled="disabled(date, mode)" ng-required="false"
@@ -71,8 +71,8 @@
 
 					<input type="text" ng-model="tag" placeholder="tag"
 						class="form-control" required="true"> <span
-						class="input-group-btn"> <input type="submit"
-						class="btn btn-primary" value="Add">
+						class="input-group-btn"> 
+						<input type="submit" class="btn btn-success" value="Add">
 					</span>
 				</div>
 
@@ -80,10 +80,10 @@
 			<p></p>
 
 			<!-- Tag list -->
-			<div ng-model="tags">
-				<p class="input-group" ng-repeat="tag in tags"
+			<div ng-model="file.tags">
+				<p class="input-group" ng-repeat="tag in file.tags track by $index"
 					style="padding: 5px 10px; cursor: move;">
-					<input type="text" ng-model="tag" class="form-control"> <span
+					<input type="text" ng-model="file.tags[$index]" class="form-control" ng-change = changeTag($index)> <span
 						class="input-group-btn">
 						<button class="btn btn-danger" ng-click="removeTag($index)"
 							aria-label="Remove">X</button>
@@ -119,7 +119,7 @@
 					<td data-title="'File Name'">{{file.fileName}}</td>
 					<td data-title="'Date'">{{file.docDate | date:'dd-MM-yyyy'}}</td>
 					<td data-title="'Tags'">
-						<table ng-repeat="tag in tags track by $index"">
+						<table ng-repeat="tag in tags track by $index">
 							<td>{{tag}}</td>
 						</table>
 					</td>
