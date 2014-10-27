@@ -12,7 +12,7 @@
 
             <div class="row">
 
-                <div class="col-lg-2">
+                <div class="col-lg-3">
  
 
                     <h3>Select files</h3>
@@ -40,7 +40,7 @@
       <div class="input-group">
         <input type="text" ng-model="tag" placeholder="tag" class="form-control" required="true">
         <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Add">
+          <input type="submit" class="btn btn-primary" value="Add" ng-disabled ="!uploader.queue.length > 0">
         </span>
       </div>
     </div>
@@ -59,7 +59,7 @@
                 </div>
 
 
-                <div class="col-lg-8" style="margin-bottom: 40px">
+                <div class="col-lg-9" style="margin-bottom: 40px">
 
                     <h3>Upload queue</h3>
                     <p>Queue length: {{ uploader.queue.length }}</p>
@@ -80,7 +80,7 @@
                                 <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                 <td ng-show="uploader.isHTML5">
                                     <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
                                     </div>
                                 </td>
                                 <td class="text-center">
@@ -107,7 +107,7 @@
                         <div>
                             Queue progress:
                             <div class="progress" style="">
-                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
                             </div>
                         </div>
                         <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">

@@ -95,9 +95,9 @@
 
 			<p>
 				<button ng-hide="editStatus" type="submit" class="btn btn-primary"
-					role="button" ng-click="submit()">submit</button>
+					role="button" ng-click="submit()">Submit</button>
 				<button ng-hide="editStatus" type="submit" class="btn btn-danger"
-					role="button" ng-click="clear()">clear</button>
+					role="button" ng-click="clear()">Clear</button>
 			</p>
 			<button ng-show="editStatus" type="submit" class="btn btn-primary"
 				ng-click="update()">update</button>
@@ -127,12 +127,14 @@
 
 
 
-					<td><a href="/homearchive/rs/findFiles/{{file.id}}"
-						class="glyphicon glyphicon-save btn btn-default btn-md"></a> <span
-						class="glyphicon glyphicon-remove btn btn-default btn-md"
-						ng-click="remove(file)"></span> <span
-						class="glyphicon glyphicon-pencil btn btn-default btn-md"
-						ng-click="edit(file)"></span></td>
+					<td><a href="/homearchive/rs/findFiles/{{file.id}}" class = "btn btn-success btn-xs">
+                                        <span class="glyphicon glyphicon-save"></span>Download</a>
+						
+						<button type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove</button>
+						<button type="button" class="btn btn-primary btn-xs" ng-click="edit(file)">
+                                        <span class="glyphicon glyphicon-pencil"></span> Edit</button>
+                                        </td>
 				</tr>
 			</table>
 			</p>
