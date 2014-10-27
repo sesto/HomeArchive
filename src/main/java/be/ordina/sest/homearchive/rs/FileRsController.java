@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -105,9 +106,7 @@ public class FileRsController {
         UploadDocument uploadDocument = new UploadDocument();
         uploadDocument.setFile(file);
         log.debug("Received parameters: " + tags);
-        ObjectMapper mapper = new ObjectMapper();
-        List<String> tagsList = mapper.readValue(tags, new TypeReference<ArrayList<String>>() {
-        });
+        List<String> tagsList = parseParameters(tags);
         log.debug("Parsed list: " + tagsList);
         uploadDocument.setTags(tagsList);
         service.uploadFile(uploadDocument);
@@ -220,5 +219,20 @@ public class FileRsController {
             parsedDate = df.parse(date.replace('"', ' ').trim());
         }
         return parsedDate;
+    }
+    /**
+     *
+     * TODO
+     *
+     * @param paramString
+     * @return
+     */
+    private ArrayList<String> parseParameters(final String paramString) {
+        String[] paramArray = StringUtils.split(paramString, ',');
+        ArrayList<String> paramList = new ArrayList<>();
+        for (String param : paramArray) {
+            paramList.add(StringUtils.trim(param));
+        }
+        return paramList;
     }
 }
