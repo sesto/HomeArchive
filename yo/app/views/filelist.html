@@ -51,18 +51,6 @@
 			</div>
 
 
-
-
-			<!--  			<div class="form-group">
-					<label for="inputEmail">Tag2</label> <input type="text"
-						class="form-control" ng-model="tag2" placeholder="Tag2">
-				</div>
-				<div class="form-group">
-					<label for="inputEmail">Tag3</label> <input type="text"
-						class="form-control" ng-model="tag3" placeholder="Tag3">
-				</div>  -->
-
-
 			<!-- Tag input -->
 			<form ng-submit="addTag()">
 
@@ -94,10 +82,11 @@
 
 
 			<p>
-				<button ng-hide="editStatus" type="submit" class="btn btn-primary"
-					role="button" ng-click="submit()">Submit</button>
-				<button ng-hide="editStatus" type="submit" class="btn btn-danger"
-					role="button" ng-click="clear()">Clear</button>
+				<button ng-hide="editStatus" type="button" class="btn btn-primary"
+					role="button" ng-click="submit()"><span class="glyphicon glyphicon-filter"></span>Search</button>			
+					
+				<button ng-hide="editStatus" type="button" class="btn btn-danger"
+					role="button" ng-click="clear()"><span class="glyphicon glyphicon-remove"></span>Clear</button>
 			</p>
 			<button ng-show="editStatus" type="submit" class="btn btn-primary"
 				ng-click="update()">update</button>
@@ -127,8 +116,8 @@
 
 
 
-					<td><a href="/homearchive/rs/findFiles/{{file.id}}" class = "btn btn-success btn-xs">
-                                        <span class="glyphicon glyphicon-save"></span>Download</a>
+					<td><a href="http://localhost:8080/homearchive/rs/findFiles/{{file.id}}" class = "btn btn-success btn-xs">
+                                        <span class="glyphicon glyphicon-download"></span>Download</a>
 						
 						<button type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">
                                         <span class="glyphicon glyphicon-trash"></span> Remove</button>

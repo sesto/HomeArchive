@@ -79,16 +79,21 @@ angular.module('homearchiveApp').controller(
 
 					// deletes file
 					$scope.remove = function(file) {
-						console.log('Removing file with id: ' + file.id);
-						FileService.remove({
-							id : file.id
-						}).$promise.then(function() {
-							var idx = $scope.files.indexOf(file);
-							$scope.files.splice(idx, 1);
-							console.log('removed from scope, idx: '
-									+ $scope.files.indexOf(file));
-							$scope.tableParams.reload();
-						});
+						if (confirm("Are you sure you want to delete "
+								+ file.fileName + ' from the database?') == false) {
+							return;
+						} else {
+							console.log('Removing file with id: ' + file.id);
+							FileService.remove({
+								id : file.id
+							}).$promise.then(function() {
+								var idx = $scope.files.indexOf(file);
+								$scope.files.splice(idx, 1);
+								console.log('removed from scope, idx: '
+										+ $scope.files.indexOf(file));
+								$scope.tableParams.reload();
+							});
+						};
 					};
 
 					// pushes values into the model for editing
