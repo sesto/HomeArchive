@@ -29,7 +29,7 @@ public class GridFsQueryBuilder {
      */
     public GridFsQueryBuilder addFileName(final String fileName) {
         if (StringUtils.isNotEmpty(fileName)) {
-            Criteria criteria = GridFsCriteria.whereFilename().regex(fileName + "*");
+            Criteria criteria = GridFsCriteria.whereFilename().regex(fileName);
             createOrGetQuery(criteria);
         }
         return this;
