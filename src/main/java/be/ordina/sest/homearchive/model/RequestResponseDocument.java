@@ -12,7 +12,7 @@ public class RequestResponseDocument implements Serializable{
 
     private static final long serialVersionUID = -5211227215172538582L;
     private String id;
-    private String fileName;
+    private String filename;
     private String documentType;
     private List<String> tags;
     private Date startDate;

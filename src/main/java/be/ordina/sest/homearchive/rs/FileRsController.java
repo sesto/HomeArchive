@@ -153,7 +153,7 @@ public class FileRsController {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode params = mapper.readTree(jsonParams);
         if (params.get("fileName") != null && !params.get("fileName").asText().equals("null")) {
-            document.setFileName(params.get("fileName").asText());
+            document.setFilename(params.get("fileName").asText());
         }
         if (params.get("startDate") != null) {
             String startDate = params.get("startDate").asText();

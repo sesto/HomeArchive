@@ -107,7 +107,7 @@
 			<table ng-table="tableParams" show-filter="true" class="table">
 				<tr ng-repeat="file in $data" ng-init='tags = getTag(file)'>
 					<td data-title="'Index'">{{$index + 1}}</td>
-					<td data-title="'File Name'" sortable = "'fileName'" filter="{ 'fileName': 'text' }">{{file.fileName}} </td>
+					<td data-title="'File Name'" sortable = "'filename'" filter="{ 'filename': 'text' }">{{file.filename}} </td>
 					<td data-title="'Date'" sortable = "'docDate'" >{{file.docDate | date:'dd-MM-yyyy'}}</td>
 					<td data-title="'Tags'">
 						<table ng-repeat="tag in tags track by $index">

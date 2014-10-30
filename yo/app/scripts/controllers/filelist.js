@@ -105,7 +105,7 @@ angular
 							// deletes file
 							$scope.remove = function(file) {
 								if (confirm("Are you sure you want to delete "
-										+ file.fileName + ' from the database?') == false) {
+										+ file.filename + ' from the database?') == false) {
 									return;
 								} else {
 									console.log('Removing file with id: '
@@ -126,7 +126,7 @@ angular
 							// pushes values into the model for editing
 							$scope.edit = function(file) {
 								$scope.editStatus = true;
-								$scope.file.fileName = file.fileName;
+								$scope.file.fileName = file.filename;
 								$scope.file.tags = file.tags;
 								scopeFile = file;
 
@@ -137,7 +137,7 @@ angular
 								FileService.update({
 									id : scopeFile.id
 								}, {
-									fileName : $scope.file.fileName,
+									filename : $scope.file.fileName,
 									tags : $scope.file.tags
 								}
 

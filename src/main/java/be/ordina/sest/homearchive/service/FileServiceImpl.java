@@ -39,7 +39,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<RequestResponseDocument> findDocuments(final RequestResponseDocument document) {
-        String fileName = document.getFileName();
+        String fileName = document.getFilename();
         String documentType = document.getDocumentType();
         List<String> tags = document.getTags();
         Date startDate = document.getStartDate();
@@ -71,7 +71,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public void updateDocument(final String id, final RequestResponseDocument document) {
         DBObject update = new BasicDBObject();
-        update.put("filename", document.getFileName());
+        update.put("filename", document.getFilename());
         update.put("metadata", new BasicDBObject("tags", document.getTags()));
         log.debug("Update db object: " + update);
         mongoDao.updateDocument(id, new BasicDBObject("$set", update));
@@ -88,7 +88,7 @@ public class FileServiceImpl implements FileService {
         List<RequestResponseDocument> documents = new ArrayList<RequestResponseDocument>();
         for (GridFSDBFile gridFSDBFile : fileList) {
             RequestResponseDocument document1 = new RequestResponseDocument();
-            document1.setFileName(gridFSDBFile.getFilename());
+            document1.setFilename(gridFSDBFile.getFilename());
             document1.setId((gridFSDBFile.getId().toString()));
             document1.setDocumentType(gridFSDBFile.getContentType());
             Object tags = gridFSDBFile.getMetaData().get("tags");
