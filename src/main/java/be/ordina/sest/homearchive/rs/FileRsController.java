@@ -83,13 +83,7 @@ public class FileRsController {
         RequestResponseDocument document = new RequestResponseDocument();
         log.debug("Received parameters: " + param);
         setParams(param, document);
-        List<RequestResponseDocument> documents = new ArrayList<RequestResponseDocument>();
-        List<GridFSDBFile> files = service.findDocuments(document);
-        for (GridFSDBFile gridFSDBFile : files) {
-            setDocumentFields(documents, gridFSDBFile);
-
-        }
-        return documents;
+        return service.findDocuments(document);
     }
 
     /**
@@ -143,25 +137,6 @@ public class FileRsController {
         service.updateDocument(id, document);
     }
 
-    /**
-     * Stores file metadata in RequestRequestDocument fields
-     *
-     *
-     * @param documents
-     * @param gridFSDBFile
-     */
-    private void setDocumentFields(final List<RequestResponseDocument> documents, final GridFSDBFile gridFSDBFile) {
-        RequestResponseDocument document1 = new RequestResponseDocument();
-        document1.setFileName(gridFSDBFile.getFilename());
-        document1.setId((gridFSDBFile.getId().toString()));
-        document1.setDocumentType(gridFSDBFile.getContentType());
-        Object tags = gridFSDBFile.getMetaData().get("tags");
-        @SuppressWarnings("unchecked")
-        List<String> tagList = (List<String>) tags;
-        document1.setTags(tagList);
-        document1.setDocDate((gridFSDBFile.getUploadDate()));
-        documents.add(document1);
-    }
 
     /**
      *
@@ -206,7 +181,7 @@ public class FileRsController {
     }
 
     /**
-     * Parses string representatation of the date TODO
+     * Parses string representatation of the date
      *
      * @param date
      * @return
@@ -222,7 +197,7 @@ public class FileRsController {
     }
     /**
      *
-     * TODO
+     * Parses prameneters from comma-separated string
      *
      * @param paramString
      * @return
