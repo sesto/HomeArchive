@@ -48,7 +48,7 @@ public class MongoDaoImpl implements MongoDao {
     private DB db;
 
     @Autowired
-    public MongoDaoImpl(@Value("homearchive") final String dbName) {
+    public MongoDaoImpl(@Value("homearchive_elastic") final String dbName) {
         this.dbName = dbName;
     }
 

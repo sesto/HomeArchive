@@ -58,7 +58,7 @@ angular
 
 							// does search with parameters
 							$scope.submit = function() {
-								console.log($scope.file.tags);
+							
 								var queryParams = {
 									'params' : {
 										fileName : $scope.file.fileName,
@@ -88,7 +88,7 @@ angular
 							// clears the form
 							clean = function() {
 								$scope.file.fileName = null;
-								$scope.file.tags = [];
+								$scope.file.metadata = {};
 								$scope.file.startDate = null;
 								$scope.file.endDate = null;
 							};
@@ -121,7 +121,7 @@ angular
 							$scope.edit = function(file) {
 								$scope.editStatus = true;
 								$scope.file.fileName = file.filename;
-								$scope.file.tags = file.tags;
+								$scope.file.metadata.description = file.metadata.description;
 								scopeFile = file;
 
 							};
@@ -132,7 +132,9 @@ angular
 									id : scopeFile.id
 								}, {
 									filename : $scope.file.fileName,
-									tags : $scope.file.tags
+									metadata:{
+										description: $scope.file.metadata.description
+									}
 								}
 
 								).$promise.then(function() {

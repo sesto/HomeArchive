@@ -1,23 +1,21 @@
 package be.ordina.sest.homearchive.helper;
 
 import java.util.Date;
-import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
+import lombok.extern.log4j.Log4j;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsCriteria;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-
 /**
  * Builds queries
  *
  *
  */
+@Log4j
 public class GridFsQueryBuilder {
     public Query query;
 
@@ -73,7 +71,8 @@ public class GridFsQueryBuilder {
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addDescription (final String description) {
-        if (StringUtils.isNotBlank(description)) {
+        if (StringUtils.isNotEmpty(description)) {
+            log.debug("Building query with description: " + description);
             Criteria criteria = GridFsCriteria.whereMetaData("description").is(description);
             createOrGetQuery(criteria);
         }
