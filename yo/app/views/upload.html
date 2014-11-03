@@ -33,29 +33,11 @@
 
                    
                     <input type="file" nv-file-select="" uploader="uploader"/>
-                    <h3>Add tags</h3>
-                  <!-- Tag input -->
-  <form role="form" ng-submit="addTag()">
-    <div class="row">
-      <div class="input-group">
-        <input type="text" ng-model="tag" placeholder="tag" class="form-control" required="true">
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Add" ng-disabled ="!uploader.queue.length > 0">
-        </span>
-      </div>
-    </div>
- </form>
-  <p></p>
+                    <h3>Enter description</h3>
+                <input type="text" class="form-control" required placeholder="Description" ng-model="description">
+ 
 
-  <!-- Tag list -->
-  <div ng-model="tags">
-  <p class="input-group" ng-repeat="tag in tags track by $index" style="padding:5px 10px; cursor: move;">
-    <input type="text" ng-model="tags[$index]" class="form-control">
-    <span class="input-group-btn">
-      <button class="btn btn-danger" ng-click="removeTag($index)" aria-label="Remove">X</button>
-    </span>
-  </p>
-</div>   
+   
                 </div>
 
 

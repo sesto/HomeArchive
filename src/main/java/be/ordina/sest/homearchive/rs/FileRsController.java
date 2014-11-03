@@ -95,14 +95,12 @@ public class FileRsController {
      * @throws IOException
      */
     @RequestMapping(value = "/findFiles", method = RequestMethod.POST)
-    public void uploadFile(@RequestParam("file") final MultipartFile file, @RequestParam("tags") final String tags)
-        throws IOException {
+    public void uploadFile(@RequestParam("file") final MultipartFile file,
+        @RequestParam("description") final String description) throws IOException {
         UploadDocument uploadDocument = new UploadDocument();
         uploadDocument.setFile(file);
-        log.debug("Received parameters: " + tags);
-        List<String> tagsList = parseParameters(tags);
-        log.debug("Parsed list: " + tagsList);
-        uploadDocument.setTags(tagsList);
+        log.debug("Received description: " + description);
+        uploadDocument.setDescription(description);
         service.uploadFile(uploadDocument);
     }
 
@@ -136,7 +134,6 @@ public class FileRsController {
         log.debug("Updating document with _id:  " + id);
         service.updateDocument(id, document);
     }
-
 
     /**
      *
@@ -194,20 +191,5 @@ public class FileRsController {
             parsedDate = df.parse(date.replace('"', ' ').trim());
         }
         return parsedDate;
-    }
-    /**
-     *
-     * Parses prameneters from comma-separated string
-     *
-     * @param paramString
-     * @return
-     */
-    private ArrayList<String> parseParameters(final String paramString) {
-        String[] paramArray = StringUtils.split(paramString, ',');
-        ArrayList<String> paramList = new ArrayList<>();
-        for (String param : paramArray) {
-            paramList.add(StringUtils.trim(param));
-        }
-        return paramList;
     }
 }

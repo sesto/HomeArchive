@@ -30,6 +30,8 @@
 		<spring.data.mongodb.version>1.6.0.RELEASE</spring.data.mongodb.version>
 		<spring.data.elasticsearch.version>1.0.0.BUILD-SNAPSHOT</spring.data.elasticsearch.version>
 		<mongodb.version>2.12.1</mongodb.version>
+		
+		
 
 		<!-- Jackson -->
 		<jackson.databind-version>2.2.3</jackson.databind-version>
@@ -82,7 +84,7 @@
 			<artifactId>spring-data-elasticsearch</artifactId>
 			<version>${spring.data.elasticsearch.version}</version>
 		</dependency>
-
+		
 		<!-- Other Web dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>

@@ -14,7 +14,7 @@
 
 	<!-- Connection to MongoDB server -->
 	<mongo:db-factory host="localhost" port="27017"
-		dbname="homearchive" />
+		dbname="homearchive_elastic" />
 	<mongo:mapping-converter id="converter"
 		db-factory-ref="mongoDbFactory" />
 
@@ -31,14 +31,16 @@
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
- 	<!-- Elastic search -->
-<!--	<elasticsearch:repositories base-package="be.ordina.sest.homearchive.dao" />
+	<!-- Elastic search -->
+	<elasticsearch:repositories base-package="be.ordina.sest.homearchive.dao" />
+
 	<elasticsearch:transport-client id="client"
 		cluster-nodes="localhost:9300" />
 	<elasticsearch:node-client id="client" local="true" />
+
 	<bean name="elasticsearchTemplate"
 		class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
-		<constructor-arg name="client" ref="client" /> 
-	</bean> -->
+		<constructor-arg name="client" ref="client" />
+	</bean>
 
 </beans>

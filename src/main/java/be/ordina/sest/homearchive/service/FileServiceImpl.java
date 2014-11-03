@@ -59,7 +59,7 @@ public class FileServiceImpl implements FileService {
         String fileName = file.getOriginalFilename();
         String contentType = file.getContentType();
         InputStream content = file.getInputStream();
-        DBObject metaData = new BasicDBObject("tags", document.getTags());
+        DBObject metaData = new BasicDBObject("description", document.getDescription());
         mongoDao.saveDocument(content, fileName, contentType, metaData);
     }
 
