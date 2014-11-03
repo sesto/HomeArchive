@@ -1,9 +1,7 @@
 package be.ordina.sest.homearchive.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 
@@ -14,21 +12,9 @@ public class RequestResponseDocument implements Serializable{
     private String id;
     private String filename;
     private String documentType;
-    private List<String> tags;
+    private Metadata metadata = new Metadata();
     private Date startDate;
     private Date endDate;
     private Date docDate;
 
-    /**
-     *
-     * adds tags to the list
-     *
-     * @param tag
-     */
-    public void addTag(final String tag) {
-        if (tags == null) {
-            tags = new ArrayList<>();
-        }
-        tags.add(tag);
-    }
 }

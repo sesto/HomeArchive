@@ -17,17 +17,9 @@ angular
 						function($scope, $filter, FileService, ngTableParams) {
 							$scope.files = [];
 							$scope.file = {};
-							$scope.file.tags = [];
+							$scope.file.metadata = {};
 							var data;
 
-							$scope.addTag = function() {
-								$scope.file.tags.push($scope.tag);
-								$scope.tag = '';
-								$scope.removeTag = function(index) {
-									$scope.file.tags.splice(index, 1);
-
-								}
-							};
 							var scopeFile;
 							var clean;
 							$scope.tableParams = new ngTableParams(
@@ -36,13 +28,13 @@ angular
 										count : 10,
 										// count per page
 										sorting : {
-											docDate: "desc"// initial sorting
+											docDate : "desc"// initial sorting
 										}
 									},
 									{
 										total : $scope.files.length, // length
-																		// of
-																		// data
+										// of
+										// data
 										getData : function($defer, params) {
 
 											var filteredData = params.filter() ? $filter(
@@ -72,7 +64,9 @@ angular
 										fileName : $scope.file.fileName,
 										startDate : $scope.file.startDate,
 										endDate : $scope.file.endDate,
-										tags : $scope.file.tags
+										metadata : {
+											description : $scope.file.metadata.description
+										}
 									}
 								};
 

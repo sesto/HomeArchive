@@ -72,9 +72,9 @@ public class GridFsQueryBuilder {
      * @param tags
      * @return QueryBuilder
      */
-    public GridFsQueryBuilder addTags(final List<String> tags) {
-        if (CollectionUtils.isNotEmpty(tags)) {
-            Criteria criteria = GridFsCriteria.whereMetaData("tags").in(tags);
+    public GridFsQueryBuilder addDescription (final String description) {
+        if (StringUtils.isNotBlank(description)) {
+            Criteria criteria = GridFsCriteria.whereMetaData("description").is(description);
             createOrGetQuery(criteria);
         }
         return this;

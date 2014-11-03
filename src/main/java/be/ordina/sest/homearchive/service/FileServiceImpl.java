@@ -41,16 +41,16 @@ public class FileServiceImpl implements FileService {
     public List<RequestResponseDocument> findDocuments(final RequestResponseDocument document) {
         String fileName = document.getFilename();
         String documentType = document.getDocumentType();
-        List<String> tags = document.getTags();
+        String description = document.getMetadata().getDescription();
         Date startDate = document.getStartDate();
         Date endDate = document.getEndDate();
         String id = document.getId();
         Query query =
-            new GridFsQueryBuilder().addId(id).addFileName(fileName).addContentType(documentType).addTags(tags)
-            .addDateRange(startDate, endDate).getQuery();
+            new GridFsQueryBuilder().addId(id).addFileName(fileName).addContentType(documentType)
+            .addDescription(description).addDateRange(startDate, endDate).getQuery();
         log.info("Starting seacrh with query: " + query);
         log.info("Found documents: " + mongoDao.findDocuments(query));
-        return setDocumentFields( mongoDao.findDocuments(query));
+        return setDocumentFields(mongoDao.findDocuments(query));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class FileServiceImpl implements FileService {
     public void updateDocument(final String id, final RequestResponseDocument document) {
         DBObject update = new BasicDBObject();
         update.put("filename", document.getFilename());
-        update.put("metadata", new BasicDBObject("tags", document.getTags()));
+        update.put("metadata", new BasicDBObject("description", document.getMetadata().getDescription()));
         log.debug("Update db object: " + update);
         mongoDao.updateDocument(id, new BasicDBObject("$set", update));
     }
@@ -91,10 +91,8 @@ public class FileServiceImpl implements FileService {
             document1.setFilename(gridFSDBFile.getFilename());
             document1.setId((gridFSDBFile.getId().toString()));
             document1.setDocumentType(gridFSDBFile.getContentType());
-            Object tags = gridFSDBFile.getMetaData().get("tags");
-            @SuppressWarnings("unchecked")
-            List<String> tagList = (List<String>) tags;
-            document1.setTags(tagList);
+            String description = (String) gridFSDBFile.getMetaData().get("description");
+            document1.getMetadata().setDescription(description);
             document1.setDocDate((gridFSDBFile.getUploadDate()));
             documents.add(document1);
         }

@@ -160,21 +160,15 @@ public class FileRsController {
             String endDate = params.get("endDate").asText();
             document.setEndDate(parseDate(endDate));
         }
-        List<String> receivedTags = new ArrayList<String>();
 
-        if (params.get("tags") != null) {
-            Iterator<JsonNode> iter = params.get("tags").elements();
-            if (iter != null) {
-
-                while (iter.hasNext()) {
-                    String tag = iter.next().asText();
-                    if (StringUtils.isNotBlank(tag)) {
-                        receivedTags.add(tag);
-                    }
-                }
+        String description = null;
+        if (params.get("metadata") != null) {
+            JsonNode metadata = params.get("metadata");
+            if (metadata.get("description") != null) {
+                description = metadata.get("description").asText();
             }
-            document.setTags(receivedTags);
         }
+        document.getMetadata().setDescription(description);
     }
 
     /**

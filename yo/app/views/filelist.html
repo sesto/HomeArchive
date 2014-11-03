@@ -51,35 +51,10 @@
 			</div>
 
 
-			<!-- Tag input -->
-			<form ng-submit="addTag()">
-
-				<label for="inputEmail">Tags</label>
-				<div class="input-group">
-
-					<input type="text" ng-model="tag" placeholder="tag"
-						class="form-control" required="true"> <span
-						class="input-group-btn"> 
-						<input type="submit" class="btn btn-success" value="Add">
-					</span>
-				</div>
-
-			</form>
-			<p></p>
-
-			<!-- Tag list -->
-			<div ng-model="file.tags">
-				<p class="input-group" ng-repeat="tag in file.tags track by $index"
-					style="padding: 5px 10px; cursor: move;">
-					<input type="text" ng-model="file.tags[$index]" class="form-control" ng-change = changeTag($index)> <span
-						class="input-group-btn">
-						<button class="btn btn-danger" ng-click="removeTag($index)"
-							aria-label="Remove">X</button>
-					</span>
-				</p>
-			</div>
-
-
+			 <div class="form-group">
+				<label for="inputEmail">Description</label> 
+                <input type="text" class="form-control" required placeholder="Description" ng-model="file.metadata.description">
+</div>
 
 			<p>
 				<button ng-hide="editStatus" type="button" class="btn btn-primary"
@@ -105,14 +80,12 @@
         <button ng-click="tableParams.filter({})" class="btn btn-default pull-right">Clear filter</button>
      
 			<table ng-table="tableParams" show-filter="true" class="table">
-				<tr ng-repeat="file in $data" ng-init='tags = getTag(file)'>
+				<tr ng-repeat="file in $data">
 					<td data-title="'Index'">{{$index + 1}}</td>
 					<td data-title="'File Name'" sortable = "'filename'" filter="{ 'filename': 'text' }">{{file.filename}} </td>
 					<td data-title="'Date'" sortable = "'docDate'" >{{file.docDate | date:'dd-MM-yyyy'}}</td>
-					<td data-title="'Tags'">
-						<table ng-repeat="tag in tags track by $index">
-							<td>{{tag}}</td>
-						</table>
+					<td data-title="'Description'">{{file.metadata.description}}
+						
 					</td>
 
 
