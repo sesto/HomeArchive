@@ -103,9 +103,9 @@ angular
 									return;
 								} else {
 									console.log('Removing file with id: '
-											+ file.id);
+											+ file._id);
 									FileService.remove({
-										id : file.id
+										id : file._id
 									}).$promise.then(function() {
 										var idx = $scope.files.indexOf(file);
 										$scope.files.splice(idx, 1);
@@ -129,7 +129,7 @@ angular
 							// submits updated values to the service
 							$scope.update = function() {
 								FileService.update({
-									id : scopeFile.id
+									id : scopeFile._id
 								}, {
 									filename : $scope.file.fileName,
 									metadata:{

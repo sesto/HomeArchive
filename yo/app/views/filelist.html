@@ -83,7 +83,7 @@
 				<tr ng-repeat="file in $data">
 					<td data-title="'Index'">{{$index + 1}}</td>
 					<td data-title="'File Name'" sortable = "'filename'" filter="{ 'filename': 'text' }">{{file.filename}} </td>
-					<td data-title="'Date'" sortable = "'docDate'" >{{file.docDate | date:'dd-MM-yyyy'}}</td>
+					<td data-title="'Date'" sortable = "'docDate'" >{{file.uploadDate | date:'dd-MM-yyyy'}}</td>
 					<td data-title="'Description'">{{file.metadata.description}}
 						
 					</td>
@@ -91,7 +91,7 @@
 
 
 
-					<td><a href="http://localhost:8080/homearchive/rs/findFiles/{{file.id}}" class = "btn btn-success btn-xs">
+					<td><a href="http://localhost:8080/homearchive/rs/findFiles/{{file._id}}" class = "btn btn-success btn-xs">
                                         <span class="glyphicon glyphicon-download"></span>Download</a>
 						
 						<button type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">

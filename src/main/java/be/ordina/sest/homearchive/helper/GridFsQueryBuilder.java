@@ -82,31 +82,20 @@ public class GridFsQueryBuilder {
     public GridFsQueryBuilder addDateRange(final Date beginningDate, final Date endDate) {
 
         if (beginningDate != null) {
-            Date startBeginningDate = getBeginningOfDay(beginningDate);
+            Date startBeginningDate = DateUtils.getBeginningOfDay(beginningDate);
             if (endDate == null) {
-                Date endBeginningDate = getEndOfDay(beginningDate);
+                Date endBeginningDate = DateUtils.getEndOfDay(beginningDate);
                 createOrGetQuery(Criteria.where("uploadDate").gte(startBeginningDate).lte(endBeginningDate));
 
             } else {
-                Date endEndDate = getEndOfDay(endDate);
+                Date endEndDate = DateUtils.getEndOfDay(endDate);
                 createOrGetQuery(Criteria.where("uploadDate").gte(startBeginningDate).lte(endEndDate));
             }
         }else if(endDate!=null){
-            Date endEndDate = getEndOfDay(endDate);
+            Date endEndDate = DateUtils.getEndOfDay(endDate);
             createOrGetQuery(Criteria.where("uploadDate").lte(endEndDate));
         }
         return this;
-    }
-
-    private Date getBeginningOfDay(final Date beginningDate) {
-        return new DateTime(beginningDate).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0)
-            .withMillisOfSecond(0).toDate();
-    }
-
-    private Date getEndOfDay(final Date date) {
-        DateTime res =
-            new DateTime(date).withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).withMillisOfSecond(999);
-        return res.toDate();
     }
 
     /**
