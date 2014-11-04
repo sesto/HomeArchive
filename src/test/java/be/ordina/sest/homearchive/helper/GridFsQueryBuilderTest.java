@@ -30,7 +30,7 @@ public class GridFsQueryBuilderTest {
         System.out.println(builder.getQuery());
         List<String> tags = new ArrayList<>();
         tags.add("a tag");
-        builder.addTags(tags);
+        //        builder.addTags(tags);
         System.out.println(builder.getQuery());
         builder.addDateRange(startDate, endDate);
         System.out.println(builder.getQuery());

@@ -32,7 +32,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public GridFSDBFile downloadFileById(final RequestResponseDocument document) throws IOException {
-        String id = document.getId();
+        String id = document.get_id();
         GridFSDBFile dbFile = mongoDao.findDocumentById(id);
         return dbFile;
     }
@@ -40,11 +40,11 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<RequestResponseDocument> findDocuments(final RequestResponseDocument document) {
         String fileName = document.getFilename();
-        String documentType = document.getDocumentType();
+        String documentType = document.getContentType();
         String description = document.getMetadata().getDescription();
         Date startDate = document.getStartDate();
         Date endDate = document.getEndDate();
-        String id = document.getId();
+        String id = document.get_id();
         Query query =
             new GridFsQueryBuilder().addId(id).addFileName(fileName).addContentType(documentType)
             .addDescription(description).addDateRange(startDate, endDate).getQuery();
@@ -89,15 +89,13 @@ public class FileServiceImpl implements FileService {
         for (GridFSDBFile gridFSDBFile : fileList) {
             RequestResponseDocument document1 = new RequestResponseDocument();
             document1.setFilename(gridFSDBFile.getFilename());
-            document1.setId((gridFSDBFile.getId().toString()));
-            document1.setDocumentType(gridFSDBFile.getContentType());
+            document1.set_id((gridFSDBFile.getId().toString()));
+            document1.setContentType(gridFSDBFile.getContentType());
             String description = (String) gridFSDBFile.getMetaData().get("description");
             document1.getMetadata().setDescription(description);
-            document1.setDocDate((gridFSDBFile.getUploadDate()));
+            document1.setUploadDate((gridFSDBFile.getUploadDate()));
             documents.add(document1);
         }
-
         return documents;
     }
-
 }

@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import be.ordina.sest.homearchive.model.RequestResponseDocument;
 import be.ordina.sest.homearchive.model.UploadDocument;
 import be.ordina.sest.homearchive.service.FileService;
+import be.ordina.sest.homearchive.service.SearchService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -41,7 +42,10 @@ import com.mongodb.gridfs.GridFSDBFile;
 public class FileRsController {
 
     @Autowired
-    private FileService service;
+    private FileService fileService;
+
+    @Autowired
+    private SearchService searchService;
 
     /**
      *
@@ -56,8 +60,8 @@ public class FileRsController {
     public void downloadFile(@PathVariable("id") final String id, final HttpServletResponse response)
         throws IOException {
         RequestResponseDocument doc = new RequestResponseDocument();
-        doc.setId(id);
-        GridFSDBFile dbFile = service.downloadFileById(doc);
+        doc.set_id(id);
+        GridFSDBFile dbFile = fileService.downloadFileById(doc);
         String contentType = dbFile.getContentType();
         String fileName = dbFile.getFilename();
         response.setContentType(contentType);
@@ -83,7 +87,8 @@ public class FileRsController {
         RequestResponseDocument document = new RequestResponseDocument();
         log.debug("Received parameters: " + param);
         setParams(param, document);
-        return service.findDocuments(document);
+        //        return service.findDocuments(document);
+        return searchService.findDocuments(document);
     }
 
     /**
@@ -101,7 +106,7 @@ public class FileRsController {
         uploadDocument.setFile(file);
         log.debug("Received description: " + description);
         uploadDocument.setDescription(description);
-        service.uploadFile(uploadDocument);
+        fileService.uploadFile(uploadDocument);
     }
 
     /**
@@ -114,7 +119,7 @@ public class FileRsController {
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, value = "/findFiles/{id}")
     public void deleteDocument(@PathVariable("id") final String id) throws IOException {
-        service.deleteDocument(id);
+        fileService.deleteDocument(id);
 
     }
 
@@ -132,7 +137,7 @@ public class FileRsController {
         @RequestBody final RequestResponseDocument document) throws ParseException {
         log.debug("Received document" + document);
         log.debug("Updating document with _id:  " + id);
-        service.updateDocument(id, document);
+        fileService.updateDocument(id, document);
     }
 
     /**
