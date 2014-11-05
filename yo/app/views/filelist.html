@@ -83,7 +83,7 @@
 				<tr ng-repeat="file in $data">
 					<td data-title="'Index'">{{$index + 1}}</td>
 					<td data-title="'File Name'" sortable = "'filename'" filter="{ 'filename': 'text' }">{{file.filename}} </td>
-					<td data-title="'Date'" sortable = "'docDate'" >{{file.uploadDate | date:'dd-MM-yyyy'}}</td>
+					<td data-title="'Date'" sortable = "'uploadDate'" >{{file.uploadDate | date:'dd-MM-yyyy'}}</td>
 					<td data-title="'Description'">{{file.metadata.description}}
 						
 					</td>

@@ -25,13 +25,15 @@
 		<!-- Spring -->
 		<spring-framework.version>4.1.0.RELEASE</spring-framework.version>
 
-		<!-- Spring data-->
+		<!-- Spring data -->
 
 		<spring.data.mongodb.version>1.6.0.RELEASE</spring.data.mongodb.version>
 		<spring.data.elasticsearch.version>1.0.0.BUILD-SNAPSHOT</spring.data.elasticsearch.version>
 		<mongodb.version>2.12.1</mongodb.version>
-		
-		
+
+		<!-- elasticsearch plugins -->
+		<elasticsearch.mapper.attachments>2.4.0</elasticsearch.mapper.attachments>
+		<elasticsearch.river.mongodb>2.0.1</elasticsearch.river.mongodb>
 
 		<!-- Jackson -->
 		<jackson.databind-version>2.2.3</jackson.databind-version>
@@ -84,7 +86,19 @@
 			<artifactId>spring-data-elasticsearch</artifactId>
 			<version>${spring.data.elasticsearch.version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch-mapper-attachments</artifactId>
+			<version>${elasticsearch.mapper.attachments}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.richardwilly98.elasticsearch</groupId>
+			<artifactId>elasticsearch-river-mongodb</artifactId>
+			<version>${elasticsearch.river.mongodb}</version>
+		</dependency>
+
+
 		<!-- Other Web dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
