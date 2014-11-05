@@ -14,27 +14,46 @@ public class ElasticQueryBuilder {
 
     private BoolQueryBuilder queryBuilder;
 
+    /**
+     *
+     * adds filename to the query
+     *
+     * @param fileName
+     * @return {@link ElasticQueryBuilder}
+     */
     public ElasticQueryBuilder addFileName(final String fileName) {
         if (StringUtils.isNotEmpty(fileName)) {
-            getOrCreateQueryBuilder().must(new FuzzyLikeThisFieldQueryBuilder("filename")
-            .fuzziness(Fuzziness.fromEdits(2))
-            .maxQueryTerms(100)
-            .likeText(fileName));
+            getOrCreateQueryBuilder().must(
+                new FuzzyLikeThisFieldQueryBuilder("filename").fuzziness(Fuzziness.fromEdits(2)).maxQueryTerms(100)
+                .likeText(fileName));
         }
         return this;
     }
 
+    /**
+     *
+     * adds description to the query
+     *
+     * @param description
+     * @return {@link ElasticQueryBuilder}
+     */
     public ElasticQueryBuilder addDescription(final String description) {
         if (StringUtils.isNotEmpty(description)) {
             getOrCreateQueryBuilder().must(
-                new FuzzyLikeThisFieldQueryBuilder("metadata.description")
-                .fuzziness(Fuzziness.fromEdits(2))
-                .maxQueryTerms(100)
-                .likeText(description));
+                new FuzzyLikeThisFieldQueryBuilder("metadata.description").fuzziness(Fuzziness.fromEdits(2))
+                .maxQueryTerms(100).likeText(description));
         }
         return this;
     }
 
+    /**
+     * adds date range to the query
+     *
+     *
+     * @param beginningDate
+     * @param endDate
+     * @return {@link ElasticQueryBuilder}
+     */
     public ElasticQueryBuilder addDateRange(final Date beginningDate, final Date endDate) {
         if (beginningDate != null) {
             Date startBeginningDate = DateUtils.getBeginningOfDay(beginningDate);
@@ -56,10 +75,22 @@ public class ElasticQueryBuilder {
         return this;
     }
 
+    /**
+     *
+     * builds query
+     *
+     * @return {@link SearchQuery}
+     */
     public SearchQuery buildQuery() {
         return new NativeSearchQueryBuilder().withQuery(queryBuilder).build();
     }
 
+    /**
+     *
+     * gets {@link BoolQueryBuilder} or initializes, if is not initialized yet
+     *
+     * @return
+     */
     private BoolQueryBuilder getOrCreateQueryBuilder() {
         if (this.queryBuilder == null) {
             this.queryBuilder = new BoolQueryBuilder();

@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.query.Query;
 
-import be.ordina.sest.homearchive.model.RequestResponseDocument;
-
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 

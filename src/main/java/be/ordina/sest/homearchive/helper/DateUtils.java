@@ -4,18 +4,36 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
+/**
+ *
+ * Some useful methods for date
+ *
+ */
 public class DateUtils {
-
-
 
     private DateUtils() {
 
     }
 
-    public static Date getBeginningOfDay(final Date beginningDate) {
-        return new DateTime(beginningDate).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0)
-            .withMillisOfSecond(0).toDate();
+    /**
+     *
+     * returns beginning of a day
+     *
+     * @param beginningDate
+     * @return beginning of a day
+     */
+    public static Date getBeginningOfDay(final Date date) {
+        return new DateTime(date).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0)
+            .toDate();
     }
+
+    /**
+     *
+     * returns end of a day
+     *
+     * @param date
+     * @return end of a day
+     */
 
     public static Date getEndOfDay(final Date date) {
         DateTime res =

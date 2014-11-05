@@ -3,8 +3,6 @@ package be.ordina.sest.homearchive.service;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.data.mongodb.core.query.Query;
-
 import be.ordina.sest.homearchive.model.RequestResponseDocument;
 import be.ordina.sest.homearchive.model.UploadDocument;
 

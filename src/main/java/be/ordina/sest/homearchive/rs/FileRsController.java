@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +29,6 @@ import be.ordina.sest.homearchive.service.FileService;
 import be.ordina.sest.homearchive.service.SearchService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.gridfs.GridFSDBFile;
@@ -87,7 +83,6 @@ public class FileRsController {
         RequestResponseDocument document = new RequestResponseDocument();
         log.debug("Received parameters: " + param);
         setParams(param, document);
-        //        return service.findDocuments(document);
         return searchService.findDocuments(document);
     }
 

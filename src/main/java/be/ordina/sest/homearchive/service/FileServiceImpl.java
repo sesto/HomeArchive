@@ -1,6 +1,5 @@
 package be.ordina.sest.homearchive.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,6 +22,11 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 
+/**
+ *
+ * Implementation of {@link FileService}
+ *
+ */
 @Service
 @Log4j
 public class FileServiceImpl implements FileService {

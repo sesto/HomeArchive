@@ -8,6 +8,11 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+/**
+ *
+ * Document entity
+ *
+ */
 @Data
 @Document(indexName = "mongoindex", type = "requestresponseentity")
 public class RequestResponseDocument implements Serializable {
@@ -29,6 +34,12 @@ public class RequestResponseDocument implements Serializable {
 
     private Date uploadDate;
 
+    /**
+     *
+     * null-safe getter
+     *
+     * @return {@link Metadata}
+     */
     public Metadata getMetadata() {
         if (this.metadata == null) {
             this.metadata = new Metadata();

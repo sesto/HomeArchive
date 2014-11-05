@@ -5,7 +5,6 @@ import java.util.Date;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsCriteria;
