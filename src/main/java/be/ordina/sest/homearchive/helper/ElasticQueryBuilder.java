@@ -7,7 +7,6 @@ import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.FuzzyLikeThisFieldQueryBuilder;
 import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
@@ -17,7 +16,10 @@ public class ElasticQueryBuilder {
 
     public ElasticQueryBuilder addFileName(final String fileName) {
         if (StringUtils.isNotEmpty(fileName)) {
-            getOrCreateQueryBuilder().must(new WildcardQueryBuilder("filename", fileName + "*"));
+            getOrCreateQueryBuilder().must(new FuzzyLikeThisFieldQueryBuilder("filename")
+            .fuzziness(Fuzziness.fromEdits(2))
+            .maxQueryTerms(100)
+            .likeText(fileName));
         }
         return this;
     }
@@ -25,7 +27,10 @@ public class ElasticQueryBuilder {
     public ElasticQueryBuilder addDescription(final String description) {
         if (StringUtils.isNotEmpty(description)) {
             getOrCreateQueryBuilder().must(
-                new FuzzyLikeThisFieldQueryBuilder("metadata.description").fuzziness(Fuzziness.fromEdits(2)).maxQueryTerms(100).likeText(description));
+                new FuzzyLikeThisFieldQueryBuilder("metadata.description")
+                .fuzziness(Fuzziness.fromEdits(2))
+                .maxQueryTerms(100)
+                .likeText(description));
         }
         return this;
     }
