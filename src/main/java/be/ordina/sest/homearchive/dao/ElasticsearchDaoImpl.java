@@ -34,22 +34,23 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
     @Autowired
     private Client client;
 
-    @PostConstruct
-    public void setUpRiver() {
-
-        try {
-            XContentBuilder json =
-                jsonBuilder().startObject().field("type", "mongodb").field("mongodb").startObject()
-                .field("db", "homearchive_elastic").field("collection", "fs.files").endObject().field("index")
-                .startObject().field("name", "mongoindex").field("type", "requestresponseentity").endObject()
-                .endObject();
-            client.prepareIndex("_river", "mongodb", "_meta").setSource(json).execute();
-        } catch (IOException e) {
-            log.error("Error setting river: " + e.getCause());
-            e.printStackTrace();
-        }
-
-    }
+    //    @PostConstruct
+    //    public void setUpRiver() {
+    //
+    //        try {
+    //            XContentBuilder json =
+    //                jsonBuilder().startObject().field("type", "mongodb").field("mongodb").startObject()
+    //                .field("db", "homearchive_elastic").field("collection", "fs.files").endObject().field("index")
+    //                .startObject().field("name", "mongoindex").field("type", "requestresponseentity").endObject()
+    //                .endObject();
+    //            client.prepareIndex("_river", "mongodb", "_meta").setSource(json).execute();
+    //
+    //        } catch (IOException e) {
+    //            log.error("Error setting river: " + e.getCause());
+    //            e.printStackTrace();
+    //        }
+    //
+    //    }
 
     @Override
     public List<RequestResponseDocument> findDocuments(final RequestResponseDocument document) {
