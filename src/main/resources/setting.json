@@ -1,0 +1,28 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "homearchive_ngram_analyzer": {
+          "filter": [
+            "lowercase",
+            "homearchive_ngram_filter"
+          ],
+          "tokenizer": "whitespace"
+        }
+      },
+      "filter": {
+        "homearchive_ngram_filter": {
+          "type": "edgeNGram",
+          "min_gram": "1",
+          "max_gram": "10",
+          "token_chars": [
+            "letter",
+            "digit",
+            "whitespace",
+            "punctuation"
+          ]
+        }
+      }
+    }
+  }
+}

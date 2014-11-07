@@ -36,7 +36,7 @@
 
 	<elasticsearch:transport-client id="client"
 		cluster-nodes="localhost:9300" />
-<!-- 	<elasticsearch:node-client id="client" local="true" />  -->
+<!--   	<elasticsearch:node-client id="client" local="true" />  -->
 
 	<bean name="elasticsearchTemplate"
 		class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
