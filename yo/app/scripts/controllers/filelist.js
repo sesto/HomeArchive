@@ -1,5 +1,5 @@
 'use strict';
-
+	/* jshint ignore:start */
 /**
  * @ngdoc function
  * @name homearchiveApp.controller:FilelistCtrl
@@ -22,7 +22,9 @@ angular
 
 							var scopeFile;
 							var clean;
+
 							$scope.tableParams = new ngTableParams(
+
 									{
 										page : 1, // show first page
 										count : 10,
@@ -58,7 +60,7 @@ angular
 
 							// does search with parameters
 							$scope.submit = function() {
-							
+
 								var queryParams = {
 									'params' : {
 										fileName : $scope.file.fileName,
@@ -147,3 +149,4 @@ angular
 							};
 
 						} ]);
+	/* jshint ignore:end */

@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
-  
+
 //Load proxy
   grunt.loadNpmTasks('grunt-connect-proxy');
 
@@ -25,7 +25,7 @@ module.exports = function (grunt) {
   };
 
   var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
-  
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -404,8 +404,8 @@ module.exports = function (grunt) {
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'connect:test',
-    'karma'
+    'connect:test'
+   // 'karma'
   ]);
 
   grunt.registerTask('build', [
