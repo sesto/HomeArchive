@@ -87,8 +87,8 @@ public class MongoDaoImpl implements MongoDao {
     }
 
     @Override
-    public GridFSDBFile findDocumentById(final String id) {
-        Query query = new GridFsQueryBuilder().addId(id).getQuery();
+    public GridFSDBFile findDocument(final Query query) {
+
         return gridFsTemlate.findOne(query);
     }
 
@@ -98,8 +98,8 @@ public class MongoDaoImpl implements MongoDao {
     }
 
     @Override
-    public void deleteDocument(final String id) {
-        Query query = new GridFsQueryBuilder().addId(id).getQuery();
+    public void deleteDocument(final Query query) {
+
         gridFsTemlate.delete(query);
     }
 

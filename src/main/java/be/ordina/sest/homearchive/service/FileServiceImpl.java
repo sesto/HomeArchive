@@ -23,9 +23,7 @@ import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 
 /**
- *
  * Implementation of {@link FileService}
- *
  */
 @Service
 @Log4j
@@ -36,25 +34,19 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public GridFSDBFile downloadFileById(final RequestResponseDocument document) throws IOException {
-        String id = document.get_id();
-        GridFSDBFile dbFile = mongoDao.findDocumentById(id);
+        Query query = getSingleDocumentQuery(document);
+        GridFSDBFile dbFile = mongoDao.findDocument(query);
         return dbFile;
     }
 
     @Override
     public List<RequestResponseDocument> findDocuments(final RequestResponseDocument document) {
-        String fileName = document.getFilename();
-        String documentType = document.getContentType();
-        String description = document.getMetadata().getDescription();
-        Date startDate = document.getStartDate();
-        Date endDate = document.getEndDate();
-        String id = document.get_id();
         Query query =
-            new GridFsQueryBuilder().addId(id).addFileName(fileName).addContentType(documentType)
-            .addDescription(description).addDateRange(startDate, endDate).getQuery();
-        log.info("Starting seacrh with query: " + query);
-        log.info("Found documents: " + mongoDao.findDocuments(query));
-        return setDocumentFields(mongoDao.findDocuments(query));
+               getMultipleDocumentQuery(document);
+        List<GridFSDBFile> docList = mongoDao.findDocuments(query);
+        log.info("Starting search with query: " + query);
+        log.info("Found documents: " + docList);
+        return setDocumentFields(docList);
     }
 
     @Override
@@ -69,26 +61,24 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void deleteDocument(final String id) {
-        mongoDao.deleteDocument(id);
+        Query query = new GridFsQueryBuilder().addId(id).getQuery();
+        mongoDao.deleteDocument(query);
     }
 
     @Override
     public void updateDocument(final String id, final RequestResponseDocument document) {
-        DBObject update = new BasicDBObject();
-        update.put("filename", document.getFilename());
-        update.put("metadata", new BasicDBObject("description", document.getMetadata().getDescription()));
-        log.debug("Update db object: " + update);
-        mongoDao.updateDocument(id, new BasicDBObject("$set", update));
+        DBObject update = getUpdateQuery(document);
+        log.debug("Update query: "+ update);
+        mongoDao.updateDocument(id, update);
     }
 
     /**
-     *
      * Stores file data in the RequestResponseDocument
      *
      * @param fileList
      * @return List<RequestResponseDocument>
      */
-    private List<RequestResponseDocument> setDocumentFields(final List<GridFSDBFile> fileList) {
+    protected List<RequestResponseDocument> setDocumentFields(final List<GridFSDBFile> fileList) {
         List<RequestResponseDocument> documents = new ArrayList<RequestResponseDocument>();
         for (GridFSDBFile gridFSDBFile : fileList) {
             RequestResponseDocument document1 = new RequestResponseDocument();
@@ -101,5 +91,46 @@ public class FileServiceImpl implements FileService {
             documents.add(document1);
         }
         return documents;
+    }
+
+    /**
+     * builds query to search multiple documents
+     * @param document
+     * @return query
+     */
+    protected Query getMultipleDocumentQuery(final RequestResponseDocument document) {
+        String fileName = document.getFilename();
+        String documentType = document.getContentType();
+        String description = document.getMetadata().getDescription();
+        Date startDate = document.getStartDate();
+        Date endDate = document.getEndDate();
+        String id = document.get_id();
+        Query query =
+                new GridFsQueryBuilder().addId(id).addFileName(fileName).addContentType(documentType)
+                        .addDescription(description).addDateRange(startDate, endDate).getQuery();
+        return query;
+    }
+
+    /**
+     * builds query to return single document
+     * @param document
+     * @return
+     */
+    protected Query getSingleDocumentQuery(final RequestResponseDocument document){
+        String id = document.get_id();
+        Query query = new GridFsQueryBuilder().addId(id).getQuery();
+        return query;
+    }
+
+    /**
+     * returns query for updating document
+     * @param document
+     * @return
+     */
+    protected DBObject getUpdateQuery(final RequestResponseDocument document){
+        DBObject update = new BasicDBObject();
+        update.put("filename", document.getFilename());
+        update.put("metadata", new BasicDBObject("description", document.getMetadata().getDescription()));
+        return new BasicDBObject("$set", update);
     }
 }

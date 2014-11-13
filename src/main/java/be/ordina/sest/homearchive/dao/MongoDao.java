@@ -14,7 +14,7 @@ public interface MongoDao {
      * Saves file in MongoDB
      *
      * @param content
-     * @param contenType
+     * @param contentType
      * @param fileName
      * @param metaData
      * @throws FileNotFoundException
@@ -26,11 +26,11 @@ public interface MongoDao {
      *
      * returns one document
      *
-     * @param fileName
+     * @param query
      * @return document
      */
 
-    GridFSDBFile findDocumentById(final String fileName);
+    GridFSDBFile findDocument(final Query query);
 
     /**
      *
@@ -42,7 +42,11 @@ public interface MongoDao {
 
     List<GridFSDBFile> findDocuments(final Query query);
 
-    void deleteDocument(final String id);
+    /**
+     * Deletes document
+     * @param query
+     */
+    void deleteDocument(final Query query);
 
     /**
      * updates metadata
