@@ -19,7 +19,7 @@ public class GridFsQueryBuilder {
     public Query query;
 
     /**
-     * adds filename to the query TODO
+     * adds filename to the query
      *
      * @param fileName
      * @return QueryBuilder
@@ -66,7 +66,7 @@ public class GridFsQueryBuilder {
      *
      * adds list of tags
      *
-     * @param tags
+     * @param description
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addDescription (final String description) {

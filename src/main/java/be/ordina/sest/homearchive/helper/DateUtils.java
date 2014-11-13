@@ -19,7 +19,7 @@ public class DateUtils {
      *
      * returns beginning of a day
      *
-     * @param beginningDate
+     * @param date
      * @return beginning of a day
      */
     public static Date getBeginningOfDay(final Date date) {
