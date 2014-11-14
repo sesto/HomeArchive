@@ -3,6 +3,7 @@ package be.ordina.sest.homearchive.dao;
 import java.util.List;
 
 import be.ordina.sest.homearchive.model.RequestResponseDocument;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 /**
  *
@@ -15,8 +16,8 @@ public interface ElasticsearchDao {
      *
      * searches for documents using elasticsearch
      *
-     * @param document
+     * @param query
      * @return List<RequestResponseDocument>
      */
-    List<RequestResponseDocument> findDocuments(final RequestResponseDocument document);
+    List<RequestResponseDocument> findDocuments(final SearchQuery query);
 }

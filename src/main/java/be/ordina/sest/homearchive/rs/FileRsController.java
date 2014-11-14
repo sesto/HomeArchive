@@ -1,37 +1,26 @@
 package be.ordina.sest.homearchive.rs;
 
+import be.ordina.sest.homearchive.model.RequestResponseDocument;
+import be.ordina.sest.homearchive.model.UploadDocument;
+import be.ordina.sest.homearchive.service.FileService;
+import be.ordina.sest.homearchive.service.SearchService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.gridfs.GridFSDBFile;
+import lombok.extern.log4j.Log4j;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
-import lombok.extern.log4j.Log4j;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import be.ordina.sest.homearchive.model.RequestResponseDocument;
-import be.ordina.sest.homearchive.model.UploadDocument;
-import be.ordina.sest.homearchive.service.FileService;
-import be.ordina.sest.homearchive.service.SearchService;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.gridfs.GridFSDBFile;
 
 @Log4j
 @RestController
@@ -44,17 +33,16 @@ public class FileRsController {
     private SearchService searchService;
 
     /**
-     *
      * Downloads file
      *
-     * @param id
-     * @param response
+     * @param id       String id
+     * @param response HttpServletResponse
      * @throws IOException
      */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles/{id}")
     public void downloadFile(@PathVariable("id") final String id, final HttpServletResponse response)
-        throws IOException {
+            throws IOException {
         RequestResponseDocument doc = new RequestResponseDocument();
         doc.set_id(id);
         GridFSDBFile dbFile = fileService.downloadFileById(doc);
@@ -67,19 +55,17 @@ public class FileRsController {
     }
 
     /**
-     *
      * Searches for files
      *
-     * @param param
-     * @return
+     * @param param String
+     * @return list of documents
      * @throws ParseException
      * @throws IOException
-     * @throws JsonProcessingException
      */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles")
     public List<RequestResponseDocument> findFiles(@RequestParam("params") final String param) throws ParseException,
-    JsonProcessingException, IOException {
+            IOException {
         RequestResponseDocument document = new RequestResponseDocument();
         log.debug("Received parameters: " + param);
         setParams(param, document);
@@ -89,14 +75,13 @@ public class FileRsController {
     /**
      * uploads file
      *
-     *
-     * @param file
-     * @param tags
+     * @param file        MultipartFile
+     * @param description String
      * @throws IOException
      */
     @RequestMapping(value = "/findFiles", method = RequestMethod.POST)
     public void uploadFile(@RequestParam("file") final MultipartFile file,
-        @RequestParam("description") final String description) throws IOException {
+                           @RequestParam("description") final String description) throws IOException {
         UploadDocument uploadDocument = new UploadDocument();
         uploadDocument.setFile(file);
         log.debug("Received description: " + description);
@@ -105,10 +90,9 @@ public class FileRsController {
     }
 
     /**
-     *
      * deletes file
      *
-     * @param id
+     * @param id String
      * @throws IOException
      */
     @ResponseStatus(value = HttpStatus.OK)
@@ -119,34 +103,30 @@ public class FileRsController {
     }
 
     /**
-     *
      * updates document metadata
      *
-     * @param id
-     * @param param
+     * @param id       String
+     * @param document {@link RequestResponseDocument}
      * @throws ParseException
      */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.PUT, value = "/findFiles/{id}")
     public void updateDocument(@PathVariable("id") final String id,
-        @RequestBody final RequestResponseDocument document) throws ParseException {
+                               @RequestBody final RequestResponseDocument document) throws ParseException {
         log.debug("Received document" + document);
         log.debug("Updating document with _id:  " + id);
         fileService.updateDocument(id, document);
     }
 
     /**
-     *
      * Stores request parameters in RequestRequestDocument fields
      *
-     * @param param
-     * @param document
-     * @throws ParseException
+     * @param jsonParams String
+     * @param document   {@link RequestResponseDocument}
      * @throws IOException
-     * @throws JsonProcessingException
      */
-    private void setParams(final String jsonParams, final RequestResponseDocument document) throws ParseException,
-    JsonProcessingException, IOException {
+    private void setParams(final String jsonParams, final RequestResponseDocument document) throws
+            IOException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode params = mapper.readTree(jsonParams);
         if (params.get("fileName") != null && !params.get("fileName").asText().equals("null")) {
@@ -172,11 +152,10 @@ public class FileRsController {
     }
 
     /**
-     * Parses string representatation of the date
+     * Parses string representation of the date
      *
-     * @param date
-     * @return
-     * @throws ParseException
+     * @param date String
+     * @return parsedDate
      */
     private Date parseDate(final String date) throws ParseException {
         Date parsedDate = null;

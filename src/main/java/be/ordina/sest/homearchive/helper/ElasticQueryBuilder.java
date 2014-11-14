@@ -1,9 +1,6 @@
 package be.ordina.sest.homearchive.helper;
 
-import java.util.Date;
-
 import org.apache.commons.lang.StringUtils;
-import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
@@ -11,6 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
+import java.util.Date;
+
+/**
+ * Builds elasticsearch query
+ */
 public class ElasticQueryBuilder {
 
     private BoolQueryBuilder queryBuilder;
@@ -19,7 +21,7 @@ public class ElasticQueryBuilder {
      *
      * adds filename to the query
      *
-     * @param fileName
+     * @param fileName String
      * @return {@link ElasticQueryBuilder}
      */
     public ElasticQueryBuilder addFileName(final String fileName) {
@@ -34,7 +36,7 @@ public class ElasticQueryBuilder {
      *
      * adds description to the query
      *
-     * @param description
+     * @param description String
      * @return {@link ElasticQueryBuilder}
      */
 
@@ -51,8 +53,8 @@ public class ElasticQueryBuilder {
      * adds date range to the query
      *
      *
-     * @param beginningDate
-     * @param endDate
+     * @param beginningDate Date
+     * @param endDate Date
      * @return {@link ElasticQueryBuilder}
      */
     public ElasticQueryBuilder addDateRange(final Date beginningDate, final Date endDate) {
@@ -90,7 +92,7 @@ public class ElasticQueryBuilder {
      *
      * gets {@link BoolQueryBuilder} or initializes, if is not initialized yet
      *
-     * @return
+     * @return queryBuilder
      */
     private BoolQueryBuilder getOrCreateQueryBuilder() {
         if (this.queryBuilder == null) {

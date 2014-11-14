@@ -1,25 +1,22 @@
 package be.ordina.sest.homearchive.dao;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
+import be.ordina.sest.homearchive.helper.ElasticQueryBuilder;
+import be.ordina.sest.homearchive.helper.JSONHelper;
+import be.ordina.sest.homearchive.model.RequestResponseDocument;
 import lombok.extern.log4j.Log4j;
-
 import org.elasticsearch.client.Client;
 import org.elasticsearch.cluster.ClusterState;
 import org.elasticsearch.cluster.metadata.IndexMetaData;
-import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Repository;
 
-import be.ordina.sest.homearchive.helper.ElasticQueryBuilder;
-import be.ordina.sest.homearchive.helper.JSONHelper;
-import be.ordina.sest.homearchive.model.RequestResponseDocument;
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -32,7 +29,9 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
     @Autowired
     private ElasticsearchTemplate template;
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
+    @Qualifier("client")
     private Client client;
 
     @PostConstruct
@@ -64,14 +63,11 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
     }
 
     @Override
-    public List<RequestResponseDocument> findDocuments(final RequestResponseDocument document) {
-        List<RequestResponseDocument> docList = new ArrayList<RequestResponseDocument>();
-        SearchQuery query =
-            new ElasticQueryBuilder().addFileName(document.getFilename())
-            .addDescription(document.getMetadata().getDescription())
-            .addDateRange(document.getStartDate(), document.getEndDate()).buildQuery();
-        docList = template.queryForList(query, RequestResponseDocument.class);
-        return docList;
+    public List<RequestResponseDocument> findDocuments(final SearchQuery query) {
+
+
+
+        return  template.queryForList(query, RequestResponseDocument.class);
     }
 
 }

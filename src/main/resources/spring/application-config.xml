@@ -32,7 +32,7 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<!-- Elastic search -->
-	<elasticsearch:repositories base-package="be.ordina.sest.homearchive.dao" />
+<!--	<elasticsearch:repositories base-package="be.ordina.sest.homearchive.dao" /> -->
 
 	<elasticsearch:transport-client id="client"
 		cluster-nodes="localhost:9300" />
