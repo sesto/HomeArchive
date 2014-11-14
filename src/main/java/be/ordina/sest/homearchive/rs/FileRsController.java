@@ -64,7 +64,7 @@ public class FileRsController {
      */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/findFiles")
-    public List<RequestResponseDocument> findFiles(@RequestParam("params") final String param) throws ParseException,
+    public List<RequestResponseDocument> findFiles(@RequestParam(value = "params", required = false) final String param) throws ParseException,
             IOException {
         RequestResponseDocument document = new RequestResponseDocument();
         log.debug("Received parameters: " + param);
@@ -128,27 +128,29 @@ public class FileRsController {
     private void setParams(final String jsonParams, final RequestResponseDocument document) throws
             IOException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode params = mapper.readTree(jsonParams);
-        if (params.get("fileName") != null && !params.get("fileName").asText().equals("null")) {
-            document.setFilename(params.get("fileName").asText());
-        }
-        if (params.get("startDate") != null) {
-            String startDate = params.get("startDate").asText();
-            document.setStartDate(parseDate(startDate));
-        }
-        if (params.get("endDate") != null) {
-            String endDate = params.get("endDate").asText();
-            document.setEndDate(parseDate(endDate));
-        }
-
-        String description = null;
-        if (params.get("metadata") != null) {
-            JsonNode metadata = params.get("metadata");
-            if (metadata.get("description") != null) {
-                description = metadata.get("description").asText();
+        if (StringUtils.isNotBlank(jsonParams)) {
+            JsonNode params = mapper.readTree(jsonParams);
+            if (params.get("fileName") != null && !params.get("fileName").asText().equals("null")) {
+                document.setFilename(params.get("fileName").asText());
             }
+            if (params.get("startDate") != null) {
+                String startDate = params.get("startDate").asText();
+                document.setStartDate(parseDate(startDate));
+            }
+            if (params.get("endDate") != null) {
+                String endDate = params.get("endDate").asText();
+                document.setEndDate(parseDate(endDate));
+            }
+
+            String description = null;
+            if (params.get("metadata") != null) {
+                JsonNode metadata = params.get("metadata");
+                if (metadata.get("description") != null) {
+                    description = metadata.get("description").asText();
+                }
+            }
+            document.getMetadata().setDescription(description);
         }
-        document.getMetadata().setDescription(description);
     }
 
     /**

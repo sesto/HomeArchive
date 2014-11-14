@@ -16,7 +16,7 @@
         <!-- Web -->
         <jsp.version>2.2</jsp.version>
         <jstl.version>1.2</jstl.version>
-        <servlet.version>2.5</servlet.version>
+        <servlet.version>3.1.0</servlet.version>
 
         <!-- lombok -->
         <lombok.version>1.14.2</lombok.version>
@@ -109,7 +109,7 @@
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.version}</version>
      <!--       <scope>provided</scope> -->
         </dependency>
