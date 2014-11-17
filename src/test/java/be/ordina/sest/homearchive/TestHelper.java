@@ -1,10 +1,17 @@
 package be.ordina.sest.homearchive;
 
 import be.ordina.sest.homearchive.model.RequestResponseDocument;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.MediaType;
 import com.mongodb.BasicDBObject;
 import com.mongodb.gridfs.GridFSDBFile;
+
 import org.joda.time.DateTime;
 
+
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.*;
 
 /**
@@ -29,6 +36,8 @@ public class TestHelper {
 
     public static final Date UPLOAD_DATE_1 = new DateTime(2014, 11, 7, 0, 0).toDate();
     public static final Date UPLOAD_DATE_2 = new DateTime(2014, 11, 8, 0, 0).toDate();
+
+    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
 
 
@@ -85,5 +94,13 @@ public class TestHelper {
         fileList.add(getFile1());
         fileList.add(getFile2());
         return fileList;
+    }
+
+
+
+    public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return mapper.writeValueAsBytes(object);
     }
 }
