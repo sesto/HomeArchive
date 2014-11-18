@@ -16,7 +16,7 @@ public interface ElasticsearchDao {
      *
      * searches for documents using elasticsearch
      *
-     * @param query
+     * @param query search query
      * @return List<RequestResponseDocument>
      */
     List<RequestResponseDocument> findDocuments(final SearchQuery query);

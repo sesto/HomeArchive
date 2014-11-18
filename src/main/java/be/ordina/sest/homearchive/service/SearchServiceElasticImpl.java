@@ -1,5 +1,7 @@
 package be.ordina.sest.homearchive.service;
-
+/**
+ * Elasticsearch implementation
+ */
 import be.ordina.sest.homearchive.dao.ElasticsearchDao;
 import be.ordina.sest.homearchive.helper.ElasticQueryBuilder;
 import be.ordina.sest.homearchive.model.RequestResponseDocument;

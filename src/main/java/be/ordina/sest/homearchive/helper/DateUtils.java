@@ -14,12 +14,11 @@ public class DateUtils {
     private DateUtils() {
 
     }
-
     /**
      *
      * returns beginning of a day
      *
-     * @param date
+     * @param date date
      * @return beginning of a day
      */
     public static Date getBeginningOfDay(final Date date) {
@@ -31,7 +30,7 @@ public class DateUtils {
      *
      * returns end of a day
      *
-     * @param date
+     * @param date date
      * @return end of a day
      */
 

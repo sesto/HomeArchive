@@ -1,5 +1,7 @@
 package be.ordina.sest.homearchive.service;
-
+/**
+ * Implementation of {@link be.ordina.sest.homearchive.service.FileService}
+ */
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,8 +38,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public GridFSDBFile downloadFileById(final RequestResponseDocument document) throws IOException {
         Query query = getSingleDocumentQuery(document);
-        GridFSDBFile dbFile = mongoDao.findDocument(query);
-        return dbFile;
+        return mongoDao.findDocument(query);
     }
 
     @Override
@@ -67,19 +69,18 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void updateDocument(final String id, final RequestResponseDocument document) {
-        DBObject update = getUpdateQuery(document);
-        log.debug("Update query: "+ update);
+        Update update = getUpdateQuery(document);
         mongoDao.updateDocument(id, update);
     }
 
     /**
      * Stores file data in the RequestResponseDocument
      *
-     * @param fileList
+     * @param fileList list of GridFsFiles
      * @return List<RequestResponseDocument>
      */
     protected List<RequestResponseDocument> setDocumentFields(final List<GridFSDBFile> fileList) {
-        List<RequestResponseDocument> documents = new ArrayList<RequestResponseDocument>();
+        List<RequestResponseDocument> documents = new ArrayList<>();
         for (GridFSDBFile gridFSDBFile : fileList) {
             RequestResponseDocument document1 = new RequestResponseDocument();
             document1.setFilename(gridFSDBFile.getFilename());
@@ -95,7 +96,7 @@ public class FileServiceImpl implements FileService {
 
     /**
      * builds query to search multiple documents
-     * @param document
+     * @param document {@link be.ordina.sest.homearchive.model.RequestResponseDocument}
      * @return query
      */
     protected Query getMultipleDocumentQuery(final RequestResponseDocument document) {
@@ -105,32 +106,30 @@ public class FileServiceImpl implements FileService {
         Date startDate = document.getStartDate();
         Date endDate = document.getEndDate();
         String id = document.get_id();
-        Query query =
-                new GridFsQueryBuilder().addId(id).addFileName(fileName).addContentType(documentType)
-                        .addDescription(description).addDateRange(startDate, endDate).getQuery();
-        return query;
+        return new GridFsQueryBuilder().addId(id).addFileName(fileName).addContentType(documentType)
+                .addDescription(description).addDateRange(startDate, endDate).getQuery();
     }
 
     /**
      * builds query to return single document
-     * @param document
-     * @return
+     * @param document {@link RequestResponseDocument}
+     * @return query
      */
     protected Query getSingleDocumentQuery(final RequestResponseDocument document){
         String id = document.get_id();
-        Query query = new GridFsQueryBuilder().addId(id).getQuery();
-        return query;
+        return new GridFsQueryBuilder().addId(id).getQuery();
     }
 
     /**
      * returns query for updating document
-     * @param document
-     * @return
+     * @param requestResponseDocument {@link RequestResponseDocument}
+     * @return update
      */
-    protected DBObject getUpdateQuery(final RequestResponseDocument document){
-        DBObject update = new BasicDBObject();
-        update.put("filename", document.getFilename());
-        update.put("metadata", new BasicDBObject("description", document.getMetadata().getDescription()));
-        return new BasicDBObject("$set", update);
+
+    protected Update getUpdateQuery(final  RequestResponseDocument requestResponseDocument){
+        Update update = new Update();
+        update.set("filename", requestResponseDocument.getFilename());
+        update.set("metadata", new BasicDBObject("description", requestResponseDocument.getMetadata().getDescription()));
+        return update;
     }
 }

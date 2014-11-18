@@ -1,5 +1,7 @@
 package be.ordina.sest.homearchive.helper;
-
+/**
+ * Helper class to configure
+ */
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 import java.io.IOException;
@@ -10,11 +12,20 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 
 @Log4j
 public class JSONHelper {
-
+    /**
+     * replaces all " with \"
+     * @param source source
+     * @return resulted string
+     */
     public static String convertString(final String source) {
         return source.replaceAll("\"", "\\\\\"");
     }
 
+    /**
+     * Builds mappings
+     * @return XContentBuilder
+     * @throws IOException
+     */
     public static XContentBuilder getMapping() throws IOException {
         return jsonBuilder()
                 .startObject()
@@ -37,6 +48,11 @@ public class JSONHelper {
                 .endObject();
     }
 
+    /**
+     * Builds index settings, such as analyzer
+     * @return XContentBuilder
+     * @throws IOException
+     */
     public static XContentBuilder getSettings() throws IOException {
 
         return jsonBuilder()
@@ -62,6 +78,11 @@ public class JSONHelper {
                 .endObject();
     }
 
+    /**
+     * Builds river settings
+     * @return XContentBuilder
+     * @throws IOException
+     */
     public static XContentBuilder getRiverSettings() throws IOException {
         return jsonBuilder()
                 .startObject()

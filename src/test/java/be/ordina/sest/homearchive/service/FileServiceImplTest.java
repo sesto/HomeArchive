@@ -125,18 +125,18 @@ public class FileServiceImplTest {
         verify(mongoDao, times(1)).deleteDocument(any(Query.class));
     }
 
-    @Test
-    public void testUpdateDocument() throws Exception {
-        fileService.updateDocument(TestHelper.ID_1, requestResponseDocument);
-        verify(mongoDao, times(1)).updateDocument(eq(TestHelper.ID_1), any(DBObject.class));
-    }
-
-    @Test
-    public void testGetUpdateQuery() throws Exception {
-        DBObject expectedFields = new BasicDBObject();
-        expectedFields.put("filename", TestHelper.FILE_NAME_1);
-        expectedFields.put("metadata", new BasicDBObject("description", TestHelper.DESCRIPTION_1));
-        DBObject expectedUpdate = new BasicDBObject("$set", expectedFields);
-        assertEquals(expectedUpdate, fileService.getUpdateQuery(requestResponseDocument));
-    }
+//    @Test
+//    public void testUpdateDocument() throws Exception {
+//        fileService.updateDocument(TestHelper.ID_1, requestResponseDocument);
+//        verify(mongoDao, times(1)).updateDocument(eq(TestHelper.ID_1), any(DBObject.class));
+//    }
+//
+//    @Test
+//    public void testGetUpdateQuery() throws Exception {
+//        DBObject expectedFields = new BasicDBObject();
+//        expectedFields.put("filename", TestHelper.FILE_NAME_1);
+//        expectedFields.put("metadata", new BasicDBObject("description", TestHelper.DESCRIPTION_1));
+//        DBObject expectedUpdate = new BasicDBObject("$set", expectedFields);
+//        assertEquals(expectedUpdate, fileService.getUpdateQuery(requestResponseDocument));
+//    }
 }

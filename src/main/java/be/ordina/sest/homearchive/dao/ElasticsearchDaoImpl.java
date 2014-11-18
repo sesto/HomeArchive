@@ -1,6 +1,5 @@
 package be.ordina.sest.homearchive.dao;
 
-import be.ordina.sest.homearchive.helper.ElasticQueryBuilder;
 import be.ordina.sest.homearchive.helper.JSONHelper;
 import be.ordina.sest.homearchive.model.RequestResponseDocument;
 import lombok.extern.log4j.Log4j;
@@ -15,13 +14,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * implementation of {@link ElasticsearchDao}
- *
  */
 @Repository
 @Log4j
@@ -34,22 +30,22 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
     @Qualifier("client")
     private Client client;
 
+    /**
+     * Sets initial river configuration and mappings, if not present
+     *
+     * @throws IOException
+     */
     @PostConstruct
     public void setUpRiver() throws IOException {
-
-        // InputStream res = this.getClass().getResourceAsStream("mapping.json");
-        // log.debug("The stream: " + res);
-        // byte[] bytes = IOUtils.toByteArray(res);
-        //
         ClusterState clusterState =
-            client.admin().cluster().prepareState().setIndices("mongoindex", "_river").execute().actionGet()
-            .getState();
+                client.admin().cluster().prepareState().setIndices("mongoindex", "_river").execute().actionGet()
+                        .getState();
         IndexMetaData mongoindexMetadata = clusterState.getMetaData().index("mongoindex");
         if (mongoindexMetadata == null) {
             log.info("Adding elasticsearch settings: " + JSONHelper.getSettings());
             log.info("Adding mappings: " + JSONHelper.getMapping());
             client.admin().indices().prepareCreate("mongoindex").setSource(JSONHelper.getSettings())
-            .addMapping("requestresponseentity", JSONHelper.getMapping()).execute();
+                    .addMapping("requestresponseentity", JSONHelper.getMapping()).execute();
         } else {
             log.info("Mongoindex Mappings already exist. Not adding any mappings");
         }
@@ -64,10 +60,7 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
 
     @Override
     public List<RequestResponseDocument> findDocuments(final SearchQuery query) {
-
-
-
-        return  template.queryForList(query, RequestResponseDocument.class);
+        return template.queryForList(query, RequestResponseDocument.class);
     }
 
 }

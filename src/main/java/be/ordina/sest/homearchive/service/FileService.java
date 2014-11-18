@@ -1,5 +1,7 @@
 package be.ordina.sest.homearchive.service;
-
+/**
+ * Service downloads, uploads and modifies files
+ */
 import java.io.IOException;
 import java.util.List;
 
@@ -10,10 +12,10 @@ import com.mongodb.gridfs.GridFSDBFile;
 
 public interface FileService {
     /**
-     * Downloads file by id TODO
+     * Downloads file by id
      *
-     * @param downloadDocument
-     * @return
+     * @param downloadDocument query document {@link be.ordina.sest.homearchive.model.RequestResponseDocument}
+     * @return GridFSDBFile
      * @throws IOException
      */
     GridFSDBFile downloadFileById(final RequestResponseDocument downloadDocument) throws IOException;
@@ -21,7 +23,7 @@ public interface FileService {
      *
      * Searches for documents in db
      *
-     * @param document
+     * @param document query document {@link be.ordina.sest.homearchive.model.RequestResponseDocument}
      * @return {@link RequestResponseDocument}
      */
 
@@ -39,7 +41,7 @@ public interface FileService {
      *
      * Uploads file
      *
-     * @param id
+     * @param id id of the document
      */
 
     public void deleteDocument(final String id);
@@ -48,8 +50,8 @@ public interface FileService {
      *
      * udates metadata
      *
-     * @param id
-     * @param document
+     * @param id id of the document
+     * @param document {@link be.ordina.sest.homearchive.model.RequestResponseDocument}
      */
     void updateDocument(final String id, final RequestResponseDocument document);
 

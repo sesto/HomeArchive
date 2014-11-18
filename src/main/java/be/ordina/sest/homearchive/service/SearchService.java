@@ -1,5 +1,7 @@
 package be.ordina.sest.homearchive.service;
-
+/**
+ * Elasticsearch service
+ */
 import java.util.List;
 
 import be.ordina.sest.homearchive.model.RequestResponseDocument;
@@ -14,7 +16,7 @@ public interface SearchService {
      *
      * Returns results of the elastic search
      *
-     * @param document
+     * @param document query document {@link be.ordina.sest.homearchive.model.RequestResponseDocument}
      * @return List<RequestResponseDocument>
      */
     List<RequestResponseDocument> findDocuments(final RequestResponseDocument document);

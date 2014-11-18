@@ -21,7 +21,7 @@ public class GridFsQueryBuilder {
     /**
      * adds filename to the query
      *
-     * @param fileName
+     * @param fileName name of the file
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addFileName(final String fileName) {
@@ -36,7 +36,7 @@ public class GridFsQueryBuilder {
      *
      * adds _id to search
      *
-     * @param id
+     * @param id document id
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addId(final String id) {
@@ -51,7 +51,7 @@ public class GridFsQueryBuilder {
      *
      * adds content type to the query
      *
-     * @param contentType
+     * @param contentType content type
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addContentType(final String contentType) {
@@ -64,9 +64,9 @@ public class GridFsQueryBuilder {
 
     /**
      *
-     * adds list of tags
+     * adds description
      *
-     * @param description
+     * @param description document description
      * @return QueryBuilder
      */
     public GridFsQueryBuilder addDescription (final String description) {
@@ -104,6 +104,7 @@ public class GridFsQueryBuilder {
      * @return query
      */
     public Query getQuery() {
+
         return query;
     }
 
@@ -111,7 +112,7 @@ public class GridFsQueryBuilder {
      *
      * Gets or creates query
      *
-     * @param criteria
+     * @param criteria criteria
      */
     private void createOrGetQuery(final Criteria criteria) {
         if (query == null) {
