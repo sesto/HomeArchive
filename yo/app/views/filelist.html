@@ -1,118 +1,121 @@
-
 <div class="container">
-	<div class="row">
-		<div class="col-lg-2">
-			<p>
-			<h3 ng-hide="editStatus">Search</h3>
-			<h3 ng-show="editStatus">Edit</h3>
+  <div class="row">
+    <div class="col-lg-2">
+      <p>
 
-			<div class="form-group">
-				<label for="inputEmail">File name</label> 
-				<input type="text" class="form-control" ng-model="file.fileName" placeholder="File name1">
+      <h3 ng-hide="editStatus">Search</h3>
 
-			</div>
+      <h3 ng-show="editStatus">Edit</h3>
 
-			<div ng-hide="editStatus" class="form-group"
-				ng-controller="StartdateCtrl">
-				<label for="inputEmail">Start Date</label>
-				<p class="input-group">
+      <div class="form-group">
+        <label for="inputEmail">File name</label>
+        <input type="text" class="form-control" ng-model="file.fileName" placeholder="File name1">
 
-					<input type="text" class="form-control"
-						datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.startDate"
-						is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
-						datepicker-options="dateOptions"
-						date-disabled="disabled(date, mode)" ng-required="false"
-						close-text="Close" /> <span class="input-group-btn">
+      </div>
+
+      <div ng-hide="editStatus" class="form-group"
+           ng-controller="StartdateCtrl">
+        <label for="inputEmail">Start Date</label>
+
+        <p class="input-group">
+
+          <input type="text" class="form-control"
+                 datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.startDate"
+                 is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
+                 datepicker-options="dateOptions"
+                 date-disabled="disabled(date, mode)" ng-required="false"
+                 close-text="Close"/> <span class="input-group-btn">
 						<button type="button" class="btn btn-default"
-							ng-click="open($event)">
-							<i class="glyphicon glyphicon-calendar"></i>
-						</button>
+                    ng-click="open($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
 					</span>
-				</p>
-			</div>
+        </p>
+      </div>
 
-			<div ng-hide="editStatus" class="form-group"
-				ng-controller="EnddateCtrl">
-				<label for="inputEmail">End Date</label>
-				<p class="input-group">
+      <div ng-hide="editStatus" class="form-group"
+           ng-controller="EnddateCtrl">
+        <label for="inputEmail">End Date</label>
 
-					<input type="text" class="form-control"
-						datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.endDate"
-						is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
-						datepicker-options="dateOptions"
-						date-disabled="disabled(date, mode)" ng-required="false"
-						close-text="Close" /> <span class="input-group-btn">
+        <p class="input-group">
+
+          <input type="text" class="form-control"
+                 datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.endDate"
+                 is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
+                 datepicker-options="dateOptions"
+                 date-disabled="disabled(date, mode)" ng-required="false"
+                 close-text="Close"/> <span class="input-group-btn">
 						<button type="button" class="btn btn-default"
-							ng-click="open($event)">
-							<i class="glyphicon glyphicon-calendar"></i>
-						</button>
+                    ng-click="open($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
 					</span>
-				</p>
-			</div>
+        </p>
+      </div>
 
 
-			 <div class="form-group">
-				<label for="inputEmail">Description</label> 
-                <input type="text" class="form-control" required placeholder="Description" ng-model="file.metadata.description" ng-change="submit()">
-</div>
+      <div class="form-group" ng-hide="editStatus">
+        <label for="inputEmail">Description</label>
+        <input type="text" class="form-control" required placeholder="Description" ng-model="file.metadata.description"
+               ng-change="submit()">
+      </div>
 
-			<p>
-				<button ng-hide="editStatus" type="button" class="btn btn-primary"
-					role="button" ng-click="submit()"><span class="glyphicon glyphicon-filter"></span>Search</button>			
-					
-				<button ng-hide="editStatus" type="button" class="btn btn-danger"
-					role="button" ng-click="clear()"><span class="glyphicon glyphicon-remove"></span>Clear</button>
-			</p>
-			<button ng-show="editStatus" type="submit" class="btn btn-primary"
-				ng-click="update()">update</button>
+      <div class="form-group" ng-show="editStatus">
+        <label for="inputEmail">Description</label>
+        <input type="text" class="form-control" required placeholder="Description" ng-model="file.metadata.description">
+      </div>
 
-			</p>
-		</div>
-		<div class="col-lg-10">
-			<p>
-			<p>
-				<strong>Page:</strong> {{tableParams.page()}}
-			</p>
-			<p>
-				<strong>Count per page:</strong> {{tableParams.count()}}
-			</p>
-            <button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
-        <button ng-click="tableParams.filter({})" class="btn btn-default pull-right">Clear filter</button>
-     
-			<table ng-table="tableParams" show-filter="true" class="table">
-				<tr ng-repeat="file in $data">
-					<td data-title="'Index'">{{$index + 1}}</td>
-					<td data-title="'File Name'" sortable = "'filename'" filter="{ 'filename': 'text' }">{{file.filename}} </td>
-					<td data-title="'Date'" sortable = "'uploadDate'" >{{file.uploadDate | date:'dd-MM-yyyy'}}</td>
-					<td data-title="'Description'">{{file.metadata.description}}
-						
-					</td>
+      <p>
+        <button ng-hide="editStatus" type="button" class="btn btn-primary"
+                role="button" ng-click="submit()"><span class="glyphicon glyphicon-filter"></span>Search
+        </button>
 
+        <button ng-hide="editStatus" type="button" class="btn btn-danger"
+                role="button" ng-click="clear()"><span class="glyphicon glyphicon-remove"></span>Clear
+        </button>
+      </p>
+      <button ng-show="editStatus" type="submit" class="btn btn-primary"
+              ng-click="update()">update
+      </button>
 
+      </p>
+    </div>
+    <div class="col-lg-10">
+      <p>
 
+      <p>
+        <strong>Page:</strong> {{tableParams.page()}}
+      </p>
 
-					<td><a href="http://localhost:8080/homearchive/rs/findFiles/{{file._id}}" class = "btn btn-success btn-xs">
-                                        <span class="glyphicon glyphicon-download"></span>Download</a>
-						
-						<button type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">
-                                        <span class="glyphicon glyphicon-trash"></span> Remove</button>
-						<button type="button" class="btn btn-primary btn-xs" ng-click="edit(file)">
-                                        <span class="glyphicon glyphicon-pencil"></span> Edit</button>
-                                        </td>
-				</tr>
-			</table>
-			</p>
-		</div>
-	</div>
+      <p>
+        <strong>Count per page:</strong> {{tableParams.count()}}
+      </p>
+      <button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
+      <button ng-click="tableParams.filter({})" class="btn btn-default pull-right">Clear filter</button>
+
+      <table ng-table="tableParams" show-filter="true" class="table">
+        <tr ng-repeat="file in $data">
+          <td data-title="'Index'">{{$index + 1}}</td>
+          <td data-title="'File Name'" sortable="'filename'" filter="{ 'filename': 'text' }">{{file.filename}}</td>
+          <td data-title="'Date'" sortable="'uploadDate'">{{file.uploadDate | date:'dd-MM-yyyy'}}</td>
+          <td data-title="'Description'">{{file.metadata.description}}
+
+          </td>
 
 
+          <td><a href="http://localhost:8080/homearchive/rs/findFiles/{{file._id}}" class="btn btn-success btn-xs">
+            <span class="glyphicon glyphicon-download"></span>Download</a>
 
-
-
-
-
-
-
-
-
+            <button type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">
+              <span class="glyphicon glyphicon-trash"></span> Remove
+            </button>
+            <button type="button" class="btn btn-primary btn-xs" ng-click="edit(file)">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </td>
+        </tr>
+      </table>
+      </p>
+    </div>
+  </div>
 </div>

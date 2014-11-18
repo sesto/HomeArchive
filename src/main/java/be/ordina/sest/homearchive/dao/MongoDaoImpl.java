@@ -24,8 +24,9 @@ import java.util.List;
 @Component
 @Log4j
 public class MongoDaoImpl implements MongoDao {
+
     @Autowired
-    private GridFsTemplate gridFsTemlate;
+    private GridFsTemplate gridFsTemplate;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -33,25 +34,25 @@ public class MongoDaoImpl implements MongoDao {
     @Override
     public void saveDocument(final InputStream content, final String fileName, final String contentType,
                              final DBObject metaData) throws FileNotFoundException {
-        gridFsTemlate.store(content, fileName, contentType, metaData);
+        gridFsTemplate.store(content, fileName, contentType, metaData);
 
     }
 
     @Override
     public GridFSDBFile findDocument(final Query query) {
 
-        return gridFsTemlate.findOne(query);
+        return gridFsTemplate.findOne(query);
     }
 
     @Override
     public List<GridFSDBFile> findDocuments(final Query query) {
-        return gridFsTemlate.find(query);
+        return gridFsTemplate.find(query);
     }
 
     @Override
     public void deleteDocument(final Query query) {
 
-        gridFsTemlate.delete(query);
+        gridFsTemplate.delete(query);
     }
 
     @Override
