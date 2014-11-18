@@ -9,14 +9,27 @@ describe('Controller: FilelistCtrl', function () {
     scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    FilelistCtrl = $controller('FilelistCtrl', {
+  beforeEach(inject(function ($controller) {
+    scope = {};
+    FilelistCtrl = $controller('FileListCtrl', {
       $scope: scope
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('scope.file should be defined', function () {
+    expect(scope.file).toBeDefined();
   });
+
+  it('scope.file.metadata should be defined', function () {
+    expect(scope.file.metadata).toBeDefined();
+  });
+
+  it('scope.files array should be defined with length 0', function () {
+    expect(scope.files.length).toBe(0);
+  });
+
+  it('scope.tableParams array should be defined', function () {
+    expect(scope.tableParams).toBeDefined();
+  });
+
 });
