@@ -76,11 +76,6 @@ angular
             $scope.files = data;
             console.log(JSON
               .stringify($scope.files));
-            $scope.getTag = function (file) {
-              return angular
-                .isArray(file.tags) ? file.tags
-                : [file.tags];
-            };
 
             $scope.tableParams.reload();
           });
