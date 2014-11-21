@@ -9,7 +9,7 @@ angular.module('homearchiveApp').controller('UploadCtrl',
   ['$scope', 'FileUploader', function ($scope, FileUploader) {
 
     $scope.uploader = new FileUploader({
-      url: 'rs/findFiles'
+      url: 'rs/fileService'
     });
 
     $scope.uploader.onBeforeUploadItem = function (item) {

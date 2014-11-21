@@ -69,7 +69,7 @@ public class FileRsControllerTest {
         doc.set_id(TestHelper.ID_1);
         GridFSDBFile gridFSDBFile = testHelper.getFile1();
         when(fileService.downloadFileById(eq(doc))).thenReturn(gridFSDBFile);
-        mockMvc.perform(get("/findFiles/{id}", TestHelper.ID_1))
+        mockMvc.perform(get("/fileService/{id}", TestHelper.ID_1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.parseMediaType(TestHelper.CONTENT_TYPE_1)))
                 .andExpect(header().string("Content-Disposition", "attachment;filename=" + TestHelper.FILE_NAME_1))
@@ -80,7 +80,7 @@ public class FileRsControllerTest {
     public void testFindFiles() throws Exception {
         List<RequestResponseDocument> documentList = testHelper.getListOfDocuments();
         when(searchService.findDocuments(any(RequestResponseDocument.class))).thenReturn(documentList);
-        mockMvc.perform(get("/findFiles"))
+        mockMvc.perform(get("/fileService"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(TestHelper.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -101,7 +101,7 @@ public class FileRsControllerTest {
     @Test
     public void testUploadFile() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "someFile", "text/xml", "someXml".getBytes());
-        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/findFiles").file(file).param("description", "description"))
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/fileService").file(file).param("description", "description"))
                 .andExpect(status().isOk());
         verify(fileService, times(1)).uploadFile(any(UploadDocument.class));
 
@@ -109,7 +109,7 @@ public class FileRsControllerTest {
 
     @Test
     public void testDeleteDocument() throws Exception {
-        mockMvc.perform(delete("/findFiles/" + TestHelper.ID_1))
+        mockMvc.perform(delete("/fileService/" + TestHelper.ID_1))
                 .andExpect(status().isOk());
         verify(fileService, times(1)).deleteDocument(TestHelper.ID_1);
     }
@@ -118,7 +118,7 @@ public class FileRsControllerTest {
     public void testUpdateDocument() throws Exception {
         RequestResponseDocument requestResponseDocument = testHelper.getDocument1();
 
-        mockMvc.perform(put("/findFiles/{id}", TestHelper.ID_1)
+        mockMvc.perform(put("/fileService/{id}", TestHelper.ID_1)
                 .contentType(TestHelper.APPLICATION_JSON_UTF8)
                 .content(TestHelper.convertObjectToJsonBytes(testHelper.getDocument1())))
                 .andExpect(status().isOk())

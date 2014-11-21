@@ -68,7 +68,7 @@ public class JSONHelper {
                             .startObject("filter")
                                 .startObject("homearchive_ngram_filter")
                                     .field("type", "edgeNGram")
-                                    .field("min_gram", "1")
+                                    .field("min_gram", "3")
                                     .field("max_gram", "10")
                                     .array("token_chars", "letter", "digit", "whitespace", "punctuation")
                                 .endObject()

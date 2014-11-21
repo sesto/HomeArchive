@@ -3,7 +3,7 @@
 var fileServices = angular.module('fileServices', [ 'ngResource' ]);
 
 fileServices.factory('FileService', [ '$resource', function($resource) {
-	return $resource('rs/findFiles/:id', {id:'@id'},
+	return $resource('rs/fileService/:id', {id:'@id'},
 			{
 		update:{
 			method:'PUT'

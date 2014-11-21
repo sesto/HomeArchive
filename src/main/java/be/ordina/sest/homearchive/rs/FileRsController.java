@@ -40,7 +40,7 @@ public class FileRsController {
      * @throws IOException
      */
     @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value = "/findFiles/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/fileService/{id}")
     public void downloadFile(@PathVariable("id") final String id, final HttpServletResponse response)
             throws IOException {
         RequestResponseDocument doc = new RequestResponseDocument();
@@ -63,7 +63,7 @@ public class FileRsController {
      * @throws IOException
      */
     @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value = "/findFiles")
+    @RequestMapping(method = RequestMethod.GET, value = "/fileService")
     public List<RequestResponseDocument> findFiles(@RequestParam(value = "params", required = false) final String param) throws ParseException,
             IOException {
         RequestResponseDocument document = new RequestResponseDocument();
@@ -79,7 +79,7 @@ public class FileRsController {
      * @param description String
      * @throws IOException
      */
-    @RequestMapping(value = "/findFiles", method = RequestMethod.POST)
+    @RequestMapping(value = "/fileService", method = RequestMethod.POST)
     public void uploadFile(@RequestParam("file") final MultipartFile file,
                            @RequestParam("description") final String description) throws IOException {
         UploadDocument uploadDocument = new UploadDocument();
@@ -96,7 +96,7 @@ public class FileRsController {
      * @throws IOException
      */
     @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.DELETE, value = "/findFiles/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/fileService/{id}")
     public void deleteDocument(@PathVariable("id") final String id) throws IOException {
         fileService.deleteDocument(id);
 
@@ -110,7 +110,7 @@ public class FileRsController {
      * @throws ParseException
      */
     @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.PUT, value = "/findFiles/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/fileService/{id}")
     public void updateDocument(@PathVariable("id") final String id,
                                @RequestBody final RequestResponseDocument document) throws ParseException {
         log.debug("Received document" + document);
