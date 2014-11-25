@@ -7,18 +7,46 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Created by sest on 25/11/14.
  */
+@Component
 @Log4j
 public class UserDaoImpl implements UserDao {
 
     public static final String USER_COLLECTION = "users";
 
+
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
+    @PostConstruct
+    private void initDefaultUsers() {
+        log.debug("Inserting default users");
+        UserEntity userEntity;
+        //add admin
+        userEntity = new UserEntity();
+        userEntity.setUsername("admin");
+        userEntity.setPassword(passwordEncoder.encode("admin"));
+        userEntity.getRoles().add("ROLE_ADMIN");
+        userEntity.getRoles().add("ROLE_USER");
+        insertUser(userEntity);
+        //add user
+        userEntity = new UserEntity();
+        userEntity.setUsername("user");
+        userEntity.setPassword(passwordEncoder.encode("user"));
+        userEntity.getRoles().add("ROLE_USER");
+        insertUser(userEntity);
+    }
 
     @Override
     public UserEntity findUser(String userName) {
@@ -41,7 +69,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(String userName) {
-        log.debug("Deleting user: "+ userName);
+        log.debug("Deleting user: " + userName);
         Query query = new Query(Criteria.where("_id").is(userName));
         mongoTemplate.remove(query, USER_COLLECTION);
     }
