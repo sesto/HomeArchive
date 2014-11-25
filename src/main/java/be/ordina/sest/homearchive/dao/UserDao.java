@@ -1,6 +1,6 @@
 package be.ordina.sest.homearchive.dao;
 
-import be.ordina.sest.homearchive.model.UserEntity;
+import be.ordina.sest.homearchive.model.User;
 
 /**
  * Defines CRUD operations with user
@@ -8,11 +8,11 @@ import be.ordina.sest.homearchive.model.UserEntity;
  */
 public interface UserDao {
 
-    UserEntity findUser(String userName);
+    User findUser(String userName);
 
-    boolean insertUser(UserEntity userEntity);
+    boolean insertUser(User user);
 
     void deleteUser(String id);
 
-    void updateUser(UserEntity userEntity);
+    void updateUser(User user);
 }

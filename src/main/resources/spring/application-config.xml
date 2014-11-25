@@ -53,4 +53,36 @@
 		<constructor-arg value="secret.salt" />
 	</bean>
 
+	<security:authentication-manager id="authenticationManager">
+		<security:authentication-provider user-service-ref="userService">
+			<security:password-encoder ref="passwordEncoder"></security:password-encoder>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http
+			realm="Protected API"
+			use-expressions="true"
+			auto-config="false"
+			create-session="stateless"
+			entry-point-ref="unauthorizedEntryPoint"
+			authentication-manager-ref="authenticationManager">
+		<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
+		<security:intercept-url pattern="/rs/user/authenticate" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/rs/fileService/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url method="PUT" pattern="/rs/fileService/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url method="POST" pattern="/rs/fileService/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/rs/fileService/**" access="hasRole('ROLE_ADMIN')" />
+	</security:http>
+
+	<bean id="unauthorizedEntryPoint" class="be.ordina.sest.homearchive.security.UnauthorizedEntryPoint" />
+
+	<bean class="be.ordina.sest.homearchive.security.AuthenticationTokenProcessingFilter" id="authenticationTokenProcessingFilter">
+		<constructor-arg ref="userService" />
+	</bean>
+
+	<bean id="userService" class="be.ordina.sest.homearchive.service.UserServiceImpl">
+
+	</bean>
+
+
 </beans>

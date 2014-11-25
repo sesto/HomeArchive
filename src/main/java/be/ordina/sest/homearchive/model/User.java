@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,9 @@ import java.util.Set;
  */
 @Data
 @Document
-public class UserEntity implements UserDetails {
+public class User implements UserDetails, Serializable {
+
+    private static final long serialVersionUID = -5212490273003968555L;
 
     @Id
     private String username;
