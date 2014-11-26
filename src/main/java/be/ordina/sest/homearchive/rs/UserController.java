@@ -33,8 +33,8 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public ResponseEntity<UserTransfer> getUser()
-    {
+    @RequestMapping(method = RequestMethod.GET, value = "")
+    public ResponseEntity<UserTransfer> getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         if (principal instanceof String && ((String) principal).equals("anonymousUser")) {
@@ -44,16 +44,15 @@ public class UserController {
         return new ResponseEntity<UserTransfer>(new UserTransfer(userDetails.getUsername(), this.createRoleMap(userDetails)), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "authenticate", method= RequestMethod.POST)
-    public TokenTransfer authenticate(@RequestParam("username") String username, @RequestParam("password") String password)
-    {
+    @RequestMapping(value = "authenticate", method = RequestMethod.POST)
+    public TokenTransfer authenticate(@RequestParam("username") String username, @RequestParam("password") String password) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		/*
-		 * Reload user as password of authentication principal will be null after authorization and
+         * Reload user as password of authentication principal will be null after authorization and
 		 * password is needed for token generation
 		 */
         UserDetails userDetails = this.userService.loadUserByUsername(username);
@@ -61,8 +60,7 @@ public class UserController {
         return new TokenTransfer(TokenUtils.createToken(userDetails));
     }
 
-    private Map<String, Boolean> createRoleMap(UserDetails userDetails)
-    {
+    private Map<String, Boolean> createRoleMap(UserDetails userDetails) {
         Map<String, Boolean> roles = new HashMap<String, Boolean>();
         for (GrantedAuthority authority : userDetails.getAuthorities()) {
             roles.put(authority.getAuthority(), Boolean.TRUE);

@@ -6,8 +6,11 @@
  * @description # UploadCtrl Controller of the homearchiveApp
  */
 angular.module('homearchiveApp').controller('UploadCtrl',
-  ['$scope', 'FileUploader', function ($scope, FileUploader) {
-
+  ['$rootScope','$scope','$location', 'FileUploader', function ($rootScope, $scope, $location, FileUploader) {
+	  if (!$rootScope.isAuth()) {		
+  		$location.path('/login');
+  	};
+  	
     $scope.uploader = new FileUploader({
       url: 'rs/fileService'
     });

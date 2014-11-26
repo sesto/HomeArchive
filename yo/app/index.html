@@ -14,6 +14,7 @@
 <!-- endbuild -->
 <!-- build:css(.tmp) styles/main.css -->
 <!-- endbuild -->
+<link rel="stylesheet" href="styles/signin.css">
 </head>
 <body ng-app="homearchiveApp">
 	<div class="container">
@@ -34,7 +35,14 @@
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="#/search">Search</a></li>
 					<li><a href="#/upload">Upload</a></li>
-
+				</ul>
+				<ul class="nav navbar-nav navbar-right">	
+					<li class="dropdown" ng-show="user">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">{{user.name}} <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="" ng-click="logout()"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+						</ul>
+					</li>
 				</ul>
 
 			</div>
@@ -74,16 +82,19 @@
 	<script src="bower_components/ng-table/ng-table.js"></script>
 	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
+	<script src="bower_components/angular-cookies/angular-cookies.js"></script>
 	<!-- endbower -->
 	<!-- endbuild -->
 
 	<!-- build:js({.tmp,app}) scripts/scripts.js -->
-	<script src="scripts/app.js"></script>
+	<script src="scripts/config/config.js"></script>
+  <script src="scripts/app.js"></script>
 	<script src="scripts/services/services.js"></script>
 <script src="scripts/controllers/filelist.js"></script>
 <script src="scripts/controllers/upload.js"></script>
 <script src="scripts/controllers/startdate.js"></script>
 <script src="scripts/controllers/enddate.js"></script>
+<script src="scripts/controllers/login.js"></script>
 	<!-- endbuild -->
 </body>
 </html>

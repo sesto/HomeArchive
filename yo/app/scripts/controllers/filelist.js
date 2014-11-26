@@ -10,11 +10,17 @@ angular
   .controller(
   'FileListCtrl',
   [
+	'$rootScope',
     '$scope',
+    '$location',
     '$filter',
     'FileService',
     'ngTableParams',
-    function ($scope, $filter, FileService, ngTableParams) {
+    function ($rootScope, $scope, $location, $filter, FileService, ngTableParams) {
+    	if (!$rootScope.isAuth()) {		
+    		$location.path('/login');
+    	};
+    	
       $scope.files = [];
       $scope.file = {};
       $scope.file.metadata = {};
