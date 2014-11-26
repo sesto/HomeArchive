@@ -35,9 +35,10 @@ angular.module('homearchiveApp',
             var config = rejection.config;
             var method = config.method;
             var url = config.url;
-
+console.log(status, config, method, url);
             if (status == 401) {
               $location.path("/login");
+              $rootScope.error = status;
             } else {
               $rootScope.error = method + " on " + url + " failed with status " + status;
             }

@@ -1,6 +1,7 @@
 body {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-left:10px; 
+  padding-righ:10px;
+  padding-bottom:10px;
   background-color: #eee;
 }
 
@@ -38,3 +39,4 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+

@@ -56,13 +56,13 @@
 
       <div class="form-group" ng-hide="editStatus">
         <label for="inputEmail">Description</label>
-        <input type="text" class="form-control" required placeholder="Description" ng-model="file.metadata.description"
-               ng-change="submit()">
+        <textarea rows="5" class="form-control" required placeholder="Description" ng-model="file.metadata.description"
+               ng-change="submit()"/>
       </div>
 
       <div class="form-group" ng-show="editStatus">
         <label for="inputEmail">Description</label>
-        <input type="text" class="form-control" required placeholder="Description" ng-model="file.metadata.description">
+        <textarea rows="5" class="form-control" required placeholder="Description" ng-model="file.metadata.description"/>
       </div>
 
       <p>
