@@ -10,9 +10,13 @@ angular.module('homearchiveApp').controller('UploadCtrl',
 	  if (!$rootScope.isAuth()) {		
   		$location.path('/login');
   	};
+ 
   	
     $scope.uploader = new FileUploader({
-      url: 'rs/fileService'
+      url: 'rs/fileService',
+      headers:{
+    	  'X-Auth-Token': $rootScope.authToken
+      }
     });
 
     $scope.uploader.onBeforeUploadItem = function (item) {

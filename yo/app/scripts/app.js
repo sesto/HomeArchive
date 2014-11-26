@@ -21,7 +21,7 @@ angular.module('homearchiveApp',
       templateUrl: 'views/login.html',
       controller: 'LoginCtrl'
     }).otherwise({
-      redirectTo: '/'
+      redirectTo: '/search'
     });
 
    // $locationProvider.hashPrefix('!');

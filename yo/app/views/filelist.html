@@ -103,15 +103,16 @@
           </td>
 
 
-          <td><a href="http://localhost:8080/homearchive/rs/findFiles/{{file._id}}" class="btn btn-success btn-xs">
-            <span class="glyphicon glyphicon-download"></span>Download</a>
-
-            <button type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">
-              <span class="glyphicon glyphicon-trash"></span> Remove
+          <td><a href="http://localhost:8080/homearchive/rs/fileService/{{file._id}}?token={{authToken}}" class="btn btn-success btn-xs">
+            <span class="glyphicon glyphicon-download"></span></a>
+			
+            <button ng-show="hasRole('ROLE_ADMIN')" type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">
+              <span class="glyphicon glyphicon-trash"></span>
             </button>
-            <button type="button" class="btn btn-primary btn-xs" ng-click="edit(file)">
-              <span class="glyphicon glyphicon-pencil"></span> Edit
+            <button  ng-show="hasRole('ROLE_ADMIN')" type="button" class="btn btn-primary btn-xs" ng-click="edit(file)">
+              <span class="glyphicon glyphicon-pencil"></span>
             </button>
+           	
           </td>
         </tr>
       </table>
