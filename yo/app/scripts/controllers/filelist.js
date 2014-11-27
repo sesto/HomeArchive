@@ -10,21 +10,21 @@ angular
   .controller(
   'FileListCtrl',
   [
-	'$rootScope',
+    '$rootScope',
     '$scope',
     '$location',
     '$filter',
     'FileService',
     'ngTableParams',
     function ($rootScope, $scope, $location, $filter, FileService, ngTableParams) {
-    	if (!$rootScope.isAuth()) {		
-    		$location.path('/login');
-    	};
-    	
+      if (!$rootScope.isAuth()) {
+        $location.path('/login');
+      }
+      ;
+
       $scope.files = [];
       $scope.file = {};
       $scope.file.metadata = {};
-      var data;
 
       var scopeFile;
       var clean;
@@ -60,31 +60,36 @@ angular
               * params.count(),
               params.page()
               * params.count()));
+
           }
         });
+      $scope.tableParams.settings().$scope = $scope;
 
       // does search with parameters
       $scope.submit = function () {
-
-        var queryParams = {
-          'params': {
-            fileName: $scope.file.fileName,
-            startDate: $scope.file.startDate,
-            endDate: $scope.file.endDate,
-            metadata: {
-              description: $scope.file.metadata.description
+        //submit only in case of search, no edit
+        if ($scope.editStatus !== true) {
+          var queryParams = {
+              'params': {
+                fileName: $scope.file.fileName,
+                startDate: $scope.file.startDate,
+                endDate: $scope.file.endDate,
+                metadata: {
+                  description: $scope.file.metadata.description
+                }
+              }
             }
-          }
-        };
+            ;
 
-        FileService.query(queryParams).$promise
-          .then(function (data) {
-            $scope.files = data;
-            console.log(JSON
-              .stringify($scope.files));
+          FileService.query(queryParams).$promise
+            .then(function (data) {
+              $scope.files = data;
+              console.log(JSON
+                .stringify($scope.files));
 
-            $scope.tableParams.reload();
-          });
+              $scope.tableParams.reload();
+            });
+        }
       };
 
       // clears the form
@@ -100,7 +105,7 @@ angular
 
       // deletes file
       $scope.remove = function (file) {
-        if (confirm("Are you sure you want to delete "
+        if (confirm('Are you sure you want to delete '
           + file.filename + ' from the database?') == false) {
           return;
         } else {

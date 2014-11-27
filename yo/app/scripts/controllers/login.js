@@ -8,7 +8,7 @@
  * Controller of the homearchiveApp
  */
 angular.module('homearchiveApp')
-  .controller('LoginCtrl', function($scope, $rootScope, $location, $cookieStore, UserService) {
+  .controller('LoginCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'UserService', function($scope, $rootScope, $location, $cookieStore, UserService) {
     $rootScope.initialLogin=1;
     $scope.rememberMe = false;
     $scope.login = function() {
@@ -33,5 +33,5 @@ angular.module('homearchiveApp')
         });
       });
     };
-  });
+  }]);
 

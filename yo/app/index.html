@@ -13,8 +13,9 @@
 <!-- endbower -->
 <!-- endbuild -->
 <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/signin.css">
 <!-- endbuild -->
-<link rel="stylesheet" href="styles/signin.css">
+
 </head>
 <body ng-app="homearchiveApp">
 	<div class="container">
@@ -35,7 +36,7 @@
 					<li><a ng-show="user" href="#/search">Search</a></li>
 					<li><a ng-show="hasRole('ROLE_ADMIN')" href="#/upload">Upload</a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">	
+				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown" ng-show="user">
 						<a href="" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown">{{user.name}} <b class="caret"></b></a>
 						<ul role="menu" class="dropdown-menu">
@@ -65,10 +66,12 @@
 
 
 
-	<!--[if lt IE 9]> -->
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.min.js"></script>
-    <!-- [endif]-->
+  <!-- build:js(.) scripts/oldieshim.js -->
+  <!--[if lt IE 9]>
+  <script src="bower_components/es5-shim/es5-shim.js"></script>
+  <script src="bower_components/json3/lib/json3.min.js"></script>
+  <![endif]-->
+  <!-- endbuild -->
 
 	<!-- build:js(.) scripts/vendor.js -->
 	<!-- bower:js -->

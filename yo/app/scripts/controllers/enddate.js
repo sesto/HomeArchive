@@ -7,7 +7,7 @@
  */
 angular.module('homearchiveApp')
 		.controller(
-				'EnddateCtrl',
+				'EnddateCtrl',['$scope',
 				function($scope) {
 					// $scope.today = function() {
 					// $scope.$parent.endDate = new Date();
@@ -49,4 +49,4 @@ angular.module('homearchiveApp')
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy/MM/dd',
 							'dd.MM.yyyy', 'shortDate' ];
 					$scope.format = $scope.formats[0];
-				});
+				}]);

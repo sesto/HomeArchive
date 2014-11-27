@@ -7,7 +7,7 @@
  */
 angular.module('homearchiveApp')
 		.controller(
-				'StartdateCtrl',
+				'StartdateCtrl', ['$scope',
 				function($scope) {
 
 					$scope.clear = function() {
@@ -45,4 +45,4 @@ angular.module('homearchiveApp')
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy/MM/dd',
 							'dd.MM.yyyy', 'shortDate' ];
 					$scope.format = $scope.formats[0];
-				});
+				}]);

@@ -8,18 +8,18 @@
       <h3 ng-show="editStatus">Edit</h3>
 
       <div class="form-group">
-        <label for="inputEmail">File name</label>
-        <input type="text" class="form-control" ng-model="file.fileName" placeholder="File name1">
+        <label for="fileName">File name</label>
+        <input type="text" id = "fileName" class="form-control" ng-model="file.fileName" placeholder="File name1">
 
       </div>
 
       <div ng-hide="editStatus" class="form-group"
            ng-controller="StartdateCtrl">
-        <label for="inputEmail">Start Date</label>
+        <label for="startDate">Start Date</label>
 
         <p class="input-group">
 
-          <input type="text" class="form-control"
+          <input type="text" id = "startDate"class="form-control"
                  datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.startDate"
                  is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
                  datepicker-options="dateOptions"
@@ -35,11 +35,11 @@
 
       <div ng-hide="editStatus" class="form-group"
            ng-controller="EnddateCtrl">
-        <label for="inputEmail">End Date</label>
+        <label for="endDate">End Date</label>
 
         <p class="input-group">
 
-          <input type="text" class="form-control"
+          <input type="text" id="endDate" class="form-control"
                  datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.endDate"
                  is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
                  datepicker-options="dateOptions"
@@ -54,16 +54,11 @@
       </div>
 
 
-      <div class="form-group" ng-hide="editStatus">
-        <label for="inputEmail">Description</label>
-        <textarea rows="5" class="form-control" required placeholder="Description" ng-model="file.metadata.description"
-               ng-change="submit()"/>
-      </div>
-
-      <div class="form-group" ng-show="editStatus">
-        <label for="inputEmail">Description</label>
-        <textarea rows="5" class="form-control" required placeholder="Description" ng-model="file.metadata.description"/>
-      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea rows="5" id="description" class="form-control" required placeholder="Description" ng-model="file.metadata.description"
+               ng-change="submit()"></textarea>
+        </div>
 
       <p>
         <button ng-hide="editStatus" type="button" class="btn btn-primary"
@@ -105,14 +100,14 @@
 
           <td><a href="http://localhost:8080/homearchive/rs/fileService/{{file._id}}?token={{authToken}}" class="btn btn-success btn-xs">
             <span class="glyphicon glyphicon-download"></span></a>
-			
+
             <button ng-show="hasRole('ROLE_ADMIN')" type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
             <button  ng-show="hasRole('ROLE_ADMIN')" type="button" class="btn btn-primary btn-xs" ng-click="edit(file)">
               <span class="glyphicon glyphicon-pencil"></span>
             </button>
-           	
+
           </td>
         </tr>
       </table>

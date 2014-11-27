@@ -244,18 +244,21 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // uglify: {
+    //uglify: {
     //   dist: {
     //     files: {
     //       '<%= yeoman.dist %>/scripts/scripts.js': [
     //         '<%= yeoman.dist %>/scripts/scripts.js'
     //       ]
     //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
+    //   },
+    //  options: {
+    //    mangle: false
+    //  }
+    //},
+    concat: {
+       dist: {}
+    },
 
     imagemin: {
       dist: {
@@ -284,7 +287,7 @@ module.exports = function (grunt) {
         options: {
           collapseWhitespace: true,
           conservativeCollapse: true,
-          collapseBooleanAttributes: true,
+          collapseBooleanAttributes: false,
           removeCommentsFromCDATA: true,
           removeOptionalTags: true
         },
