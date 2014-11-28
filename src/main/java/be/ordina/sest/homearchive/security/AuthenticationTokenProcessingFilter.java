@@ -18,25 +18,25 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.GenericFilterBean;
 
 /**
+ * Custom authentication filter
  * Created by sest on 25/11/14.
+ *
+ * @author sest
  */
 @Log4j
-public class AuthenticationTokenProcessingFilter extends GenericFilterBean
-{
+public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 
     private final UserDetailsService userService;
 
 
-    public AuthenticationTokenProcessingFilter(final UserDetailsService userService)
-    {
+    public AuthenticationTokenProcessingFilter(final UserDetailsService userService) {
         this.userService = userService;
     }
 
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException,
-    ServletException
-    {
+            ServletException {
         HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
         String authToken = this.extractAuthTokenFromRequest(httpRequest);
@@ -47,10 +47,10 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
             UserDetails userDetails = this.userService.loadUserByUsername(userName);
             log.debug(String.format("Found user %s with authorities %s", userDetails.getUsername(), userDetails.getAuthorities()));
             boolean isValidToken = TokenUtils.validateToken(authToken, userDetails);
+            log.debug("Token is valid: " + isValidToken);
             if (isValidToken) {
-                log.debug("Token is valid: " + isValidToken);
                 UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -59,9 +59,14 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
         chain.doFilter(request, response);
     }
 
+    /**
+     * Casts {@link javax.servlet.ServletRequest} to {@link javax.servlet.http.HttpServletRequest}
+     *
+     * @param request input request
+     * @return request output request
+     */
 
-    private HttpServletRequest getAsHttpRequest(final ServletRequest request)
-    {
+    private HttpServletRequest getAsHttpRequest(final ServletRequest request) {
         if (!(request instanceof HttpServletRequest)) {
             throw new RuntimeException("Expecting an HTTP request");
         }
@@ -69,9 +74,14 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
         return (HttpServletRequest) request;
     }
 
+    /**
+     * Extractsn security token from request
+     *
+     * @param httpRequest request
+     * @return authToken security token
+     */
 
-    private String extractAuthTokenFromRequest(final HttpServletRequest httpRequest)
-    {
+    private String extractAuthTokenFromRequest(final HttpServletRequest httpRequest) {
         /* Get token from header */
         String authToken = httpRequest.getHeader("X-Auth-Token");
 

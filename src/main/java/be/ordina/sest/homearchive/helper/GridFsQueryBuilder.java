@@ -10,9 +10,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsCriteria;
 
 /**
- * Builds queries
+ * Builds GridFS queries
  *
- *
+ *@author sest
  */
 @Log4j
 public class GridFsQueryBuilder {

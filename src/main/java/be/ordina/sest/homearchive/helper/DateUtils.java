@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 /**
  *
  * Some useful methods for date
+ * @author sest
  *
  */
 public class DateUtils {

@@ -22,6 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * REST api for file operations
+ * @author sest
+ */
 @Log4j
 @RestController
 public class FileRsController {

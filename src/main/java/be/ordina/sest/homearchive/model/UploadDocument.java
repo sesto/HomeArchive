@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  *
  * Entity for document upload
+ * @author sest
  *
  */
 @Data

@@ -1,7 +1,5 @@
 package be.ordina.sest.homearchive.helper;
-/**
- * Helper class to configure
- */
+
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 import java.io.IOException;
@@ -9,7 +7,10 @@ import java.io.IOException;
 import lombok.extern.log4j.Log4j;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
-
+/**
+ * Helper class to configure elasticsearch and mongodb river plugin
+ * @author sest
+ */
 @Log4j
 public class JSONHelper {
     /**

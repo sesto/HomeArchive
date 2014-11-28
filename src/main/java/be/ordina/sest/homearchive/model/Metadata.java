@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * Metadata entity
- *
+ *@author sest
  *
  */
 @Data

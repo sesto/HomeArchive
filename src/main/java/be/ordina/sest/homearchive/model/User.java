@@ -15,6 +15,7 @@ import java.util.Set;
 /**
  * User entity
  * Created by sest on 25/11/14.
+ * @author sest
  */
 @Data
 @Document

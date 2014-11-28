@@ -18,6 +18,8 @@ import java.util.List;
 
 /**
  * implementation of {@link ElasticsearchDao}
+ * @author sest
+ *
  */
 @Repository
 @Log4j

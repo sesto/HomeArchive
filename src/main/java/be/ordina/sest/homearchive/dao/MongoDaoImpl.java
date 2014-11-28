@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Dao for CRUD MongoDB operations
+ * implementation of {@link be.ordina.sest.homearchive.dao.MongoDao}
  *
  * @author sest
  */

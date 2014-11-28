@@ -9,6 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
+/**
+ * Dao for CRUD MongoDB operations
+ * @author sest
+ */
 public interface MongoDao {
     /**
      * Saves file in MongoDB

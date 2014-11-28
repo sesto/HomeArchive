@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * Builds elasticsearch query
+ * @author sest
  */
 public class ElasticQueryBuilder {
 

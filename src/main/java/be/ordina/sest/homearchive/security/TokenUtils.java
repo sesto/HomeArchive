@@ -8,13 +8,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.codec.Hex;
 
 /**
+ * Utilities for operations with security token
  * Created by sest on 25/11/14.
+ *
  */
 @Log4j
 public class TokenUtils {
-    public static final String MAGIC_KEY = "obfuscate";
+    public static final String MAGIC_KEY = "verysecretword";
 
-
+    /**
+     * Creates security token
+     * @param userDetails {@link org.springframework.security.core.userdetails.UserDetails}
+     * @return token
+     */
     public static String createToken(UserDetails userDetails) {
         /* Expires in one hour */
         long expires = System.currentTimeMillis() + 1000L * 60 * 60;
@@ -29,7 +35,12 @@ public class TokenUtils {
         return tokenBuilder.toString();
     }
 
-
+    /**
+     * Computes signature
+     * @param userDetails {@link org.springframework.security.core.userdetails.UserDetails}
+     * @param expires expiry period
+     * @return user signature
+     */
     public static String computeSignature(UserDetails userDetails, long expires) {
         StringBuilder signatureBuilder = new StringBuilder();
         signatureBuilder.append(userDetails.getUsername());
@@ -50,7 +61,11 @@ public class TokenUtils {
         return new String(Hex.encode(digest.digest(signatureBuilder.toString().getBytes())));
     }
 
-
+    /**
+     * Gets username from token
+     * @param authToken token
+     * @return username
+     */
     public static String getUserNameFromToken(String authToken) {
         if (null == authToken) {
             return null;
@@ -60,7 +75,12 @@ public class TokenUtils {
         return parts[0];
     }
 
-
+    /**
+     * Validates token
+     * @param authToken token
+     * @param userDetails {@link org.springframework.security.core.userdetails.UserDetails}
+     * @return returns true if signature is valid
+     */
     public static boolean validateToken(String authToken, UserDetails userDetails) {
         String[] parts = authToken.split(":");
         long expires = Long.parseLong(parts[1]);

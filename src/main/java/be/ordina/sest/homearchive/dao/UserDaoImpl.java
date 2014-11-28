@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
+ * implementation of {@link be.ordina.sest.homearchive.dao.UserDao}
  * Created by sest on 25/11/14.
  */
 @Component
@@ -56,16 +57,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean insertUser(User user) {
-        boolean isUserNotFound = true;
-        if (findUser(user.getUsername()) != null) {
-            isUserNotFound = false;
-        } else {
-            mongoTemplate.insert(user, USER_COLLECTION);
-        }
-        log.debug(String.format("User %s does not exists: %s", user.getUsername(), isUserNotFound));
-        return isUserNotFound;
+    public void insertUser(User user) {
+        mongoTemplate.insert(user, USER_COLLECTION);
     }
+
 
     @Override
     public void deleteUser(String userName) {

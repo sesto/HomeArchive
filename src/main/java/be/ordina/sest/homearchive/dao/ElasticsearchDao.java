@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.core.query.SearchQuery;
 /**
  *
  * Dao for elasticsearch
- *
+ * @author sest
  */
 public interface ElasticsearchDao {
 

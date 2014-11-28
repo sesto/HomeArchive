@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
+ * Unauthorised entry point class
  * Created by sest on 25/11/14.
  */
 public class UnauthorizedEntryPoint implements AuthenticationEntryPoint {

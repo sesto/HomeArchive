@@ -10,7 +10,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 /**
  *
- * Document entity
+ * Document entity used both for the request and response
+ * @author sest
  *
  */
 @Data
