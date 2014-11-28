@@ -3,6 +3,7 @@ package be.ordina.sest.homearchive.security.transfer;
 import java.util.Map;
 
 /**
+ * user transfer object
  * Created by sest on 25/11/14.
  */
 public class UserTransfer {

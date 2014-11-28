@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * User REST API
  * Created by sest on 25/11/14.
  */
 @RestController
@@ -33,6 +34,11 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    /**
+     * Gets current user from the security context
+     * @return response entity with user transfer object
+     */
+
     @RequestMapping(method = RequestMethod.GET, value = "")
     public ResponseEntity<UserTransfer> getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -44,6 +50,12 @@ public class UserController {
         return new ResponseEntity<UserTransfer>(new UserTransfer(userDetails.getUsername(), this.createRoleMap(userDetails)), HttpStatus.OK);
     }
 
+    /**
+     * authenticates user
+     * @param username username
+     * @param password password
+     * @return token transfer object with security token
+     */
     @RequestMapping(value = "authenticate", method = RequestMethod.POST)
     public TokenTransfer authenticate(@RequestParam("username") String username, @RequestParam("password") String password) {
         UsernamePasswordAuthenticationToken authenticationToken =
