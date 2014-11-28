@@ -13,12 +13,12 @@
             <div class="row">
 
                 <div class="col-lg-3">
- 
+
 
                     <h3>Select files</h3>
 
                     <div ng-show="uploader.isHTML5">
-    
+
 
                         <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
                         <div nv-file-drop="" uploader="uploader">
@@ -29,15 +29,15 @@
                     </div>
 
                     <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
-  
 
-                   
+
+
                     <input type="file" nv-file-select="" uploader="uploader"/>
                     <h3>Enter description</h3>
-                <input type="text" class="form-control" required placeholder="Description" ng-model="description">
- 
+                <textarea rows="5" class="form-control" required placeholder="Description" ng-model="description"/>
 
-   
+
+
                 </div>
 
 
