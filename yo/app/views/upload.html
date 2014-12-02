@@ -46,9 +46,8 @@
       <h3>Enter description</h3>
 
       <div class="form-group">
-        <textarea rows="5" id="description" class="form-control" required placeholder="Description"
-                  ng-model="file.metadata.description"
-                  ng-change="submit()"></textarea>
+        <textarea rows="5" class="form-control" required placeholder="Description"
+                  ng-model="description"></textarea>
       </div>
 
 
@@ -88,7 +87,7 @@
           </td>
           <td nowrap>
             <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()"
-                    ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                    ng-disabled="item.isReady || item.isUploading || item.isSuccess || description === undefined">
               <span class="glyphicon glyphicon-upload"></span> Upload
             </button>
             <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()"
@@ -112,7 +111,7 @@
           </div>
         </div>
         <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()"
-                ng-disabled="!uploader.getNotUploadedItems().length">
+                ng-disabled="!uploader.getNotUploadedItems().length || description === undefined">
           <span class="glyphicon glyphicon-upload"></span> Upload all
         </button>
         <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()"

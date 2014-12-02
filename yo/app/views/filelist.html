@@ -12,11 +12,14 @@
         <input type="text" id = "fileName" class="form-control" ng-model="file.fileName" placeholder="File name1">
 
       </div>
+      <div class="checkbox">
+        <label><input type="checkbox" ng-model="dateRange" value="true">enable date range</label>
+      </div>
 
       <div ng-hide="editStatus" class="form-group"
            ng-controller="StartdateCtrl">
-        <label for="startDate">Start Date</label>
-
+        <label ng-show = "dateRange" for="startDate">Start Date</label>
+        <label ng-hide = "dateRange" for="startDate">Date</label>
         <p class="input-group">
 
           <input type="text" id = "startDate"class="form-control"
@@ -33,7 +36,7 @@
         </p>
       </div>
 
-      <div ng-hide="editStatus" class="form-group"
+      <div ng-hide="editStatus || !dateRange" class="form-group"
            ng-controller="EnddateCtrl">
         <label for="endDate">End Date</label>
 
@@ -41,7 +44,7 @@
 
           <input type="text" id="endDate" class="form-control"
                  datepicker-popup="dd-MM-yyyy" ng-model="$parent.file.endDate"
-                 is-open="opened" min-date="'2010-01-01'" max-date="maxDate"
+                 is-open="opened" min-date="$parent.file.startDate" max-date="maxDate"
                  datepicker-options="dateOptions"
                  date-disabled="disabled(date, mode)" ng-required="false"
                  close-text="Close"/> <span class="input-group-btn">
