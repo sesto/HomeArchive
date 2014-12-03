@@ -117,20 +117,9 @@
         <!-- Other Web dependencies -->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${jstl.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.version}</version>
-     <!--       <scope>provided</scope> -->
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>${jsp.version}</version>
-           <scope>provided</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Logging with SLF4J & LogBack -->
