@@ -107,7 +107,7 @@
             <button ng-show="hasRole('ROLE_ADMIN')" type="button" class="btn btn-danger btn-xs" ng-click="remove(file)">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
-            <button  ng-show="hasRole('ROLE_ADMIN')" type="button" class="btn btn-primary btn-xs" ng-click="edit(file)">
+            <button  ng-show="hasRole('ROLE_ADMIN')" type="button" class="btn btn-primary btn-xs" ng-click="edit(file, $index)">
               <span class="glyphicon glyphicon-pencil"></span>
             </button>
 

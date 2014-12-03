@@ -1,5 +1,6 @@
 package be.ordina.sest.homearchive.dao;
 
+import be.ordina.sest.homearchive.model.RequestResponseDocument;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.springframework.data.mongodb.core.query.Query;
@@ -59,6 +60,6 @@ public interface MongoDao {
      * @param id document _id
      * @param update update query
      */
-    void updateDocument(final String id, final Update update);
+    RequestResponseDocument updateDocument(final String id, final Update update);
 
 }

@@ -26,8 +26,9 @@ angular
       $scope.file = {};
       $scope.file.metadata = {};
 
-      var scopeFile;
+
       var clean;
+
 
       $scope.tableParams = new ngTableParams(
         {
@@ -126,25 +127,29 @@ angular
 
       // pushes values into the model for editing
       $scope.edit = function (file) {
+       $scope.file._id = file._id;
         $scope.editStatus = true;
         $scope.file.fileName = file.filename;
         $scope.file.metadata.description = file.metadata.description;
-        scopeFile = file;
 
       };
 
       // submits updated values to the service
       $scope.update = function () {
         FileService.update({
-            id: scopeFile._id
+            id: $scope.file._id
           }, {
             filename: $scope.file.fileName,
             metadata: {
               description: $scope.file.metadata.description
             }
           }
-        ).$promise.then(function () {
+        ).$promise.then(function (data) {
             $scope.editStatus = false;
+            console.log("file: "+ angular.toJson($scope.file));
+            $scope.files = [];
+            $scope.files[0] = data;
+            $scope.tableParams.reload();
             alert('File is updated');
             clean();
           }

@@ -5,6 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -56,12 +57,13 @@ public class MongoDaoImpl implements MongoDao {
     }
 
     @Override
-    public void updateDocument(final String id, final Update update) {
+    public RequestResponseDocument updateDocument(final String id, final Update update) {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));
         log.info("Updating document with update query: " + update);
-        RequestResponseDocument requestResponseDocument = mongoTemplate.findAndModify(query, update, RequestResponseDocument.class, "fs.files");
-        log.debug("Found document to modify: " + requestResponseDocument);
+        RequestResponseDocument requestResponseDocument = mongoTemplate.findAndModify(query, update, new FindAndModifyOptions().returnNew(true),RequestResponseDocument.class, "fs.files");
+        log.debug("Modified document: " + requestResponseDocument);
+        return requestResponseDocument;
     }
 
 }
