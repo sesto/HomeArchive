@@ -1,4 +1,4 @@
-package be.ordina.sest.homearchive.rs;
+package be.ordina.sest.homearchive.api;
 
 import be.ordina.sest.homearchive.TestHelper;
 import be.ordina.sest.homearchive.model.RequestResponseDocument;
@@ -132,9 +132,9 @@ public class FileRsControllerTest {
     public static class TestConfiguration {
 
         @Bean
-        public FileRsController fileRsController() {
+        public FileResource fileRsController() {
 
-            return new FileRsController();
+            return new FileResource();
         }
 
         @Bean

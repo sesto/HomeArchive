@@ -1,4 +1,4 @@
-package be.ordina.sest.homearchive.rs;
+package be.ordina.sest.homearchive.api;
 
 import be.ordina.sest.homearchive.model.RequestResponseDocument;
 import be.ordina.sest.homearchive.model.UploadDocument;
@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Log4j
 @RestController
-public class FileRsController {
+public class FileResource {
 
     @Autowired
     private FileService fileService;
