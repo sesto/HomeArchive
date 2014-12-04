@@ -73,13 +73,13 @@ module.exports = function (grunt) {
     	   // proxy for API calls
         proxies: [
   	{
-  	  context: '/rs',
+  	  context: '/api',
   	  host: 'localhost',
   	  port: 8080,
   	  https: false,
   	  changeOrigin: false,
   	  rewrite: {
-  	    '/rs':'/homearchive/rs'
+  	    '/api':'/homearchive/api'
   	  }
   	}
         ],

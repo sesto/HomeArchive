@@ -54,7 +54,7 @@ angular.module('homearchiveApp',
     $httpProvider.interceptors.push(['$q', '$rootScope', function ($q, $rootScope) {
       return {
         'request': function (config) {
-          var isRestCall = config.url.indexOf('rs') === 0;
+          var isRestCall = config.url.indexOf('api') === 0;
           if (isRestCall && angular.isDefined($rootScope.authToken)) {
             var authToken = $rootScope.authToken;
             if (appConfig.useAuthTokenHeader) {

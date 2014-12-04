@@ -67,11 +67,11 @@
 			entry-point-ref="unauthorizedEntryPoint"
 			authentication-manager-ref="authenticationManager">
 		<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
-		<security:intercept-url pattern="/rs/user/authenticate" access="permitAll" />
-		<security:intercept-url method="GET" pattern="/rs/fileService/**" access="hasRole('ROLE_USER')" />
-		<security:intercept-url method="PUT" pattern="/rs/fileService/**" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url method="POST" pattern="/rs/fileService/**" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url method="DELETE" pattern="/rs/fileService/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/api/user/authenticate" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/fileService/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url method="PUT" pattern="/api/fileService/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/fileService/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/fileService/**" access="hasRole('ROLE_ADMIN')" />
 	</security:http>
 
 	<bean id="unauthorizedEntryPoint" class="be.ordina.sest.homearchive.security.UnauthorizedEntryPoint" />
