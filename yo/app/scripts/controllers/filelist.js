@@ -136,19 +136,21 @@ angular
 
       // submits updated values to the service
       $scope.update = function () {
+        console.log("File to update with id: "+ $scope.file._id);
         FileService.update({
             id: $scope.file._id
           }, {
             filename: $scope.file.fileName,
+            _id:$scope.file._id,
             metadata: {
               description: $scope.file.metadata.description
             }
           }
         ).$promise.then(function (data) {
             $scope.editStatus = false;
-            console.log("file: "+ angular.toJson($scope.file));
+            console.log("updated file: "+ angular.toJson(data));
             $scope.files = [];
-            $scope.files[0] = data;
+            $scope.files.push(data);
             $scope.tableParams.reload();
             alert('File is updated');
             clean();
