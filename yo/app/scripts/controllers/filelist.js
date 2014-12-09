@@ -102,7 +102,7 @@ angular
       };
       $scope.clear = function () {
         clean();
-      }
+      };
 
       // deletes file
       $scope.remove = function (file) {
@@ -141,7 +141,7 @@ angular
             id: $scope.file._id
           }, {
             filename: $scope.file.fileName,
-            _id:$scope.file._id,
+//            _id:$scope.file._id,
             metadata: {
               description: $scope.file.metadata.description
             }

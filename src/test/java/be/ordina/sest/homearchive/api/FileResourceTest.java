@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @WebAppConfiguration
-public class FileRsControllerTest {
+public class FileResourceTest {
 
     @Autowired
     private WebApplicationContext ctx;
@@ -53,7 +53,7 @@ public class FileRsControllerTest {
     private SearchService searchService;
 
 
-    private GridFSDBFile gridFSDBFile;
+//    private GridFSDBFile gridFSDBFile;
 
     private TestHelper testHelper = new TestHelper();
 

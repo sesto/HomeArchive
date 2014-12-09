@@ -2,8 +2,6 @@ target/
 .settings
 .project
 .classpath
-~*.xls*
-output/
 *.log
 *.iml
 .idea/

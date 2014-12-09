@@ -6,7 +6,8 @@ import java.util.Date;
 import lombok.Data;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 
 /**
  *
@@ -15,7 +16,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
  *
  */
 @Data
-@Document(indexName = "mongoindex", type = "requestresponseentity")
+@Document
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "mongoindex", type = "requestresponseentity")
 public class RequestResponseDocument implements Serializable {
 
     private static final long serialVersionUID = -5211227215172538582L;

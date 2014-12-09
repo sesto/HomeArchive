@@ -115,11 +115,12 @@ public class FileResource {
      */
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.PUT, value = "/fileService/{id}")
-    public void updateDocument(@PathVariable("id") final String id,
+    public RequestResponseDocument updateDocument(@PathVariable("id") final String id,
                                @RequestBody final RequestResponseDocument document) throws ParseException {
         log.debug("Received document" + document);
         log.debug("Updating document with _id:  " + id);
-        fileService.updateDocument(id, document);
+        RequestResponseDocument requestResponseDocument = fileService.updateDocument(id, document);
+        return requestResponseDocument;
     }
 
     /**

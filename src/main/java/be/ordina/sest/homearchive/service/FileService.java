@@ -53,6 +53,6 @@ public interface FileService {
      * @param id id of the document
      * @param document {@link be.ordina.sest.homearchive.model.RequestResponseDocument}
      */
-    void updateDocument(final String id, final RequestResponseDocument document);
+    RequestResponseDocument updateDocument(final String id, final RequestResponseDocument document);
 
 }

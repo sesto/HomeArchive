@@ -62,12 +62,6 @@
     </properties>
 
     <dependencies>
-        <!-- MongoDB driver -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongodb.version}</version>
-        </dependency>
 
         <!-- Spring MVC -->
         <dependency>

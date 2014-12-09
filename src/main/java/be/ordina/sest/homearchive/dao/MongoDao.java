@@ -60,6 +60,7 @@ public interface MongoDao {
      * @param id document _id
      * @param update update query
      */
-    RequestResponseDocument updateDocument(final String id, final Update update);
+  //  RequestResponseDocument updateDocument(final String id, final Update update);
 
+    RequestResponseDocument updateDocument(final String id, final DBObject update);
 }
