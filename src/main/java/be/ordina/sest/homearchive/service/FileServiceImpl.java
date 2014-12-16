@@ -134,6 +134,5 @@ public class FileServiceImpl implements FileService {
         update.put("filename", document.getFilename());
         update.put("metadata", new BasicDBObject("description", document.getMetadata().getDescription()));
         return new BasicDBObject("$set", update);
-
     }
 }
