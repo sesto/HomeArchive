@@ -11,7 +11,7 @@ angular.module('homearchiveApp')
 				function($scope) {
 
 					$scope.clear = function() {
-						$scope.$parent.stratDate = null;
+						$scope.$parent.startDate = null;
 					};
 
 					// Disable weekend selection

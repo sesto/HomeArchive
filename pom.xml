@@ -254,6 +254,7 @@
         </repository>
     </repositories>
     <build>
+        <finalName>homearchive</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

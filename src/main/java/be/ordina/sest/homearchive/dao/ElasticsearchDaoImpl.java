@@ -39,6 +39,7 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
      */
     @PostConstruct
     public void setUpRiver() throws IOException {
+        log.info("Setting up elasticsearch");
         ClusterState clusterState =
                 client.admin().cluster().prepareState().setIndices("mongoindex", "_river").execute().actionGet()
                         .getState();

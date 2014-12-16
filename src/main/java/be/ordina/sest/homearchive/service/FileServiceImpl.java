@@ -125,16 +125,10 @@ public class FileServiceImpl implements FileService {
     /**
      * returns query for updating document
      *
-     * @param requestResponseDocument {@link RequestResponseDocument}
-     * @return update
+     * @param document {@link RequestResponseDocument}
+     * @return query update
      */
 
-//    protected Update getUpdateQuery(final  RequestResponseDocument requestResponseDocument){
-//        Update update = new Update();
-//        update.set("filename", requestResponseDocument.getFilename());
-//        update.set("metadata", new BasicDBObject("description", requestResponseDocument.getMetadata().getDescription()));
-//        return update;
-//    }
     protected DBObject getUpdateQuery(final RequestResponseDocument document) {
         DBObject update = new BasicDBObject();
         update.put("filename", document.getFilename());

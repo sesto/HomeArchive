@@ -112,15 +112,6 @@ public class MongoDaoImpl implements MongoDao {
         return mapToRequestResponseDocument(dbDocument);
     }
 
-    //    @Override
-//    public RequestResponseDocument updateDocument(final String id, final Update update) {
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("_id").is(id));
-//        log.info("Updating document with update query: " + update);
-//        RequestResponseDocument requestResponseDocument = mongoTemplate.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), RequestResponseDocument.class, "fs.files");
-//        log.debug("Modified document: " + requestResponseDocument);
-//        return requestResponseDocument;
-//    }
     private RequestResponseDocument mapToRequestResponseDocument(DBObject dbo) {
         RequestResponseDocument requestResponseDocument = new RequestResponseDocument();
         requestResponseDocument.set_id(dbo.get("_id").toString());

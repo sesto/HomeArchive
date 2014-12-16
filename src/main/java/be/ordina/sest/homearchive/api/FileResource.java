@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * REST api for file operations
+ *
  * @author sest
  */
 @Log4j
@@ -116,7 +117,7 @@ public class FileResource {
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(method = RequestMethod.PUT, value = "/fileService/{id}")
     public RequestResponseDocument updateDocument(@PathVariable("id") final String id,
-                               @RequestBody final RequestResponseDocument document) throws ParseException {
+                                                  @RequestBody final RequestResponseDocument document) throws ParseException {
         log.debug("Received document" + document);
         log.debug("Updating document with _id:  " + id);
         RequestResponseDocument requestResponseDocument = fileService.updateDocument(id, document);
@@ -165,11 +166,7 @@ public class FileResource {
      * @return parsedDate
      */
     private Date parseDate(final String date) throws ParseException {
-        Date parsedDate = null;
-        if (StringUtils.isNotBlank(date) && !date.equals("null")) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-            parsedDate = df.parse(date.replace('"', ' ').trim());
-        }
-        return parsedDate;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        return df.parse(date.replace('"', ' ').trim());
     }
 }
