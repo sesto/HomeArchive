@@ -19,7 +19,7 @@ from the project root.
 Deployment
 ----------
 
-Deployment requires installation and proper configuration of Elasticseacrh, MongoDB and TomCat (or any other web container). For this, a vagrant script is provided, to deploy the application inside of the VirtualBox, where the configuration will be guaranteed.
+Deployment requires installation and proper configuration of Elasticseacrh, MongoDB and TomCat. For this, a vagrant script is provided, to deploy the application inside of the VirtualBox, where the configuration will be guaranteed.
 This requires installation of [VirtualBox] (https://www.virtualbox.org/wiki/Downloads) and [Vagrant] (https://www.vagrantup.com/downloads.html).
 
 Deploy the application by running:
