@@ -33,4 +33,6 @@ Access the application from a browser at:
 
 __localhost:8080/homearchive__
 
+You can login with user name/paasword: __admin/admin__ or __user/user__
+
 
